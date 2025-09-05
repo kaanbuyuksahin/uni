@@ -1,0 +1,2463 @@
+% =====================================================================
+% Mathematik II für Elektrotechniker - Kurzreferenz
+% Autor: Kaan Büyükşahin 
+% Version: 1.0; 30.08.2025, 17:02:32 Uhr
+% Beschreibung: Kurzreferenz der Vorlesung Mathematik II für
+% Elektrotechniker
+% =====================================================================
+
+\documentclass[a4paper,11pt,oneside,open=any,parskip=half, DIV=15]{scrreprt}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[automark]{scrlayer-scrpage}
+\usepackage{newtxtext,newtxmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{booktabs} 
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,intersections,positioning,matrix,decorations.pathmorphing,patterns, shapes.geometric}
+\usepackage{xcolor}
+\usepackage[table]{xcolor}
+\usepackage{tcolorbox}
+\usetikzlibrary{matrix}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{paracol}
+\usepackage{hyperref}
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=black,
+        urlcolor=blue,
+        citecolor=blue,
+        filecolor=blue,
+        menucolor=blue,
+        pdftitle={Mathematik II fuer Elektrotechniker - Kurzreferenz},  % chktex 8
+        pdfauthor={Kaan Büyüksahin},
+        pdfsubject={Mathematik II Kurzreferenz für Elektrotechniker},
+        pdfcreator={LaTeX mit hyperref},
+        pdfproducer={LaTeX},
+        pdfkeywords={Mathematik, Elektrotechnik, Analysis, Lineare Algebra},
+        pdflang={de},
+        pdfstartview={FitH},
+        pdfpagelayout={OneColumn},
+        pdfpagemode={UseOutlines},
+        bookmarksnumbered=true,
+        bookmarksopen=true,
+        bookmarksopenlevel=1,
+        pdfnewwindow=true,
+        breaklinks=true,
+        pdfmenubar=true,
+        pdftoolbar=true,
+        pdfwindowui=true,
+        unicode=true,
+        pdfencoding=auto
+    }
+\usepackage{cleveref}
+
+
+\clearpairofpagestyles{}
+% Kopf- und Fußzeile ==================================================
+% oben: links Kursname, rechts aktuelle Überschrift
+\ohead{\headmark}
+
+% unten: links Autor, Mitte Seitenzahl, rechts Semester
+\ifoot{Mathematik II für Elektrotechniker\\Technische Universität Darmstadt\\Sommersemester 2025}
+\ofoot{\pagemark}
+
+% Trennlinien
+\KOMAoptions{headsepline=true, footsepline=true}
+
+% Schrift der Kopf-/Fußzeile
+\setkomafont{pageheadfoot}{\normalfont\small}
+
+% Kopfzeilenhöhe (falls Warnung "headheight too small")
+\setlength{\headheight}{15pt}
+\setlength{\footheight}{36pt}
+
+% Auch auf Kapitelanfangsseiten Kopfzeile anzeigen
+\renewcommand*\chapterpagestyle{scrheadings}
+
+% Zur Sicherheit den Stil aktivieren (normalerweise nicht nötig)
+\pagestyle{scrheadings}
+
+% Titelseite Einstellungen ============================================
+\definecolor{lav100}{HTML}{EEE7FF} 
+\definecolor{lav300}{HTML}{D6CEFF}
+\definecolor{lav500}{HTML}{B5B0FF}
+\definecolor{indigo700}{HTML}{5A6BFF}
+
+% Ausgewogene Textfarben ==============================================
+\colorlet{titlefg}{indigo700!85!white}
+\colorlet{subtitlefg}{indigo700!75!white}
+\colorlet{authorfg}{indigo700!65!white}
+
+% Diagonaler Verlauf ==================================================
+\pgfdeclarehorizontalshading{lav2vio}{100bp}{ % chktex-file 36
+  color(0bp)=(lav100);
+  color(35bp)=(lav300);
+  color(70bp)=(lav500);
+  color(100bp)=(indigo700)
+}
+
+% Layout ==============================================================
+\newcommand{\TitleBlockWidth}{0.60\paperwidth}
+\newcommand{\TitleLineGap}{1.0em}
+
+% Makros ==============================================================
+\newcommand{\TitleText}[1]{\textcolor{titlefg}{#1}}
+\newcommand{\SubtitleText}[1]{\textcolor{subtitlefg}{#1}}
+\newcommand{\AuthorText}[1]{\textcolor{authorfg}{#1}}
+
+% Matrix Laplace Markierung ===========================================
+\definecolor{matrixblau}{RGB}{30,144,255}
+
+% Formel Box ==========================================================
+\definecolor{lightviolet}{RGB}{230, 220, 255}
+\newtcolorbox{importantbox}{
+    colback=lightviolet,
+    colframe=white,
+    boxrule=0pt,
+    arc=5pt,
+    boxsep=8pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt
+}
+
+% =====================================================================
+\begin{document}
+\pagenumbering{gobble}
+
+% Titelseite ==========================================================
+\begin{titlepage}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    
+    \path[shade, shading=lav2vio, shading angle=12]
+    (current page.south west) rectangle (current page.north east);
+  
+  \node[align=center, text width=\TitleBlockWidth, inner sep=0pt]
+    at (current page.center) {%
+      {\sffamily\bfseries\fontsize{36pt}{42pt}\selectfont
+        \TitleText{Mathematik \, II}\\[\TitleLineGap]
+        \TitleText{für \, Elektrotechniker}
+      }\\[4.5em]
+      {\sffamily\bfseries\fontsize{23pt}{30pt}\selectfont
+        \SubtitleText{Kurzreferenz}
+      }%
+    };
+      
+  \end{tikzpicture}
+
+\end{titlepage}
+
+\pagecolor{white}
+\cleardoublepage{}
+
+
+% Einführung ==========================================================
+\section*{Einführung}
+\addcontentsline{toc}{section}{Einführung}
+   Liebe Studenten,
+
+   diese Zusammenfassung wurde für das Modul Mathematik~II für Elektrotechniker erstellt und dient als Kurzreferenz für Übungsaufgaben und Prüfungsvorbereitung.
+
+   Als Tutor für Mathematik~II für ET im SS25 bei PD~Dr.\ Schmidt habe ich die wesentlichen Inhalte aus Vorlesungen, Mitschriften, dem offiziellen Skript und zusätzlichen Fachbüchern kompakt zusammengetragen. 
+
+   \textbf{Empfehlung zur Prüfungsvorbereitung:} Nutzt unbedingt die Mitschriften aus den Vorlesungen von PD~Dr.\ Schmidt im Moodle-Kurs, da diese oft wichtige Erklärungen und Hinweise enthalten, die für das Verständnis und insbesondere für die Prüfung relevant sind.
+
+   \vspace{0.5em}
+   \textbf{Wichtiger Hinweis:}
+   Diese Kurzreferenz ist inoffiziell und nicht autorisiert. Sie entstand ursprünglich als meine persönliche Lernzusammenfassung und wurde während meiner Tätigkeit als Tutor im SS25 punktuell aktualisiert. Sie wurde mit größter Sorgfalt erstellt, kann jedoch Fehler enthalten und ersetzt keinesfalls weder die Teilnahme an Vorlesungen und Übungen noch das Studium der offiziellen Unterlagen.\\
+   Sie dient ausschließlich als ergänzende Lernhilfe zur Wiederholung und Strukturierung des Stoffes. Bitte überprüft alle Inhalte eigenständig; maßgeblich sind die offiziellen Materialien und die Mitschriften des Dozenten.
+
+
+   \vspace{1em}
+   Ich wünsche euch viel Erfolg beim Lernen und gutes Gelingen in der Prüfung!
+
+   \vspace{0.5em}
+   Mit freundlichen Grüßen,\\
+   Kaan Büyükşahin
+
+   \vspace{1em}
+   Tutor für Mathematik II für ET\\
+   Technische Universität Darmstadt\\
+   Fachbereich Mathematik\\
+   Veranstaltung: Mathematik~II für ET (SS25), gehalten von PD~Dr.\ Schmidt\\
+   Internetseite: \url{https://kaanbs.com}\\
+   Letzte Aktualisierung: \today
+
+% Inhaltsverzeichnis ==================================================
+\tableofcontents
+\cleardoublepage{}
+
+% Nummerierung ========================================================
+\pagenumbering{arabic}
+
+% Kapitel 1 ===========================================================
+\chapter{Determinanten, Eigenwerte und Eigenvektoren}
+
+   Zu Beginn legen wir fest: Sofern nicht anders angegeben, betrachten wir reelle Matrizen
+   \(A \in \mathbb{R}^{n\times n}\). Alle Aussagen lassen sich analog auf komplexe Matrizen
+   \(A \in \mathbb{C}^{n\times n}\) übertragen.
+
+   Für \(A=(a_{ij})\) bezeichnen \(i\) den Zeilen- und \(j\) den Spaltenindex; es gilt
+   \(i,j \in \{1,\dots,n\}\).
+
+   Die Determinante \(\det A\) ist nur für quadratische Matrizen definiert.
+
+   Die Einheitsmatrix I ist definiert als \( I = \begin{pmatrix}
+      1 & 0 & 0\\
+      0 & 1 & 0\\
+      0 & 0 & 1\\
+   \end{pmatrix} \).
+
+%=== Determinante 2x2 =================================================
+\section{Determinante einer \texorpdfstring{\(2\times 2\)\,-Matrix}{2x2-Matrix}} % chktex-file 29
+
+\begin{importantbox}
+   \[
+      A= 
+         \begin{pmatrix} 
+            a & b \\ 
+            c & d 
+         \end{pmatrix} \quad
+      \Rightarrow \quad \det A = ad - bc
+   \]
+\end{importantbox}
+
+%=== Determinante 3x3 =================================================
+\section{Determinante einer \texorpdfstring{\(3\times 3\)\,-Matrix}{3x3-Matrix}}
+
+   \begin{importantbox}
+      \[
+            A=
+      \begin{pmatrix}
+            a & b & c\\
+            d & e & f\\
+            g & h & i
+      \end{pmatrix} \quad \Rightarrow \quad \det A =(aei+bfg+cdh)-(ceg+afh+bdi)
+      \]
+   \end{importantbox}
+
+   \[
+      \det A = \textcolor{magenta}{aei} + \textcolor{green}{bfg} + \textcolor{cyan}{cdh} - \textcolor{brown}{ceg} - \textcolor{violet}{afh} - \textcolor{orange}{bdi}
+   \]  
+
+   \begin{center}
+      \begin{tikzpicture}[baseline=(m.center)]
+            \matrix (m) [
+               matrix of math nodes,
+               left delimiter={[},
+               right delimiter={]},
+               column sep=1.2em,
+               row sep=1.2em
+               ]
+               {
+                  a & b & c & a & b \\
+                  d & e & f & d & e \\
+                  g & h & i & g & h \\
+               };
+
+            \draw[thin, densely dashed, magenta] (m-1-1.north west) -- (m-3-3.south east);
+            \draw[thin, densely dashed, green] (m-1-2.north west) -- (m-3-4.south east);
+            \draw[thin, densely dashed, cyan] (m-1-3.north west) -- (m-3-5.south east);
+
+            \draw[thin, densely dashed, brown]  (m-3-1.south west) -- (m-1-3.north east);
+            \draw[thin, densely dashed, violet]  (m-3-2.south west) -- (m-1-4.north east);
+            \draw[thin, densely dashed, orange]  (m-3-3.south west) -- (m-1-5.north east);
+      \end{tikzpicture}
+   \end{center}
+
+\newpage
+        
+%=== Laplacescher Entwicklungssatz ===================================
+\section{Laplacescher Entwicklungssatz}
+
+   Für \(A=(a_{ij}) \in \mathbb{K}^{n \times n}\) mit \(\mathbb{K}\in\{\mathbb{R},\mathbb{C}\}\):
+
+   \begin{itemize}
+      \item \textbf{Minor} \( M_{ij} \): Determinante der Matrix, die aus \(A\) durch Streichen von Zeile \(i\) und Spalte \(j\) entsteht.
+      \item \textbf{Kofaktor} \(C_{ij} = (-1)^{i+j} M_{ij}\). % chktex-file 3
+   \end{itemize}
+
+   \textbf{Entwicklung nach einer Zeile/Spalte (für festes \(i\)/\(j\))}
+
+   \begin{itemize}
+      \item Nach Zeile \(i\):
+            \begin{importantbox}
+               \[
+                  \det A = \sum_{j=1}^{n} a_{ij} C_{ij} = \sum_{j=1}^{n} a_{ij} (-1)^{i+j} M_{ij}
+               \]
+            \end{importantbox}
+
+
+      \item Nach Spalte \(j\):
+            \begin{importantbox}
+               \[
+                  \det A = \sum_{i=1}^{n} a_{ij} C_{ij} = \sum_{i=1}^{n} a_{ij} (-1)^{i+j} M_{ij}
+               \]
+            \end{importantbox}
+
+   \end{itemize}
+
+   \textbf{Vorzeichenmuster}
+   \[
+      \left((-1)^{i+j}\right)_{i,j} =
+            \begin{pmatrix}
+               + & - & + & - & \cdots \\
+               - & + & - & + & \cdots \\
+               + & - & + & - & \cdots \\
+               \vdots & \vdots & \vdots & \vdots & \ddots
+            \end{pmatrix}
+   \]
+
+   \subsection*{Vorgehen mit Beispiel}
+
+      \begin{enumerate}
+            \item \textbf{Matrix abschreiben}\\
+               Wir haben die folgende Matrix gegeben:
+               \[
+                  A=
+                  \begin{pmatrix}
+                        2 & 4 & 1 & 0\\
+                        0 & 1 & 3 & 0\\
+                        4 & 0 & 2 & 1\\
+                        0 & 4 & 2 & 0
+                  \end{pmatrix}
+               \]
+            \item \textbf{Vorzeichenmuster in die Matrix einfügen}
+               \[
+                  A=
+                  \begin{pmatrix}
+                        2^{+} & 4^{-} & 1^{+} & 0^{-}\\
+                        0^{-} & 1^{+} & 3^{-} & 0^{+}\\
+                        4^{+} & 0^{-} & 2^{+} & 1^{-}\\
+                        0^{-} & 4^{+} & 2^{-} & 0^{+}
+                  \end{pmatrix}
+               \]
+            \item \textbf{Nach der günstigsten Spalte/Zeile suchen}\\
+               Wir entscheiden uns für die 4.~Spalte 
+               \[
+                  A=
+                        \left(
+                           \begin{array}{ccc>{\columncolor{violet!20}}c}
+                              2^{+} & 4^{-} & 1^{+} & 0^{-}\\
+                              0^{-} & 1^{+} & 3^{-} & 0^{+}\\
+                              4^{+} & 0^{-} & 2^{+} & 1^{-}\\
+                              0^{-} & 4^{+} & 2^{-} & 0^{+}
+                           \end{array}
+                        \right)
+                  \]
+            \item \textbf{An der ausgewählten Spalte/Zeile entwickeln}\\
+               Wir fassen die Beiträge der 4.~Spalte als \(B_1,B_2,B_3,B_4\) (Zeilen 1–4) zusammen und notieren jeweils \(\text{Vorzeichen}\times\text{Eintrag}\times\text{Minor}\).\\
+               Die Bezeichnungen \(B_{1},\dots,B_{4}\) dienen nur der Übersicht über die Zwischenschritte.\\
+               \textbf{Wichtig: auf das Vorzeichenmuster achten.}\\[1em]
+               \(
+                  A_{0^{-}}=
+                        \left(
+                           \begin{array}{c c c >{\columncolor{matrixblau!25}}c}
+                              \rowcolor{matrixblau!25}
+                              2^{+} & 4^{-} & 1^{+} & 0^{\boldsymbol{-}}\\
+                              0^{-} & 1^{+} & 3^{-} & 0^{\boldsymbol{+}}\\
+                              4^{+} & 0^{-} & 2^{+} & 1^{\boldsymbol{-}}\\
+                              0^{-} & 4^{+} & 2^{-} & 0^{\boldsymbol{+}}
+                           \end{array}
+                        \right)
+               \) \quad \(\Rightarrow \; \mathbf{B_{1}:} \quad \boldsymbol{-} \; 0 \cdot \det\begin{pmatrix}0&1&3\\4&0&2\\0&4&2\end{pmatrix} = 0\)
+
+               \vspace{1em}
+            
+               \(
+                  A_{0^{+}}=
+                        \left(
+                           \begin{array}{c c c >{\columncolor{matrixblau!25}}c}
+                              2^{+} & 4^{-} & 1^{+} & 0^{\boldsymbol{-}}\\
+                              \rowcolor{matrixblau!25}
+                              0^{-} & 1^{+} & 3^{-} & 0^{\boldsymbol{+}}\\
+                              4^{+} & 0^{-} & 2^{+} & 1^{\boldsymbol{-}}\\
+                              0^{-} & 4^{+} & 2^{-} & 0^{\boldsymbol{+}}
+                           \end{array}
+                        \right)
+               \) \quad \(\Rightarrow \; \mathbf{B_{2}:} \quad \boldsymbol{+} \; 0 \cdot \det\begin{pmatrix}2&4&1\\4&0&2\\0&4&2\end{pmatrix} = 0\)
+               
+               \vspace{1em}
+
+               \(
+                  A_{1^{-}}=
+                        \left(
+                           \begin{array}{c c c >{\columncolor{matrixblau!25}}c}
+                              2^{+} & 4^{-} & 1^{+} & 0^{\boldsymbol{-}}\\
+                              0^{-} & 1^{+} & 3^{-} & 0^{\boldsymbol{+}}\\
+                              \rowcolor{matrixblau!25}
+                              4^{+} & 0^{-} & 2^{+} & 1^{\boldsymbol{-}}\\
+                              0^{-} & 4^{+} & 2^{-} & 0^{\boldsymbol{+}}
+                           \end{array}
+                        \right)
+               \) \quad \(\Rightarrow \; \mathbf{B_{3}:} \quad \boldsymbol{-} \; 1 \cdot \det\begin{pmatrix}2&4&1\\0&1&3\\0&4&2\end{pmatrix} = \boldsymbol{-} 1 \cdot (-20) = 20\)
+               
+               \vspace{1em}
+
+               \(
+                  A_{0^{+}}=
+                        \left(
+                           \begin{array}{c c c >{\columncolor{matrixblau!25}}c}
+                              2^{+} & 4^{-} & 1^{+} & 0^{\boldsymbol{-}}\\
+                              0^{-} & 1^{+} & 3^{-} & 0^{\boldsymbol{+}}\\
+                              4^{+} & 0^{-} & 2^{+} & 1^{\boldsymbol{-}}\\
+                              \rowcolor{matrixblau!25}
+                              0^{-} & 4^{+} & 2^{-} & 0^{\boldsymbol{+}}
+                           \end{array}
+                        \right)
+               \) \quad \(\Rightarrow \; \mathbf{B_{4}:} \quad \boldsymbol{+} \; 0 \cdot \det\begin{pmatrix}2&4&1\\0&1&3\\4&0&2\end{pmatrix} = 0\)
+
+               \vspace{1em}
+
+               \textbf{Alles einsetzen und einfügen:}\\ 
+               \(\det A = \mathbf{B_{1}} + \mathbf{B_{2}} + \mathbf{B_{3}} + \mathbf{B_{4}} = 0 + 0 + 20 + 0 = 20\)
+      \end{enumerate}
+
+% Cramersche Regel ====================================================
+\section{Cramersche Regel}
+
+   Zur Lösung des linearen Gleichungssystems \(A \vec{x} = \vec{b}\) mit \(\det A \neq 0\) (sei \(A\in\mathbb{K}^{n\times n}\), \(\vec{x},\vec{b} \in\mathbb{K}^n\)):
+
+   \begin{importantbox}
+      \[
+         \vec{x} = \begin{pmatrix}x_1\\ x_2\\ \vdots\\ x_n\end{pmatrix} \quad \Rightarrow \quad x_i \;=\; \frac{\det A_i}{\det A}, \quad i=1,\dots,n
+      \]
+   \end{importantbox}
+
+   wobei \(A_i\) entsteht, indem man in \(A\) die \(i\)-te Spalte durch \(\vec{b}\) ersetzt.
+
+%=== Inverse ==========================================================
+\section{Inverse Matrix}
+
+   \begin{importantbox}
+   \[
+      A^{-1} = \frac{1}{\det A} \big( A_{adj} \big)^{\top}
+   \]
+   \end{importantbox}
+
+   \subsection*{Speziell für eine \texorpdfstring{\(2\times 2\)\,-Matrix}{2x2-Matrix}}
+
+      \begin{importantbox}
+      \[
+            A = 
+               \begin{pmatrix}
+                  a & b \\
+                  c & d 
+               \end{pmatrix} \quad \Rightarrow \quad A^{-1} = \frac{1}{\det A} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}
+      \]
+      \end{importantbox}
+
+   \subsection*{Speziell für eine \texorpdfstring{\(3\times 3\)\,-Matrix}{3x3-Matrix}}
+
+         \begin{importantbox}
+      \[
+            A^{-1} = \frac{1}{\det A} \big( A_{adj} \big)^{\top}
+      \]
+      \end{importantbox}
+
+      \noindent
+
+      \vspace{1em}
+
+      \textbf{Vorgehensweise}
+      \begin{enumerate}
+
+            \item Determinante bestimmen \( \Rightarrow \, \det A \neq 0 \) 
+
+            \item \( A_{adj} \) Matrix mit Entwicklungssatz berechnen
+            
+            \item Einträge in die Endformel einsetzen
+
+      \end{enumerate}
+
+   \subsection*{Beispielrechnung}
+
+      Wir haben eine Matrix \( A \) gegeben mit \( A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 2 & 3 \\ 2 & 3 & 5 \end{pmatrix}\).\,
+      Zuerst berechnen wir die Determinante: \(\det A=1\). Damit gilt \(\det A\neq 0 \Rightarrow A^{-1}\) existiert.
+
+      Nun stellen wir folgende Hilfsmatrix auf:
+      \begin{importantbox} 
+            \[ 
+               A^{-1}=\frac{1}{\det A}
+               \begin{pmatrix}
+                  x_{11} & x_{12} & x_{13} \\
+                  x_{21} & x_{22} & x_{23} \\
+                  x_{31} & x_{32} & x_{33}
+               \end{pmatrix}, \quad\text{mit }x_{ij}=\big((A_{adj})^{\top}\big)_{ij}=(A_{adj})_{ji}=C_{ji}
+            \] 
+      \end{importantbox}
+
+      \vspace{1em}
+
+      Wir wissen, dass mit \( x_{11} \) der Eintrag in der ersten Zeile und ersten Spalte gemeint ist. Analog also beispielsweise bei \( x_{23} \) zweite Zeile, dritte Spalte. Bei \( x_{31} \) wäre es die dritte Zeile, erste Spalte usw.
+
+      Um die Adjugierte zu berechnen, erstellen wir ein (Vorzeichen-)Gitter
+
+      \[
+            \begin{matrix} 
+                        x_{11}^{+} & x_{12}^{-} & x_{13}^{+} \\ 
+                        x_{21}^{-} & x_{22}^{+} & x_{23}^{-} \\ 
+                        x_{31}^{+} & x_{32}^{-} & x_{33}^{+}, 
+            \end{matrix} 
+      \]
+
+      Um den Eintrag für beispielsweise \( x_{23} \) zu berechnen machen wir nun folgendes: Wir vertauschen die Zeilen und Spalten. Wir gehen zurück zu unserer Matrix und betrachten \( x_{23} \), ändern aber die Reihenfolge der Indizes. Also 2 Spalte und 3 Zeile. Dort entwickeln wir nun.\\
+      Somit erhalten wir die \( \det \begin{pmatrix} x_{11} & x_{23} \\ x_{21} & x_{13} \end{pmatrix} \) und unser Eintrag für \( x_{23} \) lautet: 
+      \begin{align*}
+            x_{23} 
+               &= - ( x_{11}x_{23} - x_{21} x_{13} )\\
+               &= - (1 \cdot 3 - 1 \cdot 1 )\\
+               &= - (3 - 1 )\\
+               &= - (2) = -2
+      \end{align*}
+      Hinweis: Das Vorzeichen kommt aus dem (Vorzeichen-)Gitter!
+
+      \textbf{Alternativ mit Formel}\\
+      Für \(x_{23}= (A_{adj})_{23}=C_{32}\) streichen wir in \(A\) die 3.~Zeile und 2.~Spalte:
+      \[
+         x_{23}=C_{32}=(-1)^{3+2}\det\begin{pmatrix}1&1\\[2pt]1&3\end{pmatrix}
+         =-(3-1)=-2.
+      \]
+
+      So gehen wir analog für jeden Eintrag und erhalten die Matrix \( A^{-1} = \begin{pmatrix} 1 & - 2 & 1\\ 1 & 3 & -2\\ - 1 & - 1 & 1 \end{pmatrix}\).
+
+% Diagonalähnliche Matrizen ===========================================
+\section{Diagonalähnliche Matrizen}
+
+   \begin{importantbox}
+      \[
+         S^{-1}AS = D
+      \]
+   \end{importantbox}
+
+\newpage
+% Gram-Schmidt Orthogonalisierungsverfahren ===========================
+\section{Gram-Schmidt-Orthogonalisierung}
+
+   \begin{importantbox}
+      \[
+         \vec q_n \;=\; \vec v_n \;-\; \sum_{i=1}^{n-1} \frac{\langle \vec v_n,\vec q_i\rangle}{\|\vec q_i\|^{2}}\,\vec q_i
+      \]
+   \end{importantbox}
+
+   \textbf{Berechnung}
+   \begin{enumerate}
+      \item Start: \(\vec q_1=\vec v_1\).
+      \item Induktion: Für \(n=2,\dots,i\)
+      \[
+      \vec q_n \;=\; \vec v_n \;-\; \sum_{i=1}^{n-1} \frac{\langle \vec v_n,\vec q_i\rangle}{\|\vec q_i\|^{2}}\,\vec q_i.
+      \]
+      Falls \(\|\vec q_n\|=0\): Eingabevektoren sind linear abhängig
+      \item \emph{(Optional)} Normierung: \(\vec e_k=\dfrac{\vec q_k}{\|\vec q_k\|}\) für alle \(k\) \(\Rightarrow\) Orthonormalbasis.
+   \end{enumerate}
+
+   Ergebnis: \((\vec q_1,\dots,\vec q_n)\) sind paarweise orthogonal und spannen denselben Raum wie \((\vec v_1,\dots,\vec v_n)\); \((\vec e_1,\dots,\vec e_n)\) ist orthonormal.
+
+   \subsection*{Beispiel}
+
+   Gegeben seien
+   \[
+      \vec v_1=\begin{pmatrix}1\\[2pt]1\\[2pt]0\end{pmatrix},\qquad
+      \vec v_2=\begin{pmatrix}1\\[2pt]0\\[2pt]1\end{pmatrix},\qquad
+      \vec v_3=\begin{pmatrix}0\\[2pt]1\\[2pt]1\end{pmatrix}.
+   \]
+
+   \textbf{Orthogonalisierung}
+   \[
+      \vec q_1=\vec v_1
+   \]
+
+   \[
+      \vec q_2=\vec v_2-\frac{\langle \vec v_2,\vec q_1\rangle}{\|\vec q_1\|^2}\,\vec q_1
+      =\begin{pmatrix}1\\[2pt]0\\[2pt]1\end{pmatrix}
+      -\frac{1}{2}\begin{pmatrix}1\\[2pt]1\\[2pt]0\end{pmatrix}
+      =\begin{pmatrix}\tfrac12\\[2pt]-\tfrac12\\[2pt]1\end{pmatrix}
+   \]
+
+   \[
+      \vec q_3=\vec v_3-\frac{\langle \vec v_3,\vec q_1\rangle}{\|\vec q_1\|^2}\,\vec q_1
+      -\frac{\langle \vec v_3,\vec q_2\rangle}{\|\vec q_2\|^2}\,\vec q_2
+      =\begin{pmatrix}0\\[2pt]1\\[2pt]1\end{pmatrix}
+      -\frac{1}{2}\begin{pmatrix}1\\[2pt]1\\[2pt]0\end{pmatrix}
+      -\frac{1}{3}\begin{pmatrix}\tfrac12\\[2pt]-\tfrac12\\[2pt]1\end{pmatrix}
+      =\begin{pmatrix}-\tfrac23\\[2pt]\tfrac23\\[2pt]\tfrac23\end{pmatrix}
+   \]
+
+   (Kontrolle: \(\langle \vec q_i,\vec q_j\rangle=0\) für \(i\ne j\).)
+
+   \textbf{Normierung}
+   \[
+      \vec e_1=\frac{\vec q_1}{\|\vec q_1\|}=\begin{pmatrix}\tfrac{1}{\sqrt2}\\[2pt]\tfrac{1}{\sqrt2}\\[2pt]0\end{pmatrix},\quad
+      \vec e_2=\frac{\vec q_2}{\|\vec q_2\|}=\begin{pmatrix}\tfrac{1}{\sqrt6}\\[2pt]-\tfrac{1}{\sqrt6}\\[2pt]\tfrac{2}{\sqrt6}\end{pmatrix},\quad
+      \vec e_3=\frac{\vec q_3}{\|\vec q_3\|}=\begin{pmatrix}-\tfrac{1}{\sqrt3}\\[2pt]\tfrac{1}{\sqrt3}\\[2pt]\tfrac{1}{\sqrt3}\end{pmatrix}.
+   \]
+
+
+% Eigenwerte Eigenvektoren ============================================
+\section{Eigenwerte und Eigenvektoren}
+
+   \begin{itemize}
+      \item \textbf{Eigenpaar:} \((\lambda, \vec{x})\) heißt Eigenpaar von \(A \in \mathbb{K}^{n \times n}\), wenn
+
+      \begin{importantbox}
+         \[
+            A \vec{x} = \lambda \vec{x} \quad \text{bzw.} \quad (A - \lambda I)\vec{x} = 0 \quad \text{mit} \quad \vec x \neq \vec o
+         \]
+      \end{importantbox}
+
+      Dann heißt \(\lambda\) Eigenwert und \(\vec{x}\) ein zugehöriger Eigenvektor.
+
+      \item \textbf{Eigenraum:} Für einen Eigenwert \(\lambda\)
+         \[
+            L_\lambda = \{ \vec{x} \in \mathbb{K}^n \mid A \vec{x} = \lambda \vec{x}\}
+         \]
+      heißt Eigenraum zu \(\lambda\). Seine Dimension
+         \[
+            m_{geo}(\lambda) = \dim L_\lambda
+         \]
+      heißt geometrische Vielfachheit von \(\lambda\).
+
+      \item \textbf{Charakteristisches Polynom}
+         \begin{importantbox}
+         \[  
+            p_A(\lambda) = \det(A - \lambda I) = \lambda^n + c_{n-1}\lambda^{n-1} + \cdots + c_1\lambda + c_0
+         \]
+         \end{importantbox}
+
+      \(\lambda\) ist Eigenwert genau dann, wenn \(p_A(\lambda) = 0\).
+
+      Die algebraische Vielfachheit \(m_{alg}(\lambda)\) ist die Vielfachheit von \(\lambda\) als Nullstelle von \(p_A\).
+
+      \item \textbf{Beziehung der Vielfachheiten:}
+         \[
+            1 \leq m_{geo}(\lambda) \leq m_{alg}(\lambda) \leq n
+         \]
+            
+         \begin{itemize}
+         
+            \item \textbf{algebraische Vielfachheit} \( m_{alg}(\lambda) \)
+
+            \begin{itemize}
+               \item Ordnung, mit der ein Eigenwert \( \lambda \) als Nullstelle des charakteristischen Polynoms auftritt \( \Rightarrow \) also wie oft kommt \( \lambda \) im Polynom vor
+            \end{itemize}
+
+            \item \textbf{geometrische Vielfachheit} \( m_{geo}(\lambda) \)
+
+            \begin{itemize}
+               \item Dimension des Eigenraums, also die Anzahl der linear unabhängigen Eigenvektoren zu \( \lambda \)
+            \end{itemize}
+
+            \item Diagonaliserbar \(\Leftrightarrow \) für alle Eigenwerte \(\lambda\) gilt \(m_{geo}(\lambda) = m_{alg}(\lambda)\)
+         \end{itemize}
+
+      \item \textbf{Anzahl der Eigenwerte:}
+
+      Über \(\mathbb{C}\) besitzt jede \(n\times n\)\,-Matrix insgesamt \(n\) Eigenwerte \(\lambda_1, \ldots, \lambda_n\), gezählt mit ihren algebraischen Vielfachheiten.
+
+      \item \textbf{Mathematische Beziehungen}\\
+      \( \operatorname{rank} A = n \;\Leftrightarrow\; \det A \neq 0 \;\Leftrightarrow\; A^{-1}\text{ existiert} \;\Leftrightarrow\; \ker A = \{\vec 0\} \;\Leftrightarrow\; (A\vec x=\vec 0 \Rightarrow \vec x=\vec o)\).
+
+
+      \item \textbf{Berechnen von Eigenwert und -vektoren Aufgaben}
+         \begin{enumerate}
+            \item Berechne Eigenwerte: \( \det (A - \lambda I) = 0 \)
+            \item Setze Eigenwerte ein um Eigenvektoren zu bestimmen: \( (A - \lambda I)\vec{x} = 0 \)
+         \end{enumerate}
+
+   \end{itemize}
+
+   \subsection*{Beispielrechnung mit Vorgehen}
+
+      \begin{enumerate}
+         \item Matrix aufschreiben
+         \item Charakteristisches Polynom aufstellen und berechnen
+         \item Eigenwerte bestimmen
+         \item Für jeden Eigenwert die Eigenvektoren bestimmen
+      \end{enumerate}
+
+      \subsubsection*{1. Matrix aufschreiben}
+
+         Wir haben die Matrix \( A = \begin{pmatrix} 2 & 1\\ 0 & 3 \end{pmatrix} \) gegeben.
+
+   \subsubsection*{2. Charakteristisches Polynom aufstellen und berechnen}
+
+      \begin{importantbox}
+         \[
+            p_A(\lambda) = \det(A- \lambda I) 
+         \]
+      \end{importantbox}
+
+      Somit erhalten wir: \begin{align*}
+      \det \begin{pmatrix} 2 - \lambda & -1\\ 0 & 3 - \lambda \end{pmatrix} &= (2 - \lambda) \cdot (3 - \lambda) - (-1) \cdot 0 = (2 - \lambda) \cdot (3 - \lambda) = 6 - 2\lambda -3\lambda + {\lambda}^2\\ &=  {\lambda}^2 - 5\lambda + 6
+      \end{align*}
+
+   \subsubsection*{3. Eigenwerte bestimmen}
+
+      Nun berechnen wir die Nullstellen, also die Eigenwerte: 
+      \begin{align*}
+         {\lambda}^2 - 5\lambda + 6 &= 0 \quad \vert \, \text{pq-Formel}\\
+         {\lambda}_{1,2} = - \frac{p}{2} \pm \sqrt{\frac{{p}^2}{4}-q} &=\\ 
+         - \frac{-5}{2} \pm \sqrt{\frac{{-5}^2}{4}-6} &=\\ 
+         \frac{5}{2} \pm \sqrt{\frac{25}{4}-6} &=\\ 
+         \frac{5}{2} \pm \sqrt{\frac{25}{4}-\frac{24}{4}} &=\\
+         \frac{5}{2} \pm \sqrt{\frac{1}{4}} &= \frac{5}{2} \pm \frac{1}{2} \\
+         \lambda_1 = 3\\
+         \lambda_2 = 2
+      \end{align*}
+
+      Hier können wir schon direkt ablesen, dass unsere \( m_{alg}({\lambda_1 = 3}) = 1 \; \text{und für} \; m_{alg}({\lambda_2 = 2}) = 1 \) ist. 
+
+   \subsubsection*{4. Eigenvektoren bestimmen}
+
+      In diese Formel setzen wir unsere berechneten Eigenwerte \( \lambda = \lambda_1 \; \text{bzw.} \; \lambda_2 \) \, ein, um jeden Eigenvektor zu bestimmen
+      \begin{importantbox}
+         \[
+            ( A - \lambda I) \cdot \vec{x} = 0, \quad \vec{x} \neq \vec{o}
+         \]
+      \end{importantbox}
+
+      Wir fangen dabei an mit \( \lambda = \lambda_1 = 3 \) \, und Lösen die Gleichung mit dem Gaußalgorithmus.
+
+      \[
+         \left[
+            \begin{array}{cc|c} % chktex 44
+               x_1 & x_2 &\\ 
+               \hline  % chktex 44
+               2-\lambda & 1 & 0\\
+               0         & 3-\lambda & 0
+            \end{array}
+         \right]_{\lambda=3}
+            =
+         \left[
+            \begin{array}{cc|c}  % chktex 44
+            x_1 & x_2 &\\ 
+            \hline    % chktex 44
+            -1 & 1 & 0\\
+            0  & 0 & 0
+            \end{array}
+         \right] \Rightarrow \text{wir parametrisieren } x_2 = t
+      \]
+
+      \[
+         \begin{aligned}
+            & \text{Aus der 1. Zeile: } -x_1 + x_2 = 0
+            \; \Rightarrow \; -x_1 + t = 0
+            \; \Rightarrow \; x_1 = t\\
+            & \text{Eigenvektor: } \vec{v_1}
+            = \begin{pmatrix}x_1\\ x_2\end{pmatrix}
+            = \begin{pmatrix}t\\ t \end{pmatrix}
+            = t \begin{pmatrix}1\\ 1 \end{pmatrix},
+            \quad t\in\mathbb{R}\setminus\{0\}.
+         \end{aligned}
+      \] 
+      Nun haben wir unseren ersten Eigenvektor bestimmt. Analog berechnen wir den zweiten Eigenvektor:
+
+      \[
+         \left[
+            \begin{array}{cc|c}   % chktex 44
+               x_1 & x_2 & \\ 
+               \hline    % chktex 44
+               2-2 & 1   & 0\\
+               0   & 3-2 & 0
+            \end{array}
+         \right]
+         \sim
+         \left[
+            \begin{array}{cc|c}   % chktex 44
+               x_1 & x_2 & \\ 
+               \hline    % chktex 44
+               0 & 1 & 0\\
+               0 & 0 & 0
+            \end{array}
+         \right]
+         \;\Rightarrow\;
+            \begin{aligned}
+               &x_2=0,\; x_1=t,\\
+               &  \vec{v_2} = t \begin{pmatrix} 1 \\ 0 \end{pmatrix},
+               \quad t\in\mathbb{R}\setminus\{0\}.
+            \end{aligned}
+      \]
+      Somit sehen wir für beide Eigenvektoren, dass die \( m_{geo}(\lambda_1) = m_{geo}(\lambda_2) = 1 \) ist.
+
+%=== Definitheit ======================================================
+\section{Definitheit}
+
+   Vorausgesetzt: \(A\) ist reell symmetrisch (bzw.\ komplex hermitesch) und
+   \(Q(\vec x)=\vec x^{\top}A\vec x\) (bzw.\ \(Q(\vec x)=\vec x^{*}A\vec x\)).
+
+   \begin{importantbox}
+   {%
+   \renewcommand{\arraystretch}{1.4}%
+   \begin{center}
+      \begin{tabular}{>{\raggedright\arraybackslash}p{3.5cm}|
+                     >{\raggedright\arraybackslash}p{4.8cm}|
+                     >{\raggedright\arraybackslash}p{4.8cm}}
+         \rowcolor{gray!5}
+         \textbf{Typ} & \textbf{Bedingung: \(Q(\vec x)=\vec x^{\top}A\vec x\)} & \textbf{Eigenwerte von \(A\)} \\
+         \hline    % chktex 44
+         \rowcolor{green!25}
+         \textbf{Positiv definit}
+         & \(Q(\vec x) > 0,\ \forall\,\vec x \in \mathbb{K}^n \setminus \{\vec 0\}\)
+         & Alle Eigenwerte \(> 0\) \\
+         \hline    % chktex 44
+         \rowcolor{green!10}
+         \textbf{Positiv semidefinit}
+         & \(Q(\vec x) \ge 0,\ \forall\,\vec x \in \mathbb{K}^n\)
+         & Alle Eigenwerte \(\ge 0\) \\
+         \hline    % chktex 44
+         \rowcolor{red!25}
+         \textbf{Negativ definit}
+         & \(Q(\vec x) < 0,\ \forall\,\vec x \in \mathbb{K}^n \setminus \{\vec 0\}\)
+         & Alle Eigenwerte \(< 0\) \\
+         \hline    % chktex 44
+         \rowcolor{red!10}
+         \textbf{Negativ semidefinit}
+         & \(Q(\vec x) \le 0,\ \forall\,\vec x \in \mathbb{K}^n\)
+         & Alle Eigenwerte \(\le 0\) \\
+         \hline    % chktex 44
+         \rowcolor{orange!30}
+         \textbf{Indefinit}
+         & \(\exists\,\vec x,\vec y:\ Q(\vec x) > 0,\ Q(\vec y) < 0\)
+         & Mindestens ein positiver und ein negativer Eigenwert \\
+         \hline    % chktex 44
+      \end{tabular}
+   \end{center}
+   }%
+   \end{importantbox}
+
+   \noindent\emph{Hinweis:} Bei hermiteschem \(A\) gilt \(Q(\vec x)=\vec x^{*}A\vec x \in \mathbb{R}\).
+
+%=== Rechenregeln =====================================================
+\section{Rechenregeln}
+
+   \begin{itemize}
+
+      \item Vertauscht man \emph{zwei} Zeilen oder Spalten, wird \(\det A\) mit \(-1\) multipliziert (jeder Tausch: Faktor \(-1\))
+      \item Multipliziert man \emph{eine} Zeile oder \emph{eine} Spalte mit einem Skalar \(c\), so wird \(\det A\) mit \(c\) multipliziert
+      \item Addiert man ein Vielfaches einer Zeile (Spalte) zu einer anderen, bleibt \(\det A\) unverändert
+      \item Produktsatz: \(\det(AB)=\det A\,\det B\)
+      \item Transponieren ändert die Determinante nicht: \(\det(A^{\top})=\det A\)
+      \item Ist \(A\) invertierbar (\(\det A\neq 0\)), dann gilt \(\det(A^{-1})=\frac{1}{\det A}\)
+      \item Skalarmultiplikation: \(\det(cA)=c^{n}\det A\) für \(A\in\mathbb{K}^{n\times n}\) und \(c\in\mathbb{K}\)
+      \item Äquivalente Aussagen (für \(A\in\mathbb{K}^{n\times n}\)):
+         \begin{itemize}
+            \item \(\det A \neq 0\)
+            \item Die Spalten von \(A\) sind linear unabhängig
+            \item Die Zeilen von \(A\) sind linear unabhängig
+            \item Sie bilden jeweils eine Basis von \(\mathbb{K}^{n}\)
+            \item \(\operatorname{rank}(A)=n\)
+            \item \(A\) ist regulär (invertierbar) und \(A^{-1}\) existiert
+            \item Für jedes \(\vec b\in\mathbb{K}^{n}\) besitzt \(A\vec x=\vec b\) genau eine Lösung \(\vec x=A^{-1}\vec b\)
+         \end{itemize}
+      \item Enthält \(A\) eine Nullzeile oder Nullspalte, so ist \(\det A=0\)
+      \item Für obere/untere Dreiecksmatrizen gilt: \(\det A=\prod_{i=1}^{n} a_{ii}\)
+
+      % Matrix Arten
+      \item Matrizen
+         \begin{itemize}
+            \item \textbf{symmetrisch (reell):} \(A=A^{\top}\) (d.h.\ \(a_{ij}=a_{ji}\))
+            \item \textbf{schiefsymmetrisch (reell):} \(A=-A^{\top}\) (d.h.\ \(a_{ij}=-a_{ji}\))
+            \item \textbf{orthogonal (reell):} \(A^{-1}=A^{\top}\); die Spalten \(\vec a_{j}\) sind orthonormal
+         \end{itemize}
+
+   \end{itemize}
+
+\newpage
+% Skalarprodukt =======================================================
+\section{Skalarprodukt}
+
+   \begin{paracol}{2}
+
+      {\centering \large\textbf{Reelles Skalarprodukt}\par\vspace{0.5ex}}
+      \begin{importantbox}
+      \[
+      \langle x,y\rangle = \sum_{i=1}^{n} x_i\,y_i
+      \]
+      \end{importantbox}
+      \switchcolumn{}
+      {\centering \large\textbf{Komplexes Skalarprodukt}\par\vspace{0.5ex}}
+      \begin{importantbox}
+      \[
+      \langle x,y\rangle = \sum_{i=1}^{n} x_i\,\overline{y_i}
+      \]
+      \end{importantbox}
+   \end{paracol}
+
+   \begin{center}
+      \textbf{Zugehörige Aussagen}\\[0.4em]
+      \begin{tabular}{p{6.8cm} | p{6.8cm}}  % chktex 44
+         \multicolumn{1}{c|}{\textbf{Reell}} & \multicolumn{1}{c}{\textbf{Komplex}}\\ 
+         \hline    % chktex 44
+         \(\langle \vec x,\vec y\rangle>0\): spitzer Winkel (0°–90°) &
+         \(\langle \vec x,\vec y\rangle=0\): orthogonal \\[0.25em]
+         \(\langle \vec x,\vec y\rangle<0\): stumpfer Winkel (90°–180°) &
+         \(\langle \vec x,\vec y\rangle=\overline{\langle \vec y,\vec x\rangle}\) (Hermitizität) \\[0.25em]
+         \(\langle \vec x,\vec y\rangle=0\): orthogonal &
+         \(|\langle \vec x,\vec y\rangle|\le \|\vec x\|\,\|\vec y\|\) (Cauchy–Schwarz) \\[0.25em]
+         \(\|\vec x\|=\sqrt{\langle \vec x,\vec x\rangle}\) &
+         \(\|\vec x\|=\sqrt{\langle \vec x,\vec x\rangle}\) \\[0.25em]
+         \(\displaystyle \cos\theta=\frac{\langle \vec x,\vec y\rangle}{\|\vec x\|\,\|\vec y\|}\) &
+         \(\displaystyle \cos\theta=\frac{\operatorname{Re}\langle \vec x,\vec y\rangle}{\|\vec x\|\,\|\vec y\|}\) \\
+      \end{tabular}
+   \end{center}
+
+% Kapitel 2 ===========================================================
+\chapter{Folgen und Reihen von Funktionen}
+
+%=== Konvergenz =======================================================
+\section{Konvergenz}
+
+   Gegeben sei eine Funktionenfolge \((f_n)_{n\in\mathbb{N}}\) mit \(f_n:D\to\mathbb{R}\) und eine Funktion \(f:D\to\mathbb{R}\).
+
+   \subsection*{Punktweise Konvergenz}
+
+      \((f_n)\) konvergiert punktweise gegen \(f\), wenn für jedes feste \(x\in D\) die Zahlenfolge \((f_n(x))\) gegen \(f(x)\) konvergiert.
+
+      \begin{itemize}
+         \item Quantorenform:
+         \begin{importantbox}
+            \[
+               \forall x\in D\,\forall \varepsilon>0\,\exists n_0=n_0(\varepsilon,x)\,\forall n\ge n_0:
+               \ |f_n(x)-f(x)|<\varepsilon
+            \]
+         \end{importantbox}
+      \end{itemize}
+
+   \subsection*{Gleichmäßige Konvergenz}
+
+      \((f_n)\) konvergiert gleichmäßig gegen \(f\), wenn derselbe Startindex \(n_0\) für alle \(x\in D\) funktioniert.
+
+      \begin{itemize}
+         \item Quantorenform:
+            \begin{importantbox}
+               \[
+                  \forall \varepsilon>0\,\exists n_0=n_0(\varepsilon)\,\forall x\in D\,\forall n\ge n_0:
+                  \ |f_n(x)-f(x)|<\varepsilon
+               \]
+            \end{importantbox}
+         \item Äquivalenz in der Supremumsnorm:
+            \begin{importantbox}
+               \[
+               \sup_{x\in D}|f_n(x)-f(x)|\xrightarrow[n\to\infty]{}0
+               \]
+               \end{importantbox}
+      \end{itemize}
+
+      \begin{itemize}
+         \item Gleichmäßig \(\Rightarrow\) punktweise (Umkehrung i.\,A. falsch)
+         \item Bei punktweiser Konvergenz darf \(n_0\) von \(x\) abhängen
+         \item Bei gleichmäßiger Konvergenz gibt es einen gemeinsamen \(n_0\) für alle \(x\in D\)
+      \end{itemize}
+
+   \subsection*{Cauchy\mbox{-}Kriterium}
+
+      Gegeben sei \((f_n)_{n\in\mathbb{N}}\) mit \(f_n:D\to\mathbb{R}\).
+      \((f_n)\) ist genau dann auf \(D\) gleichmäßig konvergent, wenn
+      \begin{importantbox}
+      \[
+         \forall \varepsilon>0\,\exists n_0\in\mathbb{N}\,\forall n,m\ge n_0\,\forall x\in D:
+         \ |f_n(x)-f_m(x)|<\varepsilon
+      \]
+      \end{importantbox}
+      \emph{Hinweis:} Die Äquivalenz gilt, weil \(\mathbb{R}\) vollständig ist.
+
+   \subsection*{Folgen\mbox{-}Regeln bei gleichmäßiger Konvergenz}
+
+      \subsubsection*{1) Stetigkeit bleibt erhalten}  % chktex 9, chktex 10
+         Sind alle \(f_n\) auf \(I=[a,b]\) stetig und \(f_n\to f\) gleichmäßig auf \(I\),
+         so ist auch \(f\) auf \(I\) stetig.\\
+         \textbf{Merksatz:} Gleichmäßiger Grenzwert stetiger Funktionen ist stetig.
+
+      \subsubsection*{2) Integrierbarkeit \& Grenzwert unter dem Integral} % chktex 9, chktex 10
+         Sind alle \(f_n\) auf \(I=[a,b]\) Riemann-integrierbar und \(f_n\to f\) gleichmäßig auf \(I\),
+         dann ist auch \(f\) Riemann-integrierbar und
+         \begin{importantbox}
+            \[
+               \lim_{n\to\infty}\int_a^b f_n(x)\,\mathrm{d}x\;=\;\int_a^b f(x)\,\mathrm{d}x
+            \]
+         \end{importantbox}
+         \textbf{Merksatz:} Bei gleichmäßiger Konvergenz darf der Grenzwert ins Integral gezogen werden.
+
+      \subsubsection*{3) Differenzierbarkeit \& Grenzwert der Ableitungen} % chktex 9, chktex 10
+         Angenommen:
+         \begin{itemize}
+            \item alle \(f_n\) sind auf \(I=[a,b]\) \textbf{stetig differenzierbar} (z.\,B. \(f_n\in C^1(I)\))
+            \item es gibt \(x_0\in I\) mit \(\,f_n(x_0)\) \textbf{konvergent}
+            \item die Ableitungen \(f_n'\) konvergieren auf \(I\) \textbf{gleichmäßig} gegen eine Funktion \(g\)
+         \end{itemize}
+         Dann gilt:
+         \begin{itemize}
+            \item \(f_n\to f\) \textbf{gleichmäßig} auf \(I\)
+            \item \(f\) ist \textbf{differenzierbar} mit \(f'=g\)
+            \item und
+               \begin{importantbox}
+                  \[
+                     \forall x\in I:\quad \big(\lim_{n\to\infty} f_n(x)\big)' \;=\; \lim_{n\to\infty} f_n'(x) \;=\; f'(x)
+                  \]
+               \end{importantbox}
+         \end{itemize}
+         \textbf{Merksatz:} Wenn \(f_n'\to g\) gleichmäßig und \(f_n(x_0)\) konvergiert,
+         dann konvergiert \(f_n\) gleichmäßig zu einer differenzierbaren \(f\) mit \(f'=g\).
+
+
+%=== Potenzreihen =====================================================
+\section{Potenzreihen}
+
+   Eine Potenzreihe um \(x_0\) mit Koeffizienten \((a_n)\) ist
+   \begin{importantbox}
+      \[
+         \sum_{n=0}^{\infty} a_n (x-x_0)^n
+         \;=\;
+      a_0 \;+\; a_1(x-x_0) \;+\; a_2(x-x_0)^2 \;+\; a_3(x-x_0)^3 \;+\; \cdots
+   \]
+   \end{importantbox}
+
+   \subsection*{Konvergenzbereich}
+
+      \begin{itemize}
+         \item Es gibt einen Konvergenzradius \(r\in[0,\infty]\), sodass die Reihe für alle \(x\) mit \(|x-x_0|<r\) (sogar absolut) konvergiert und für \(|x-x_0|>r\) divergiert
+         \item Reeller Fall: Das Intervall \((x_0-r,\,x_0+r)\) ist symmetrisch um \(x_0\)
+         \item Komplexer Fall: Der Konvergenzbereich ist der offene Kreis \(B_r(x_0)=\{\,z\in\mathbb{C}:\ |z-x_0|<r\,\}\)
+         \item Reeller Rand: Randpunkte \(x=x_0\pm r\) müssen separat geprüft werden, da sie konvergieren oder divergieren können
+         \item Komplexer Rand: Punkte mit \(|z-x_0|=r\) (Randkreis) müssen separat geprüft werden
+         \item Sonderfälle: \(r=0\) \(\Rightarrow\) Konvergenz nur bei \(x=x_0\);\quad \(r=\infty\) \(\Rightarrow\) Konvergenz für alle \(x\in\mathbb{R}\) (bzw.\ \(\mathbb{C}\))
+      \end{itemize}
+
+   \subsection*{Cauchy-Hadamard}
+
+   Mit den Konventionen \(\frac{1}{0}=\infty\) und \(\frac{1}{\infty}=0\) gilt:
+   \begin{importantbox}
+      \[
+         \frac{1}{r}=\limsup_{n\to\infty}\sqrt[n]{|a_n|}
+      \]
+   \end{importantbox}
+
+   Falls der Grenzwert existiert,
+   \begin{importantbox}
+      \[
+         L=\lim_{n\to\infty}\frac{|a_{n+1}|}{|a_n|}
+      \]
+   \end{importantbox}
+   und \(|a_n|>0\) für alle hinreichend großen \(n\), dann
+   \begin{importantbox}
+      \[
+         r=\frac{1}{L}
+         \quad\text{(mit \(\frac{1}{0}=\infty\), \(\frac{1}{\infty}=0\))}
+      \]
+   \end{importantbox}
+
+%=== Taylorreihen =====================================================
+\section{Taylorreihen}
+
+   \subsection*{Taylorpolynom \(n\)-ter Ordnung um \(a\)}
+      
+      Für eine \((n+1)\)-mal stetig differenzierbare Funktion \(f\) auf einem Intervall \(I\) mit \(a\in I\) gilt:
+      \begin{importantbox}
+         \[
+            T_n(x)
+            \;=\;
+            \sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}\,(x-a)^k
+            \;=\;
+            f(a)+f'(a)(x-a)+\frac{f''(a)}{2!}(x-a)^2+\cdots+\frac{f^{(n)}(a)}{n!}(x-a)^n
+         \]
+      \end{importantbox}
+
+      \textbf{Spezialfälle:}
+      \begin{importantbox}
+         \[
+            \begin{aligned}
+               T_0(x) &= f(a)\\
+               T_1(x) &= f(a) + f'(a)(x-a)\\
+               T_2(x) &= f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2
+            \end{aligned}
+         \]
+      \end{importantbox}
+
+      \textbf{Eigenschaften (am Entwicklungszentrum \(a\)):}
+      \begin{itemize}
+         \item \(T_n^{(k)}(a)=f^{(k)}(a)\) für alle \(k=0,1,\dots,n\)
+         \item \(f(x)=T_n(x)+R_n(x)\) mit Lagrange-Rest:
+         \begin{importantbox}
+            \[
+               \exists\,\xi=\xi(x)\text{ zwischen }a\text{ und }x:\quad
+               R_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\,(x-a)^{n+1}
+            \]
+         \end{importantbox}
+      \end{itemize}
+
+   \subsection*{Taylorreihe (unendliche Reihe)}
+      \begin{importantbox}
+         \[
+            \sum_{k=0}^{\infty}\frac{f^{(k)}(a)}{k!}\,(x-a)^k
+            \;=\;
+            f(a)+f'(a)(x-a)+\frac{f''(a)}{2!}(x-a)^2+\cdots
+         \]
+      \end{importantbox}
+
+\newpage
+
+%=== Fourierreihen ====================================================
+\section{Fourierreihen}
+
+   Gegeben sei eine \(p\)-periodische Funktion \(f:\mathbb{R}\to\mathbb{R}\) (oder \(\mathbb{C}\)) mit
+   \begin{importantbox}
+      \[
+         f(x+p)=f(x)\quad\text{für alle }x\in\mathbb{R}
+      \]
+   \end{importantbox}
+   \emph{Notation:} Grundfrequenz \(\omega_0=\tfrac{2\pi}{p}\)
+
+   \subsection*{Fourierkoeffizienten (reelle Darstellung)}
+      Berechnung über \emph{eine} Periode, z.\,B. auf \([-\tfrac p2,\tfrac p2]\):
+      \begin{importantbox}
+         \[
+            \begin{aligned}
+               a_k &= \frac{2}{p}\int_{-\frac{p}{2}}^{\frac{p}{2}} f(x)\,\cos(k\omega_0 x)\,\mathrm{d}x, \quad &&k\in\mathbb{N}_0\\[0.3em]
+               b_k &= \frac{2}{p}\int_{-\frac{p}{2}}^{\frac{p}{2}} f(x)\,\sin(k\omega_0 x)\,\mathrm{d}x, \quad &&k\in\mathbb{N}
+            \end{aligned}
+         \]
+      \end{importantbox}
+      Spezialfall \(k=0\): \(\displaystyle a_0=\frac{2}{p}\int_{-\frac{p}{2}}^{\frac{p}{2}} f(x)\,\mathrm{d}x\)
+
+   \subsection*{Fourierpolynom und Fourierreihe}
+      \begin{importantbox}
+         \[
+            S_n(x)=\frac{a_0}{2}+\sum_{k=1}^{n}\Big[a_k\cos(k\omega_0 x)+b_k\sin(k\omega_0 x)\Big]
+         \]
+      \end{importantbox}
+
+      \begin{importantbox}
+         \[
+            S(x)=\frac{a_0}{2}+\sum_{k=1}^{\infty}\Big[a_k\cos(k\omega_0 x)+b_k\sin(k\omega_0 x)\Big]
+         \]
+      \end{importantbox}
+
+   \subsection*{Symmetrie-Eigenschaften (auf \([-\tfrac p2,\tfrac p2]\))}
+      \subsubsection*{Gerade Funktionen}
+         Ist \(f\) gerade (\(f(-x)=f(x)\)), dann nur Kosinus:
+         \begin{importantbox}
+            \[
+               b_k=0\ \ (k\ge 1),\qquad
+               a_k=\frac{4}{p}\int_{0}^{\frac{p}{2}} f(x)\,\cos(k\omega_0 x)\,\mathrm{d}x,\qquad
+               a_0=\frac{4}{p}\int_{0}^{\frac{p}{2}} f(x)\,\mathrm{d}x.
+            \]
+         \end{importantbox}
+
+      \subsubsection*{Ungerade Funktionen}
+         Ist \(f\) ungerade (\(f(-x)=-f(x)\)), dann nur Sinus:
+         \begin{importantbox}
+            \[
+               a_k=0\ \ (k\ge 0),\qquad
+               b_k=\frac{4}{p}\int_{0}^{\frac{p}{2}} f(x)\,\sin(k\omega_0 x)\,\mathrm{d}x.
+            \]
+         \end{importantbox}
+
+      \subsection*{Komplexe Darstellung}
+         \begin{importantbox}
+            \[
+               S(x)=\sum_{k=-\infty}^{\infty} c_k\,e^{ik\omega_0 x},
+               \qquad
+               c_k=\frac{1}{p}\int_{-\frac{p}{2}}^{\frac{p}{2}} f(x)\,e^{-ik\omega_0 x}\,\mathrm{d}x\ \ (k\in\mathbb{Z})
+            \]
+         \end{importantbox}
+         \textbf{Beziehung zu \(a_k,b_k\) (für \(k\ge 1\)):}
+         \[
+            c_0=\frac{a_0}{2},\qquad
+            c_k=\frac{a_k-i b_k}{2},\qquad
+            c_{-k}=\frac{a_k+i b_k}{2}
+         \]
+
+   \subsection*{Tipps zur Berechnung}
+      \begin{enumerate}
+         \item \textbf{Funktion skizzieren:} Periodizität, Sprünge, Symmetrien, Stücke, Schlüsselwerte
+         \item \textbf{Symmetrie prüfen:} gerade \(\Rightarrow b_k=0\); ungerade \(\Rightarrow a_k=0\)
+         \item \textbf{Intervall wählen:} Wenn möglich \(\big[-\tfrac p2,\tfrac p2\big]\) (nutzt Symmetrien optimal)
+         \item \textbf{Koeffizienten \(a_k\), \(b_k\) berechnen:} Vereinfachungen aus (2) nutzen
+         \item \textbf{Reihe aufstellen:} Nicht vergessen: \(a_0\) erscheint als \(\tfrac{a_0}{2}\)
+      \end{enumerate}
+
+
+% Kapitel 3 ===========================================================
+\chapter{Differentialrechnung für Funktionen mehrerer Veränderlicher}
+
+%=== Grenzwert Stetigkeit =============================================
+\section{Grenzwert und Stetigkeit von \texorpdfstring{\(z=f(x,y)\)}{z=f(x,y)} in \texorpdfstring{\((x_0,y_0)\)}{(x0,y0)}}
+
+   Gegeben sei \(f:D\subseteq\mathbb{R}^2\to\mathbb{R}\) und \((x_0,y_0)\in D\).
+
+   \subsection*{Grenzwert}
+
+      \begin{importantbox}
+      \[
+         \lim_{(x,y)\to(x_0,y_0)} f(x,y)=a
+      \]
+      \[
+         \forall\,\varepsilon>0\,\exists\,\delta>0:\ 
+         0<\|(x,y)-(x_0,y_0)\|<\delta\ \Rightarrow\ |f(x,y)-a|<\varepsilon
+      \]
+      \end{importantbox}
+
+      In Worten: Sind \((x,y)\) hinreichend nahe bei \((x_0,y_0)\), jedoch \(\neq (x_0,y_0)\), dann liegen die Funktionswerte beliebig nahe bei \(a\) – unabhängig von der Richtung des Herangehens.
+
+      \begin{itemize}
+      \item Äquivalent: Für jede Folge \((x_n,y_n)\subset D\setminus\{(x_0,y_0)\}\) mit \((x_n,y_n)\to(x_0,y_0)\) gilt \(f(x_n,y_n)\to a\).
+      \end{itemize}
+
+      \subsection*{Stetigkeit}
+
+      \(f\) ist in \((x_0,y_0)\) stetig genau dann, wenn der Grenzwert existiert und
+      \begin{importantbox}
+      \[
+         \lim_{(x,y)\to(x_0,y_0)} f(x,y)=f(x_0,y_0)
+      \]
+      \[
+         \text{Äquivalent:}\quad
+         \forall\,\varepsilon>0\,\exists\,\delta>0:\ 
+         \|(x,y)-(x_0,y_0)\|<\delta\ \Rightarrow\ |f(x,y)-f(x_0,y_0)|<\varepsilon
+      \]
+      \end{importantbox}
+
+      \emph{Bemerkung:} \(\|\cdot\|\) ist die euklidische Norm. Ist \(f\) in \((x_0,y_0)\) stetig und \(g:\mathbb{R}\to\mathbb{R}\) stetig, so ist auch \(g\circ f\) in \((x_0,y_0)\) stetig.
+
+
+%=== Partielle Ableitungen und Gradient ================================
+\section{Partielle Ableitungen und Gradient}
+
+   Gegeben sei \(f:D\subseteq\mathbb{R}^2\to\mathbb{R}\).
+   Die folgenden Grenzwerte sind an Punkten \((x,y)\in D\) zu verstehen, für die
+   \((x+h,y)\) bzw.\ \((x,y+h)\) bei hinreichend kleinem \(h\) in \(D\) liegen.
+
+   \subsection*{Definition}
+      \begin{importantbox}
+      \[
+      \begin{aligned}
+         f_x(x,y)=\frac{\partial f}{\partial x}(x,y)
+            &= \lim_{h\to 0}\frac{f(x+h,y)-f(x,y)}{h}\\
+         f_y(x,y)=\frac{\partial f}{\partial y}(x,y)
+            &= \lim_{h\to 0}\frac{f(x,y+h)-f(x,y)}{h}
+      \end{aligned}
+      \]
+      \end{importantbox}
+
+      \(\,f_x\) und \(f_y\) heißen die \textbf{partiellen Ableitungen} von \(f\).
+
+      \textbf{Gradient:}
+      \begin{importantbox}
+      \[
+         \nabla f(x,y)=\big(f_x(x,y),\,f_y(x,y)\big)
+         = \begin{pmatrix} f_x(x,y)\\[0.2em] f_y(x,y) \end{pmatrix}
+      \]
+      \end{importantbox}
+
+   \subsection*{Vertauschbarkeit gemischter Ableitungen}
+      Sind in einer Umgebung von \((x_0,y_0)\) die zweiten partiellen Ableitungen stetig
+      (z.\,B.\ \(f\in C^2\) in einer Umgebung), dann gilt
+      \begin{importantbox}
+      \[
+         f_{xy}(x_0,y_0)=f_{yx}(x_0,y_0)
+      \]
+      \end{importantbox}
+      Stetige zweite Ableitungen \(\Rightarrow\) gemischte Ableitungen vertauschbar; ohne diese
+      Stetigkeit können sie sich unterscheiden.
+
+
+%=== Differenzierbarkeit ==============================================
+\section{Differenzierbarkeit}
+
+   \subsection*{Definition der Differenzierbarkeit}
+
+      Es sei \(D\subset \mathbb{R}^2\) offen und \((x_0,y_0)\in D\).
+      Die Funktion \(f:D\to\mathbb{R}\) heißt in \((x_0,y_0)\) differenzierbar, wenn \(f\) in \((x_0,y_0)\) partiell differenzierbar ist und gilt
+      \begin{importantbox}
+      \[
+         \lim_{(x,y)\to(x_0,y_0)}
+         \frac{\,f(x,y)-\big[f(x_0,y_0)+f_x(x_0,y_0)\,(x-x_0)+f_y(x_0,y_0)\,(y-y_0)\big]\,}
+               {\,\|(x-x_0,\,y-y_0)\|\,}=0
+      \]
+      \end{importantbox}
+
+   \subsection*{Wichtige Eigenschaften}
+
+      Ist \(f\) in \((x_0,y_0)\) differenzierbar, dann gilt
+      \begin{importantbox}
+      \[
+         f'(x_0,y_0)=J_f(x_0,y_0)=\begin{pmatrix} f_x(x_0,y_0) & f_y(x_0,y_0) \end{pmatrix},
+         \qquad
+         \nabla f(x_0,y_0)=\begin{pmatrix} f_x(x_0,y_0)\\[0.2em] f_y(x_0,y_0) \end{pmatrix},
+      \]
+      \[
+         \text{und}\quad
+         f(x_0+\Delta x,\,y_0+\Delta y)
+         = f(x_0,y_0) + \nabla f(x_0,y_0)\!\cdot\!
+            \begin{pmatrix}\Delta x\\ \Delta y\end{pmatrix}
+            + o\!\left(\sqrt{(\Delta x)^2+(\Delta y)^2}\right)
+      \]
+      \end{importantbox}
+
+      \textbf{Folgerungen:}
+      \begin{enumerate}[label=(\arabic*)]
+         \item \(f\) in \((x_0,y_0)\) differenzierbar \(\Rightarrow\) \(f\) ist dort partiell differenzierbar
+         \item \(f\) in \((x_0,y_0)\) differenzierbar \(\Rightarrow\) \(f\) ist dort stetig
+      \end{enumerate}
+
+      \textbf{Hinreichende Bedingung (praktisch):}
+      Ist \(f\) in einer Umgebung von \((x_0,y_0)\) partiell differenzierbar und sind
+      \(f_x, f_y\) in \((x_0,y_0)\) \emph{stetig} (z.\,B. \(f\in C^1\) in einer Umgebung),
+      so ist \(f\) in \((x_0,y_0)\) differenzierbar.
+
+\newpage       
+
+   \subsection*{Untersuchung auf Differenzierbarkeit}
+
+      Vorgehen für \(f:D\to\mathbb{R}\) an \((x_0,y_0)\in D\):
+
+      \begin{center}
+      \begin{tikzpicture}[
+      every node/.style={font=\scriptsize, transform shape},
+      node distance=6mm and 20mm,
+      box/.style={rectangle, rounded corners=3pt, draw=black!55, fill=gray!3,
+                  align=center, inner sep=3.5pt, text width=34mm},
+      decision/.style={diamond, aspect=1.9, draw=blue!60, fill=blue!8,
+                        align=center, inner sep=2pt, text width=26mm},
+      bad/.style={rectangle, rounded corners=3pt, draw=red!60, fill=red!8,
+                  align=center, inner sep=3.5pt, text width=34mm},
+      good/.style={rectangle, rounded corners=3pt, draw=green!60, fill=green!8,
+                     align=center, inner sep=3.5pt, text width=34mm},
+      arrow/.style={-Stealth, semithick},
+      % Label-Style: weißer Hintergrund + kleiner Abstand zur Kante
+      lab/.style={fill=white, inner sep=0.8pt, outer sep=0.4pt, font=\scriptsize}
+      ]
+
+      % Knoten
+      \node[box] (start) {Stetigkeit in \((x_0,y_0)\) prüfen};
+
+      \node[decision, below=of start] (stetig) {Stetig?};
+      \node[bad, left=15mm of stetig] (n1) {\textbf{Nicht} differenzierbar};
+
+      \node[decision, below=of stetig] (partiell) {Partielle Ableitungen vorhanden?};
+      \node[bad, left=15mm of partiell] (n2) {\textbf{Nicht} differenzierbar};
+
+      \node[decision, below=of partiell] (c1) {\(f_x,\,f_y\) stetig (Umgebung)?};
+      \node[good, right=15mm of c1] (y1) {\textbf{Differenzierbar} (hinr.)};
+
+      \node[decision, below=of c1] (limit0) {Lin.-Grenzwert \(=0\)?};
+      \node[bad, left=15mm of limit0] (n3) {\textbf{Nicht} differenzierbar};
+      \node[good, right=15mm of limit0] (y2) {\textbf{Differenzierbar}};
+
+      % Kanten
+      \draw[arrow] (start) -- (stetig);
+
+      \draw[arrow] (stetig) -- node[lab, above=1pt, pos=0.70, xshift=5pt] {Ja} (partiell);
+      \draw[arrow] (stetig) -- node[lab, above=1.2pt, pos=0.55, xshift=2pt] {Nein} (n1);
+
+      \draw[arrow] (partiell) -- node[lab, above=1pt, pos=0.70, xshift=5pt] {Ja} (c1);
+      \draw[arrow] (partiell) -- node[lab, above=1.2pt, pos=0.55, xshift=2pt] {Nein} (n2);
+
+      \draw[arrow] (c1) -- node[lab, above=1pt, pos=0.55] {Ja} (y1);
+      \draw[arrow] (c1) -- node[lab, above=1pt, pos=0.70, xshift=-10pt] {Nein} (limit0);
+
+      \draw[arrow] (limit0) -- node[lab, above=1pt, pos=0.55] {Ja} (y2);
+      \draw[arrow] (limit0) -- node[lab, above=1.2pt, pos=0.55, xshift=1pt] {Nein} (n3);
+
+      \end{tikzpicture}
+      \end{center}
+
+% Richtungsableitung ==================================================
+\section{Richtungsableitung}
+
+   Sei \(f:D\subseteq\mathbb{R}^n\to\mathbb{R}\) und \(\vec{x_0}\in\mathrm{int}(D)\). 
+   Sei \(\vec{a}\in\mathbb{R}^n\setminus\{\vec{o}\}\) und 
+   \(\vec{u}=\dfrac{\vec{a}}{\|\vec{a}\|}\) der Einheitsvektor in Richtung \(\vec{a}\).
+
+         \begin{importantbox}
+            \[
+               D_{\vec{u}} f(\vec{x_0}) = \lim_{t \to 0} \frac{f(\vec{x_0} + t \cdot \vec{u}) - f(\vec{x_0})}{t} = \lim_{t \to 0} \frac{f(\vec{x_0} + t \cdot \vec{a}) - f(\vec{x_0})}{t \cdot \|\vec{a}\|}
+            \]
+         \end{importantbox}
+
+%=== Taylorentwicklung in zwei Variablen (um (x0,y0)) =================
+\begingroup
+\makeatletter
+\@ifundefined{importantbox}{%
+  \newenvironment{importantbox}%
+    {\begin{center}\setlength{\fboxsep}{6pt}\fbox\bgroup\begin{minipage}{0.96\linewidth}}%
+    {\end{minipage}\egroup\end{center}}%
+}{}%
+\@ifundefined{texorpdfstring}{\def\texorpdfstring#1#2{#1}}{}
+\makeatother
+
+   \section[Taylorentwicklung in zwei Variablen um (x0,y0) mit Restglied]%
+   {Taylorentwicklung von \texorpdfstring{\(f(x,y)\)}{f(x,y)}%
+   um \texorpdfstring{\((x_0,y_0)\)}{(x0,y0)} mit Restglied}
+
+      Sei \(f:U\subseteq\mathbb{R}^2\to\mathbb{R}\) in einer Umgebung \(U\) von \((x_0,y_0)\) bis zur Ordnung \(n+1\) stetig partiell differenzierbar.
+      Setze
+      \[
+         \mathrm{d}x := x - x_0,\qquad \mathrm{d}y := y - y_0,\qquad \vec{h} := \begin{pmatrix} \mathrm{d}x \\ \mathrm{d}y \end{pmatrix}.
+      \]
+
+   \subsubsection*{Taylorreihe und Taylorpolynom n-ten Grades}
+
+      \begin{importantbox}
+         \[
+            T(x,y) \;=\; \sum_{k=0}^{\infty} \frac{1}{k!}\,
+            \Bigl(\mathrm{d}x\,\frac{\partial}{\partial x} + \mathrm{d}y\,\frac{\partial}{\partial y}\Bigr)^{k} f \,\Big|_{(x_0,y_0)}
+         \]
+      \end{importantbox}
+
+      \begin{importantbox}
+         \[
+            T_n(x,y) \;=\; \sum_{k=0}^{n} \frac{1}{k!}\,
+            \Bigl(\mathrm{d}x\,\frac{\partial}{\partial x} + \mathrm{d}y\,\frac{\partial}{\partial y}\Bigr)^{k} f \,\Big|_{(x_0,y_0)}
+         \]
+      \end{importantbox}
+
+   \subsubsection*{Restglied (Lagrange-Form)}
+   Es gibt ein \(\theta\in(0,1)\) mit \((\xi_x,\xi_y)=(x_0+\theta\,\mathrm{d}x,\;y_0+\theta\,\mathrm{d}y)\) derart, dass
+   \begin{importantbox}
+   \[
+   R_n(x,y) \;=\; \frac{1}{(n+1)!}\,
+   \Bigl(\mathrm{d}x\,\frac{\partial}{\partial x} + \mathrm{d}y\,\frac{\partial}{\partial y}\Bigr)^{n+1} f(\xi_x,\xi_y),
+   \qquad\text{und}\quad f(x,y)=T_n(x,y)+R_n(x,y)
+   \]
+   \end{importantbox}
+
+   \begin{itemize}
+   \item \(f(x_0,y_0)\) ist der Funktionswert an der Entwicklungsstelle
+   \item \(\mathrm{d}x=x-x_0,\; \mathrm{d}y=y-y_0\) sind die Verschiebungen in \(x\)- bzw.\ \(y\)-Richtung
+   \end{itemize}
+
+   \textbf{Speziell (explizit):}
+   \begin{importantbox}
+   \begin{align*}
+   n=0:\quad & T_0(x,y) \;=\; f(x_0,y_0)\\[2pt]
+   n=1:\quad & T_1(x,y) \;=\; f(x_0,y_0)\;+\; f_x(x_0,y_0)\,\mathrm{d}x \;+\; f_y(x_0,y_0)\,\mathrm{d}y\\[2pt]
+   n=2:\quad & T_2(x,y) \;=\; T_1(x,y)\;+\;\frac{1}{2}\,\Bigl[\, f_{xx}(x_0,y_0)\,\mathrm{d}x^{2}
+                  \;+\; 2\,f_{xy}(x_0,y_0)\,\mathrm{d}x\,\mathrm{d}y
+                  \;+\; f_{yy}(x_0,y_0)\,\mathrm{d}y^{2}\Bigr]
+   \end{align*}
+   \end{importantbox}
+
+\endgroup
+
+% Extrema =============================================================
+\section{Relative Extrema von \texorpdfstring{\(f\colon\mathbb{R}^n\to\mathbb{R}\)}{f: Rⁿ → R}}
+
+   \subsection*{Notwendige Bedingung (Innenpunkte)}
+      Hat \(f\) bei \(x_0\) ein relatives Maximum oder Minimum und ist dort differenzierbar, dann gilt
+      \begin{importantbox}
+         \[
+            \nabla f(x_0) = 0,
+         \]
+         \end{importantbox}
+      d.\,h.\ alle partiellen Ableitungen 1.\,Ordnung verschwinden.
+
+      Angenommen, \(f\) besitzt in einer Umgebung von \(x_0\) stetige zweite partielle Ableitungen (lokal \(f \in C^2\)).
+
+      Die \emph{Hesse-Matrix} ist definiert als
+      \begin{importantbox}
+         \[
+            H = \left( \frac{\partial^2 f}{\partial x_i \partial x_j} \right) = 
+               \begin{pmatrix} 
+                  f_{x_1 x_1} & f_{x_1 x_2} & \cdots & f_{x_1 x_n}\\ 
+                  f_{x_2 x_1} & f_{x_2 x_2} & \cdots & f_{x_2 x_n}\\ 
+                  \vdots & \vdots & \ddots & \vdots\\ 
+                  f_{x_n x_1} & f_{x_n x_2} & \cdots & f_{x_n x_n}
+               \end{pmatrix}
+         \]
+      \end{importantbox}
+
+   \subsection*{Algorithmus zur Extremwertbestimmung}
+      \begin{enumerate}
+         \item \textbf{Stationäre Punkte} bestimmen: \(\nabla f(x) = 0\)
+         \item \textbf{Hesse-Matrix} \(H(x)\) bilden und in jedem stationären Punkt \(x_0\) auswerten
+         \item \textbf{Definitheit} der Hesse-Matrix prüfen
+         \item \textbf{Klassifizieren}: Minimum/Maximum/Sattelpunkt
+      \end{enumerate}
+
+   \subsection*{Klassifikation über die Hesse-Matrix}
+
+      \begin{importantbox}
+         \begin{center}
+         \renewcommand{\arraystretch}{1.8}
+            \begin{tabular}{|>{\centering\arraybackslash}m{3.2cm}|>{\centering\arraybackslash}m{2.8cm}|>{\centering\arraybackslash}m{3.5cm}|>{\centering\arraybackslash}m{4cm}|} % chktex 44
+            \hline   % chktex 44
+            \textbf{Hesse-Matrix} & \textbf{Extremum} & \textbf{Eigenwerte} & \textbf{Hauptminoren} \\
+            \hline   % chktex 44
+            \(H\) \textbf{positiv definit} & 
+            \textbf{Lokales Minimum} & 
+            Alle \(\lambda_i > 0\) & 
+            \(\det(H_1) > 0\)\\
+            & & & \(\det(H_2) > 0\)\\
+            & & & \(\det(H_3) > 0\)\\
+            & & & \(\vdots\) \\
+            & & & \((+,+,+,\ldots)\) \\
+            \hline   % chktex 44
+            \(H\) \textbf{negativ definit} & 
+            \textbf{Lokales Maximum} & 
+            Alle \(\lambda_i < 0\) & 
+            \(\det(H_1) < 0\)\\
+            & & & \(\det(H_2) > 0\)\\
+            & & & \(\det(H_3) < 0\)\\
+            & & & \(\vdots\) \\
+            & & & \((-,+,-,+,\ldots)\) \\
+            \hline   % chktex 44
+            \(H\) \textbf{indefinit} & 
+            \textbf{Sattelpunkt} & 
+            \(\exists i,j\colon \lambda_i > 0\) & 
+            Andere Muster \\
+            & & \(\land \, \lambda_j < 0\) & \\
+            \hline   % chktex 44
+            \(H\) \textbf{semidefinit} & 
+            \textbf{Unbestimmt} & 
+            \(\lambda_i \geq 0\) oder \(\lambda_i \leq 0\) & 
+            Mindestens ein \\
+            & & (mit \(\lambda_j = 0\)) & \(\det(H_k) = 0\) \\
+            \hline   % chktex 44
+            \end{tabular}
+         \end{center}
+      \end{importantbox}
+
+   \subsection*{Charakterisierung positiv definiter Matrizen}
+      Für eine symmetrische Matrix \(A \in \mathbb{R}^{n \times n}\) sind folgende Aussagen äquivalent:
+      \begin{enumerate}
+         \item \(A\) ist positiv definit
+         \item Alle Eigenwerte sind positiv: \(\lambda_1, \lambda_2, \ldots, \lambda_n > 0\)
+         \item Alle führenden Hauptminoren sind positiv:
+         \[
+            \det(A_1) > 0, \quad \det(A_2) > 0, \quad \ldots, \quad \det(A_n) > 0
+         \]
+      \end{enumerate}
+
+      \textbf{Definition der führenden Hauptminoren:}
+         \begin{align*}
+            A_1 &= (a_{11}) &&\Rightarrow \det(A_1) = a_{11}\\
+            A_2 &= \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} &&\Rightarrow \det(A_2) = a_{11}a_{22} - a_{12}a_{21}\\
+            A_3 &= \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{pmatrix} &&\Rightarrow \det(A_3) = \det(A_3)
+         \end{align*}
+
+% Implizites Differenzieren ===========================================
+\section{Implizites Differenzieren}
+
+   Sei \(f:\mathbb{R}^2\to\mathbb{R}\) in einer Umgebung von \((x_0,y_0)\) stetig differenzierbar.
+   Es gilt \(f(x_0,y_0)=0\) und \(\dfrac{\partial f}{\partial y}(x_0,y_0)\neq 0\) sowie für die zweite Ableitung \(f\in C^2\) voraus, so existieren offene Umgebungen \(U\subset\mathbb{R}\) von \(x_0\) und \(V\subset\mathbb{R}\) von \(y_0\) sowie eine eindeutig
+   bestimmte, stetig differenzierbare Funktion \(h:U\to V\) mit
+   \[
+      h(x_0)=y_0,\qquad f\bigl(x,h(x)\bigr)=0\quad\text{für alle }x\in U.
+   \]
+
+      \subsection*{Ableitungen von \(y=h(x)\)}
+
+         \textbf{Erste Ableitung (Kettenregel):} Aus \(f(x,\,y(x))\equiv 0\) folgt
+            \begin{itemize}
+               \item \(f_x + f_y\,y' = 0\)
+            \end{itemize}
+
+            \begin{importantbox}
+               \textbf{Ergebnis:} \(y' = -\,\dfrac{f_x}{f_y}\)
+            \end{importantbox}
+
+         \textbf{Zweite Ableitung:} Differenziere \(f_x + f_y\,y' = 0\) erneut nach \(x\):
+            \[
+               f_{xx} + 2f_{xy}\,y' + f_{yy}\,(y')^2 + f_y\,y'' = 0
+            \]
+
+         \begin{importantbox}
+            \begin{itemize}
+            \item \textbf{Form mit \(y'\):} \(\displaystyle \,y'' = -\dfrac{f_{xx} + 2f_{xy}\,y' + f_{yy}\,(y')^2}{f_y}\,\)
+            \item \textbf{Form ohne \(y'\) (nur \(f\)-Ableitungen):} \(\displaystyle \,y'' = -\dfrac{f_{xx}\,f_y^{2} - 2f_{xy}\,f_x f_y + f_{yy}\,f_x^{2}}{f_y^{3}}\,\)
+            \end{itemize}
+         \end{importantbox}
+
+      \subsection*{Extrema der impliziten Funktion \(y=h(x)\) bei \(x_0\)}
+
+         \textbf{Notwendig:} \(y'(x_0)=0 \;\Rightarrow\; f_x(x_0,y_0)=0\) (da \(f_y\neq 0\)).
+
+         \textbf{Hinreichender Test:} Berechne \(y''(x_0)\):
+         \begin{itemize}
+            \item \(y''(x_0) > 0 \Rightarrow\) lokales \textbf{Minimum}
+            \item \(y''(x_0) < 0 \Rightarrow\) lokales \textbf{Maximum}  
+            \item \(y''(x_0) = 0 \Rightarrow\) unentschieden (höhere Ordnung prüfen)
+         \end{itemize}
+
+         Praktisch, wenn \(y'(x_0)=0\):
+         \[
+            y''(x_0) = -\,\frac{f_{xx}(x_0,y_0)}{f_y(x_0,y_0)}
+         \]
+
+         Also:
+         \begin{itemize}
+            \item \(\frac{f_{xx}}{f_y} < 0 \Rightarrow y''>0 \Rightarrow\) Minimum
+            \item \(\frac{f_{xx}}{f_y}/ > 0 \Rightarrow y''<0 \Rightarrow\) Maximum
+         \end{itemize}
+
+% Integralrechnung ====================================================
+\chapter{Integralrechnung}
+
+   \renewcommand{\arraystretch}{1.8}
+      \begin{longtable}{{|c|c|}}
+      \hline % chktex 44
+      \textbf{Integral} & \textbf{Ergebnis ohne Konstante K} \\
+      \hline   % chktex 44
+      \hline   % chktex 44
+         \(\int x^n \, \mathrm{d}x\) & \(\frac{1}{n+1} x^{n+1}\) \\
+      \hline   % chktex 44
+         \(\int \frac{1}{x} \, \mathrm{d}x\) & \(\ln x\) \\
+      \hline   % chktex 44
+         \(\int \frac{1}{x+a} \, \mathrm{d}x\) & \(\ln(x+a)\) \\
+      \hline   % chktex 44
+         \(\int \frac{1}{\sqrt{x}} \,\mathrm{d}x\) & \(2\sqrt{x}\) \\
+      \hline   % chktex 44
+         \(\int e^{ax} \, \mathrm{d}x\) & \(\frac{1}{a} e^{ax}\) \\
+      \hline   % chktex 44
+         \(\int x e^{ax} \, \mathrm{d}x\) & \(\frac{ax-1}{a^2} e^{ax}\) \\
+      \hline   % chktex 44
+         \(\int x^2 e^{ax} \, \mathrm{d}x\) & \(\frac{e^{ax}}{a^3} (a^2 x^2 - 2ax + 2)\) \\
+      \hline   % chktex 44
+         \(\int e^{ax} \sin(bx) \, \mathrm{d}x\) & \(\frac{e^{ax}}{a^2 + b^2} (a \sin(bx) - b \cos(bx))\) \\
+      \hline   % chktex 44
+         \(\int e^{ax} \cos(bx) \, \mathrm{d}x\) & \(\frac{e^{ax}}{a^2 + b^2} (a \cos(bx) + b \sin(bx))\) \\
+      \hline   % chktex 44
+         \(\int \ln x \, \mathrm{d}x\) & \(x \ln x - x\) \\
+      \hline   % chktex 44
+         \(\int x \ln x \, \mathrm{d}x\) & \(x^2\left(\frac{\ln x}{2} - \frac{1}{4}\right)\) \\
+      \hline   % chktex 44
+         \(\int \sin(ax) \, \mathrm{d}x\) & \(-\frac{1}{a} \cos(ax)\) \\
+      \hline   % chktex 44
+         \(\int \sin^2(ax) \, \mathrm{d}x\) & \(\frac{1}{2}x - \frac{1}{4a} \sin(2ax)\) \\
+      \hline   % chktex 44
+         \(\int x \sin(ax) \, \mathrm{d}x\) & \(\frac{\sin(ax)}{a^2} - \frac{x \cos(ax)}{a}\) \\
+      \hline   % chktex 44
+         \(\int x^2 \sin(ax) \, \mathrm{d}x\) & \(\frac{2x}{a^2} \sin(ax) - \left(\frac{x^2}{a} - \frac{2}{a^3}\right) \cos(ax)\) \\
+      \hline   % chktex 44
+         \(\int \cos(ax) \, \mathrm{d}x\) & \(\frac{1}{a} \sin(ax)\) \\
+      \hline   % chktex 44
+         \(\int \cos^2(ax) \, \mathrm{d}x\) & \(\frac{1}{2}x + \frac{1}{4a} \sin(2ax)\) \\
+      \hline   % chktex 44
+         \(\int x \cos(ax) \, \mathrm{d}x\) & \(\frac{\cos(ax)}{a^2} + \frac{x \sin(ax)}{a}\) \\
+      \hline   % chktex 44
+         \(\int x^2 \cos(ax) \, \mathrm{d}x\) & \(\frac{2x}{a^2} \cos(ax) + \left(\frac{x^2}{a} - \frac{2}{a^3}\right) \sin(ax)\) \\
+      \hline   % chktex 44
+         \(\int \sin(ax) \cos(ax) \, \mathrm{d}x\) & \(\frac{1}{2a} \sin^2(ax)\) \\
+      \hline   % chktex 44
+         \(\int \sin^2(ax) \cos^2(ax) \, \mathrm{d}x\) & \(\frac{x}{8} - \frac{\sin(4ax)}{32a}\) \\
+      \hline   % chktex 44
+   \end{longtable}
+
+% Hauptsatz der Differential- und Integralrechnung ====================
+\section{Hauptsatz der Differential- und Integralrechnung}
+
+   \subsection*{Ableitung der Integralfunktion}
+
+      \textbf{Voraussetzung:} Sei \(f:[a,b] \to \mathbb{R}\) eine stetige Funktion.
+
+      \textbf{Definition der Integralfunktion:}
+      \begin{importantbox}
+      \[
+         F(x) := \int_{a}^{x} f(t) \, dt \quad \text{für alle } x \in [a,b]
+      \]
+      \end{importantbox}
+
+
+      \textbf{Aussage:} Dann ist \(F\) auf \([a,b]\) stetig, auf \((a,b)\) differenzierbar und es gilt:
+      \begin{importantbox}
+      \[
+         F'(x) = f(x) \quad \text{für alle } x \in (a,b)
+      \]
+      \end{importantbox}
+
+      \subsubsection*{Berechnung bestimmter Integrale (Newton-Leibniz)}
+
+         \textbf{Voraussetzung:} Sei \(f:[a,b] \to \mathbb{R}\) stetig und \(F\) eine Stammfunktion von \(f\) auf \([a,b]\), d.h. \(F'(x) = f(x)\) für alle \(x \in (a,b)\).
+
+         \textbf{Aussage:} Dann gilt:
+         \begin{importantbox}
+         \[
+            \int_{a}^{b} f(x) \, \mathrm{d}x = F(b) - F(a) = \left[ F(x) \right]_{a}^{b}
+         \]
+         \end{importantbox}
+
+% Parameterabhängige Integrale ========================================
+\section{Parameterabhängige Integrale}
+
+   \subsection*{Definition}
+   Sei \(x\in[a,b]\) und \(c<d\) fest (von \(x\) unabhängig). Definiere
+   \begin{importantbox}
+   \[
+      F(x) := \int_{c}^{d} f(x,y)\,\mathrm{d}y
+   \]
+   \end{importantbox}
+
+   \subsubsection*{Annahmen}
+      \begin{importantbox}
+         \begin{itemize}
+            \item \(f\) ist stetig auf \([a,b]\times[c,d]\)
+            \item \(f_x=\dfrac{\partial f}{\partial x}\) existiert und ist stetig auf \([a,b]\times[c,d]\)
+         \end{itemize}
+      \end{importantbox}
+
+      \subsubsection*{Folgerung (Differenzieren unter dem Integral)}
+         Dann ist \(F\) auf \([a,b]\) stetig differenzierbar und für \(x\in(a,b)\) gilt
+         \[
+            F'(x) \;=\; \int_{c}^{d} f_x(x,y)\,\mathrm{d}y
+         \]
+
+   \subsubsection*{Variable Grenzen (Leibniz-Regel)}
+      Seien \(c,d:[a,b]\to\mathbb{R}\) differenzierbar. Unter den obigen Voraussetzungen gilt
+      \[
+         \frac{\mathrm{d}}{\mathrm{d}x}\!\left(\int_{c(x)}^{d(x)} f(x,y)\,\mathrm{d}y\right)
+         = \int_{c(x)}^{d(x)} f_x(x,y)\,\mathrm{d}y
+            + f\bigl(x,d(x)\bigr)\,d'(x) - f\bigl(x,c(x)\bigr)\,c'(x)
+      \]
+\newpage
+
+% Integration durch Substitution ======================================
+\section{Integration durch Substitution}
+
+   \subsection*{Grundprinzip} 
+
+      Ersetze einen komplizierten Ausdruck durch eine neue Variable, um das Integral zu vereinfachen.
+
+   \subsection*{Substitutionsregel für unbestimmte Integrale}
+
+      Sei \(g(x)\) differenzierbar mit \(g'(x) \neq 0\). Dann gilt:
+      \begin{importantbox}
+      \[
+         \int f\bigl(g(x)\bigr)\,g'(x)\,\mathrm{d}x \;=\; \int f(u)\,\mathrm{d}u,
+         \qquad u=g(x)
+      \]
+
+      \[
+         \text{Ergebnis: }\quad \int f(u)\,\mathrm{d}u \;=\; F(u)+C \;=\; F\bigl(g(x)\bigr)+C
+      \]
+      \end{importantbox}
+
+      \noindent
+      \textbf{Praktisches Vorgehen:}
+      \begin{enumerate}
+         \item \textbf{Substitution wählen:} \(u = g(x)\)
+         \item \textbf{Differential:} \(du = g'(x)\,\mathrm{d}x\)
+         \item \textbf{Ersetzen:} Alle \(x\)-Terme durch \(u\)-Terme ersetzen
+         \item \textbf{Integrieren:} \(\int f(u) \, du\) lösen
+         \item \textbf{Rücksubstitution:} \(u\) durch \(g(x)\) ersetzen
+      \end{enumerate}
+
+   \subsection*{Substitutionsregel für bestimmte Integrale}
+
+      \textbf{Methode 1: Grenzen transformieren}
+      \begin{importantbox}
+         \[
+            \int_{a}^{b} f\bigl(g(x)\bigr)\,g'(x)\,\mathrm{d}x \;=\;\int_{\,g(a)}^{\,g(b)} f(u)\,\mathrm{d}u 
+         \]
+      \end{importantbox}
+
+      \textbf{Methode 2: Rücksubstitution}
+      \begin{importantbox}
+         \[
+            \int_{a}^{b} f\bigl(g(x)\bigr)\,g'(x)\,\mathrm{d}x
+            \;=\;
+            \bigl[F\bigl(g(x)\bigr)\bigr]_{x=a}^{x=b}
+            \;=\; F\bigl(g(b)\bigr)-F\bigl(g(a)\bigr),
+            \quad \text{wobei } F' = f
+         \]
+      \end{importantbox}
+
+   \subsection*{Tipps}
+
+      \begin{itemize}
+         \item \textbf{Ableitung erkennen:} Suche nach \(f(x)\) und \(f'(x)\) im Integranden
+         \item \textbf{Komplexester Term:} Substituiere den kompliziertesten Ausdruck
+         \item \textbf{Wurzeln und Potenzen:} Bei \(\sqrt{ax+b}\) oder \((ax+b)^n\) substituiere \(u = ax+b\)
+         \item \textbf{Trigonometrische Ausdrücke:} Bei \(\sin(ax+b)\), \(\cos(ax+b)\) substituiere \(u = ax+b\)
+         \item \textbf{Exponentialfunktionen:} Bei \(e^{f(x)}\) substituiere \(u = f(x)\)
+         \item \textbf{Brüche:} Bei \(\frac{f'(x)}{f(x)}\) substituiere \(u = f(x)\)
+      \end{itemize}
+
+% Partielle Integration ================================================
+\section{Partielle Integration} 
+
+   \begin{importantbox}
+      \[
+         \int u\,v'\,\mathrm{d}x \;=\; u\,v \;-\; \int u'\,v\,\mathrm{d}x
+      \] 
+   \end{importantbox}
+
+Äquivalent: \(\displaystyle \int u'\,v\,\mathrm{d}x \;=\; u\,v \;-\; \int u\,v'\,\mathrm{d}x\)
+
+
+% Polarkoordinaten ====================================================        
+\section{Polarkoordinaten}
+
+
+   \begin{center}
+   \begin{tikzpicture}[
+   scale=1.05, transform shape,
+   axis/.style={-{Stealth[length=2.2mm]}, line width=0.7pt, black},
+   rvec/.style={-{Stealth}, line width=1.3pt},
+   angarc/.style={-{Stealth}, line width=1.0pt},
+   proj/.style={densely dashed, gray!70, line width=0.9pt}
+   ]
+   % ---------------- KNOBS ----------------
+   \def\A{5.6}      % Achsen-Halblänge
+   \def\AyTop{5.6} % obere y-Länge
+   \def\AyBot{3.2} % untere y-Länge (kürzer)
+   \def\rlen{4.2}   % Länge des Strahls r
+   \def\ang{45}     % Winkel in Grad
+   \def\ar{1.2}     % Radius des Winkelbogens φ
+   % ---------------------------------------
+
+   % Achsen mit Beschriftung
+   \draw[axis] (-\A,0) -- (\A,0) node[below right] {\(x\)};
+   \draw[axis] (0,-\AyBot) -- (0,\AyTop) node[above left]  {\(y\)};
+
+   % Ursprung und Punkt P(r, φ)
+   \coordinate (O) at (0,0);
+   \coordinate (P) at (\ang:\rlen);
+
+   % Strahl r (Label leicht abgehoben über der Linie)
+   \draw[rvec] (O) -- (P) node[pos=0.55, yshift=6pt] {\(r\)};
+
+   % Winkel φ (mit Pfeil) ab positiver x-Achse
+   \draw[angarc] (\ar,0) arc[start angle=0, end angle=\ang, radius=\ar];
+   \node at ({\ang/2}:\ar+0.22) {\(\varphi\)};
+
+   % Gestrichelte Projektionen + klare Labels
+   \coordinate (Px) at (P |- 0,0);  % (x_P, 0)
+   \coordinate (Py) at (0,0 |- P);  % (0, y_P)
+   \draw[proj] (P) -- (Px) node[below=1pt] {\(y=r\sin\varphi\)};
+   \draw[proj] (P) -- (Py) node[left=1pt]  {\(x=r\cos\varphi\)};
+
+   % Punkt P
+   \fill (P) circle[radius=1.6pt] node[above right=2pt] {\(P(r,\varphi)\)};
+   \end{tikzpicture}
+   \end{center}
+
+
+   \subsection*{Kartesisch \(\leftrightarrow\) Polar}
+      \begin{importantbox}
+      \[
+      \begin{aligned}
+      x &= r\cos\varphi,\\
+      y &= r\sin\varphi,
+      \end{aligned}
+      \qquad
+      r\ge 0,\;\varphi\in[0,2\pi)   % chktex 9 
+      \]
+      \end{importantbox}
+      Rückrichtung
+      \begin{importantbox}
+         \[
+            r=\sqrt{x^2+y^2},
+            \qquad
+            \varphi=\operatorname{atan2}(y,x)\in[0,2\pi) % chktex 9
+         \]
+      \end{importantbox}
+
+   \subsubsection*{Jacobian und Flächenelement}
+
+      Die Transformation in Polarkoordinaten:
+      \begin{importantbox}
+      \[
+      h: (r,\varphi) \mapsto (x,y) = (r\cos\varphi, r\sin\varphi)
+      \]
+      \end{importantbox}
+
+      Jacobi-Matrix und Determinante:
+      \[
+      J = \begin{pmatrix}
+      \frac{\partial x}{\partial r} & \frac{\partial x}{\partial \varphi} \\[8pt]
+      \frac{\partial y}{\partial r} & \frac{\partial y}{\partial \varphi}
+      \end{pmatrix}
+      = \begin{pmatrix}
+      \cos\varphi & -r\sin\varphi \\[6pt]
+      \sin\varphi & \phantom{-}r\cos\varphi
+      \end{pmatrix}
+      \]
+
+      \begin{importantbox}
+      \[
+      \det J = r
+      \]
+      \end{importantbox}
+
+      \textit{Transformationsformel: }\,
+         \[
+            \iint_{R} f(x,y)\,\mathrm{d}x\,\mathrm{d}y
+            \;=\;
+            \iint_{h^{-1}(R)} f\!\bigl(r\cos\varphi,\,r\sin\varphi\bigr)\,\bigl|\det J\bigr|\,\mathrm{d}r\,\mathrm{d}\varphi
+            \;=\;
+            \iint_{h^{-1}(R)} f\!\bigl(r\cos\varphi,\,r\sin\varphi\bigr)\, r \,\mathrm{d}r\,\mathrm{d}\varphi
+         \]
+
+      Das Flächenelement in Polarkoordinaten:
+      \begin{importantbox}
+         \[
+            \mathrm{d}A = r \, \mathrm{d}r \, \mathrm{d}\varphi
+         \]
+      \end{importantbox}
+
+   \subsubsection*{Beispiel: Kreisfläche}
+
+      Berechnung der Fläche eines Kreises mit Radius \(R\):
+      \begin{align*}
+         A &= \iint_{x^2+y^2 \leq R^2} \mathrm{d}A \tag{Grundformel aufstellen}\\[6pt]
+         &= \int_{0}^{2\pi} \int_{0}^{R} r \, \mathrm{d}r \, \mathrm{d}\varphi \tag{Grenzen einsetzen}\\[6pt]
+         &= \int_{0}^{2\pi} \left[ \frac{r^2}{2} \right]_{0}^{R} \mathrm{d}\varphi \tag{Integrale berechnen}\\[6pt]
+         &= \int_{0}^{2\pi} \frac{R^2}{2} \, \mathrm{d}\varphi\\[6pt]
+         &= \frac{R^2}{2} \cdot 2\pi = \pi R^2
+      \end{align*}
+
+% Zylinderkoordinaten =================================================
+\section{Zylinderkoordinaten}
+
+   \begin{center}
+   \raisebox{-0.5ex}{%
+   \begin{tikzpicture}[
+   scale=0.65, transform shape,
+   axes/.style={gray,thin},
+   rho/.style={-stealth, line width=1pt}, % für r-Vektor
+   cyl/.style={line width=1.4pt},
+   rim/.style={line width=1.4pt},
+   phiarc/.style={-stealth, line width=0.9pt}
+   ]
+   % --- Parameter ---
+   \def\A{5.2}     % Achsen-Halblänge (cm)
+   \def\Rx{3}      % x-Radius der Kreisprojektion
+   \def\Ry{1}      % y-Radius der Kreisprojektion
+   \def\kr{0.60}   % Skalierung für inneren φ-Bogen (0<\kr<1)
+   \def\gap{8}     % Lücke vor r in Grad (für φ-Bogen)
+   \def\Hz{2.4}    % Zylinder-Halbhöhe (cm)
+   \def\dmeas{3}   % [cm] Abstand Maßpfeil
+
+   % abgeleitete Größen
+   \pgfmathsetmacro{\Rxinner}{\kr*\Rx}
+   \pgfmathsetmacro{\Ryinner}{\kr*\Ry}
+   \pgfmathsetmacro{\MeasX}{\Rx+\dmeas} % x-Position des Maßpfeils
+
+   % Achsen (zur Orientierung)
+   \draw[->,axes] (-\A,0) -- (\A,0) node[below right, black] {\(y\)};
+   \draw[->,axes] (0,-\A) -- (0,\A) node[left, black] {\(z\)};
+   % x-Achse (schräg, 3D-Anmutung)
+   \coordinate (Xn) at (-4.2,-2.31);
+   \coordinate (Xp) at ( 4.2,  2.31);
+   \draw[axes] (Xp) -- (0,0);
+   \draw[->,axes] (0,0) -- (Xn) node[below left, black] {\(x\)};
+
+   % -------------------- Zylinder --------------------
+   % TOP-Ellipse
+   \draw[rim] (0,\Hz) ++(\Rx cm,0)
+   arc[start angle=0, end angle=180, x radius=\Rx cm, y radius=\Ry cm];
+   \draw[rim] (0,\Hz) ++(-\Rx cm,0)
+   arc[start angle=180, end angle=360, x radius=\Rx cm, y radius=\Ry cm];
+
+   % BOTTOM-Ellipse: hinten gestrichelt, vorne durchgezogen
+   \draw[dashed,rim] (0,-\Hz) ++(\Rx cm,0)
+   arc[start angle=0, end angle=180, x radius=\Rx cm, y radius=\Ry cm];
+   \draw[rim] (0,-\Hz) ++(-\Rx cm,0)
+   arc[start angle=180, end angle=360, x radius=\Rx cm, y radius=\Ry cm];
+
+   % Mantellinien
+   \draw[cyl] (-\Rx cm,-\Hz) -- (-\Rx cm,\Hz);
+   \draw[cyl] ( \Rx cm,-\Hz) -- ( \Rx cm,\Hz);
+
+   % -------------------- Höhe z rechts markieren --------------------
+   \draw[line width=1.6pt] (\Rx cm,-\Hz) -- (\Rx cm,\Hz) node[above right=1pt] {\( \)};
+   \fill (\Rx cm,-\Hz) circle[radius=1.5pt];
+   \fill (\Rx cm,   0) circle[radius=1.5pt];
+   \fill (\Rx cm, \Hz) circle[radius=1.5pt];
+   \draw[<->,line width=0.9pt] (\MeasX cm,-\Hz) -- (\MeasX cm,\Hz)
+   node[midway,right=1pt] {\(z=\text{Höhe}\)};
+
+   % -------------------- r und φ in z=0 --------------------
+   \path[name path=ellBase] (0,0) ellipse [x radius=\Rx cm, y radius=\Ry cm];
+   \coordinate (O) at (0,0);
+   \path[name path=xray] (O) -- (Xn);
+   \path[name intersections={of=xray and ellBase, by=Xi}];
+
+   \draw[rho] (O) -- (Xi) node[pos=0.50, below right=1pt] {\(r\)};
+
+   % φ-Bogen (innen, von +y CCW bis kurz vor r)
+   \path (Xi); \pgfgetlastxy{\X}{\Y}
+   \pgfmathsetmacro{\Xcm}{\X/1cm}
+   \pgfmathsetmacro{\Ycm}{\Y/1cm}
+   \pgfmathsetmacro{\u}{\Xcm/\Rx}
+   \pgfmathsetmacro{\v}{\Ycm/\Ry}
+   \pgfmathsetmacro{\traw}{acos(\u)}
+   \pgfmathsetmacro{\phiend}{ifthenelse(\v>=0, \traw, 360 - \traw)}
+   \pgfmathsetmacro{\phiendgap}{\phiend - \gap}
+   \pgfmathsetmacro{\phiCCW}{ifthenelse(\phiendgap < 0, \phiendgap + 360, \phiendgap)}
+
+   \coordinate (PhiStart) at (\Rxinner cm, 0);
+   \node[above=1pt] at ($(O)!0.5!(PhiStart)$) {\(\varphi\)};
+   \draw[phiarc]
+   (O) ++(\Rxinner cm,0)
+   arc[start angle=0, end angle=\phiCCW,
+   x radius=\Rxinner cm, y radius=\Ryinner cm];
+   \end{tikzpicture}%
+   }%
+   \end{center}
+
+   \subsection*{Kartesisch \(\leftrightarrow\) Zylinder}
+      \begin{importantbox}
+         \[
+            \begin{aligned}
+               x&=r\cos\varphi,\\
+               y&=r\sin\varphi,\\
+               z&=z
+            \end{aligned}
+         \qquad
+         r\ge 0,\ \varphi\in[0,2\pi),\ z\in\mathbb{R} % chktex 9
+         \]
+      \end{importantbox}
+
+\newpage
+      Rückrichtung:
+      \begin{importantbox}
+         \[
+            r=\sqrt{x^2+y^2},\qquad
+            \varphi=\operatorname{atan2}(y,x)\in[0,2\pi),\qquad   % chktex 9
+            z=z.
+         \]
+      \end{importantbox}
+
+   \subsection*{Abbildung, Jacobi-Matrix, Maß}
+      \begin{importantbox}
+      \[
+         h:(r,\varphi,z)\mapsto (x,y,z)=(r\cos\varphi,\; r\sin\varphi,\; z)
+      \]
+      \end{importantbox}
+
+      \[
+         J(r,\varphi,z)=
+         \begin{pmatrix}
+            \cos\varphi & -\,r\sin\varphi & 0\\[2pt]
+            \sin\varphi & \ \,r\cos\varphi & 0\\[2pt]
+            0 & 0 & 1
+         \end{pmatrix}.
+      \]
+
+      \begin{importantbox}
+      \[
+         \det J(r,\varphi,z)=r
+      \]
+      \end{importantbox}
+
+      \begin{importantbox}
+         \[
+            \mathrm{d}V = r\,\mathrm{d}r\,\mathrm{d}\varphi\,\mathrm{d}z
+         \]
+      \end{importantbox}
+
+   \subsection*{Flächen und Volumen des Kreiszylinders}
+      Für Radius \(R\) und Höhe \(2H\) (also \(z\in[-H,H]\)) und
+      \[
+         T=[0,R]\times[0,2\pi]\times[-H,H]
+      \]
+      gilt:
+      \begin{align*}
+      V
+         &= \iiint_{T} r\,\mathrm dr\,\mathrm d\varphi\,\mathrm dz \tag{Grundformel aufstellen}\\[4pt]
+         &= \left(\int_{0}^{R} r\,\mathrm dr\right)
+         \left(\int_{0}^{2\pi}\mathrm d\varphi\right)
+         \left(\int_{-H}^{H}\mathrm dz\right) \tag{Grenzen einsetzen}\\[4pt]
+         &= \left[\tfrac{r^{2}}{2}\right]_{0}^{R}\cdot (2\pi)\cdot (2H) \tag{Integrale berechnen}\\[4pt]
+         &= \frac{R^{2}}{2}\cdot 2\pi \cdot 2H
+         = 2\pi R^{2}H \tag{Ergebnis}
+      \end{align*}
+
+      Die Oberflächen:
+      \[
+         A_{\text{Mantel}}=(2\pi R)\cdot(2H)=4\pi R H\qquad
+         A_{\text{Deckel}}=A_{\text{Boden}}=\pi R^{2}\qquad
+         A_{\text{gesamt}}=4\pi R H+2\pi R^{2}
+      \]
+
+% Kugelkoordinaten ====================================================
+\section{Kugelkoordinaten}
+
+
+   \begin{center}
+   \raisebox{-0.5ex}{%
+   \begin{tikzpicture}[
+   scale=0.65, transform shape,
+   axes/.style={gray,thin},
+   rho/.style={-stealth, line width=1pt},
+   sphere/.style={line width=1.4pt},
+   equator/.style={line width=1.4pt},
+   phiarc/.style={-stealth, line width=0.9pt},
+   thetarc/.style={-stealth, line width=0.9pt}
+   ]
+   % --- Parameter ---
+   \def\A{4}    % Achsen-Halblänge (cm)
+   \def\Rx{3}   % x-Radius der Äquator-Ellipse (horizontal -> +y)
+   \def\Ry{1}   % y-Radius der Äquator-Ellipse (vertikal -> z)
+   \def\kr{0.60}% Skalierung für inneren φ-Bogen (0<\kr<1)
+   \def\gap{8}  % Lücke vor r in Grad
+
+   % Innenradien (für φ)
+   \pgfmathsetmacro{\Rxinner}{\kr*\Rx}
+   \pgfmathsetmacro{\Ryinner}{\kr*\Ry}
+
+   % Achsen
+   \draw[->,axes] (-\A,0) -- (\A,0) node[below right, black] {\(y\)};
+   \draw[->,axes] (0,-\A) -- (0,\A) node[left, black] {\(z\)};
+
+   % Kugel-Projektion
+   \draw[sphere] (0,0) circle[radius=3cm];
+
+   % Äquator (x–y-Ebene): oben gestrichelt, unten durchgezogen
+   \draw[dashed,equator] (0,0) ++(\Rx cm,0)
+   arc[start angle=0, end angle=180, x radius=\Rx cm, y radius=\Ry cm];
+   \draw[equator] (0,0) ++(-\Rx cm,0)
+   arc[start angle=180, end angle=360, x radius=\Rx cm, y radius=\Ry cm];
+
+   % x-Achse (schräg)
+   \coordinate (Xn) at (-3.5,-1.925);
+   \coordinate (Xp) at ( 3.5,  1.925);
+   \draw[axes] (Xp) -- (0,0);
+   \draw[->,axes] (0,0) -- (Xn) node[below left, black] {\(x\)};
+
+   % Ellipse (x–y) und Strahl O->Xn, Schnitt Xi
+   \path[name path=ellFull] (0,0) ellipse [x radius=\Rx cm, y radius=\Ry cm];
+   \path[name path=xray] (0,0) -- (Xn);
+   \path[name intersections={of=xray and ellFull, by=Xi}];
+
+   % Ursprung
+   \coordinate (O) at (0,0);
+
+   % r (Label am Vektor)
+   \draw[rho] (O) -- (Xi) node[pos=0.45, below right=1pt] {\(r\)};
+
+   % ---------- φ (innen, von +y CCW bis kurz vor r) ----------
+   \path (Xi); \pgfgetlastxy{\X}{\Y}
+   \pgfmathsetmacro{\Xcm}{\X/1cm}
+   \pgfmathsetmacro{\Ycm}{\Y/1cm}
+   \pgfmathsetmacro{\u}{\Xcm/\Rx}
+   \pgfmathsetmacro{\v}{\Ycm/\Ry}
+   \pgfmathsetmacro{\traw}{acos(\u)} % 0..180
+   \pgfmathsetmacro{\phiend}{ifthenelse(\v>=0, \traw, 360 - \traw)} % 0..360
+   \pgfmathsetmacro{\phiendgap}{\phiend - \gap}
+   \pgfmathsetmacro{\phiCCW}{ifthenelse(\phiendgap < 0, \phiendgap + 360, \phiendgap)}
+
+   % Startpunkt des φ-Bogens (+y auf innerer Ellipse)
+   \coordinate (PhiStart) at (\Rxinner cm, 0);
+   % φ-Label
+   \node[above=1pt] at ($(O)!0.5!(PhiStart)$) {\(\varphi\)};
+   % φ-Bogen
+   \draw[phiarc]
+   (O) ++(\Rxinner cm,0)
+   arc[start angle=0, end angle=\phiCCW,
+   x radius=\Rxinner cm, y radius=\Ryinner cm];
+
+   % ---------- θ (rechter Halbmeridian, ellipsenförmig) ----------
+   \def\RthetaX{1.6}   % < \Rxinner (=1.8 cm), damit kein φ-Schnitt
+   \def\RthetaY{2.7}   % innerhalb des 3 cm Kugelradius
+   \coordinate (ThetaStart) at ($(O)+(0,-\RthetaY cm)$);
+   \coordinate (ThetaEnd)   at ($(O)+(0, \RthetaY cm)$);
+   \draw[thetarc]
+   (ThetaStart)
+   arc[start angle=-90, end angle=90,
+   x radius=\RthetaX cm, y radius=\RthetaY cm]
+   node[pos=0.25, right=2pt] {\(\theta\)}; % mittig bei z=0 % bearbeiten
+   \end{tikzpicture}%
+   }%
+   \end{center}
+
+   \subsection*{Kartesisch \(\leftrightarrow\) Kugel}
+
+      \begin{importantbox}
+      \[
+         \begin{aligned}
+            x&=r\sin\theta\cos\varphi,\\
+            y&=r\sin\theta\sin\varphi,\\
+            z&=r\cos\theta,
+         \end{aligned}
+         \qquad
+         r\ge0,\ \theta\in[0,\pi],\ \varphi\in[0,2\pi)  % chktex 9
+      \]
+      \end{importantbox}
+
+      Rückrichtung:
+      \begin{importantbox}
+         \[
+            r=\sqrt{x^2+y^2+z^2},\qquad
+            \theta=\arccos\!\left(\frac{z}{r}\right),\qquad
+            \varphi=\operatorname{atan2}(y,x)\in[0,2\pi)   % chktex 9
+         \]
+      \end{importantbox}
+
+   \subsection*{Abbildung, Jacobi-Matrix, Maß}
+      \begin{importantbox}
+         \[
+            h:(r,\theta,\varphi)\mapsto (x,y,z)=(r\sin\theta\cos\varphi,\; r\sin\theta\sin\varphi,\; r\cos\theta)
+         \]
+      \end{importantbox}
+
+      % vollständige Jacobi-Matrix (unboxed, zur Einordnung)
+      \[
+         J(r,\theta,\varphi)=
+         \begin{pmatrix}
+            \sin\theta\cos\varphi & r\cos\theta\cos\varphi & -\,r\sin\theta\sin\varphi\\[2pt]
+            \sin\theta\sin\varphi & r\cos\theta\sin\varphi & \ \,r\sin\theta\cos\varphi\\[2pt]
+            \cos\theta            & -\,r\sin\theta         & 0
+         \end{pmatrix}
+      \]
+
+      \begin{importantbox}
+         \[
+            \det J(r,\theta,\varphi)=r^{2}\sin\theta
+         \]
+      \end{importantbox}
+
+      \begin{importantbox}
+         \[
+         \mathrm{d}V=r^{2}\sin\theta\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}\varphi
+         \]
+      \end{importantbox}
+
+      \begin{importantbox}
+         \[
+         \mathrm{d}S=R^{2}\sin\theta\,\mathrm{d}\theta\,\mathrm{d}\varphi
+         \]
+      \end{importantbox}
+
+
+   \subsection*{Fläche und Volumen der Kugel}
+
+   Fläche:
+   \begin{align*}
+      A 
+      &= \iint_{0\le\theta\le\pi,\;0\le\varphi<2\pi} R^{2}\sin\theta\,\mathrm d\theta\,\mathrm d\varphi \tag{Grundformel aufstellen}\\[4pt]
+      &= \int_{0}^{2\pi}\!\left(\int_{0}^{\pi} R^{2}\sin\theta\,\mathrm d\theta\right)\mathrm d\varphi \tag{Grenzen einsetzen}\\[4pt]
+      &= \int_{0}^{2\pi}\!\left[-\,R^{2}\cos\theta\right]_{0}^{\pi}\mathrm d\varphi \tag{\(\theta\) integrieren}\\[4pt]
+      &= \int_{0}^{2\pi}\! \left(2R^{2}\right)\mathrm d\varphi \tag{Grenzen auswerten}\\[4pt]
+      &= 2R^{2}\,\left[\varphi\right]_{0}^{2\pi}
+      = 4\pi R^{2}\tag{Ergebnis}
+   \end{align*}
+
+   Volumen (mit \(T=[0,R]\times[0,\pi]\times[0,2\pi]\)):
+   \begin{align*}
+      V
+      &= \iiint_{T} r^{2}\sin\theta\,\mathrm dr\,\mathrm d\theta\,\mathrm d\varphi \tag{Grundformel aufstellen}\\[4pt]
+      &= \left(\int_{0}^{R} r^{2}\,\mathrm dr\right)
+      \left(\int_{0}^{\pi}\sin\theta\,\mathrm d\theta\right)
+      \left(\int_{0}^{2\pi}\mathrm d\varphi\right) \tag{Grenzen separieren}\\[4pt]
+      &= \left[\tfrac{r^{3}}{3}\right]_{0}^{R}\cdot
+      \left[-\cos\theta\right]_{0}^{\pi}\cdot
+      \left[\varphi\right]_{0}^{2\pi} \tag{Integrale berechnen}\\[4pt]
+      &= \frac{R^{3}}{3}\cdot 2 \cdot 2\pi
+      = \frac{4}{3}\pi R^{3} \tag{Ergebnis}
+   \end{align*}
+
+
+% Ellipsenkoordinaten =================================================
+\section{Ellipsenkoordinaten}
+
+
+   \begin{center}
+      \begin{tabular}{@{}c@{\qquad}c@{}}
+      \(\displaystyle \frac{x^2}{a^2}+\frac{y^2}{b^2}=1,\quad a\ge b>0\) &
+         \begin{tikzpicture}[scale=0.7,baseline=-2.5ex]
+            % Mini-Plot: Ellipse im Ursprung mit Koordinatenachsen
+            \draw[->] (-3.5,0) -- (3.5,0) node[below right] {\(x\)};
+            \draw[->] (0,-2.5) -- (0,2.5) node[left] {\(y\)};
+            \draw[line width=1.5pt] (0,0) ellipse (2.8 and 1.8);
+            % Halbachsen gestrichelt
+            \draw[densely dashed] (0,0) -- (2.8,0) node[midway,below] {\(a\)};
+            \draw[densely dashed] (0,0) -- (0,1.8) node[midway,left] {\(b\)};
+         \end{tikzpicture}
+      \end{tabular}
+   \end{center}
+
+   \subsection*{Rand-Parametrisierung}
+      \begin{importantbox}
+         \[
+            \mathbf x(\varphi)=\bigl(a\cos\varphi,\; b\sin\varphi\bigr),\qquad 0\le \varphi<2\pi
+         \]
+      \end{importantbox}
+
+   \subsection*{Kartesisch \(\leftrightarrow\) Ellipsenkoordinaten}
+      \begin{importantbox}
+         \[
+            h:(r,\varphi)\mapsto (x,y)=\bigl(a\,r\cos\varphi,\; b\,r\sin\varphi\bigr),
+            \qquad T=[0,1]\times[0,2\pi) % chktex 9
+         \]
+      \end{importantbox}
+
+      Rückrichtung:
+      \begin{importantbox}
+         \[
+            r=\sqrt{\left(\tfrac{x}{a}\right)^{2}+\left(\tfrac{y}{b}\right)^{2}},\qquad
+            \varphi=\operatorname{atan2}\!\bigl(\tfrac{y}{b},\,\tfrac{x}{a}\bigr)\in[0,2\pi)   % chktex 9   
+         \]
+      \end{importantbox}
+
+   \subsection*{Abbildung, Jacobi-Matrix, Maß}
+   \[
+      J(r,\varphi)=
+         \begin{pmatrix}
+            a\cos\varphi & -a\,r\sin\varphi\\[2pt]
+            b\sin\varphi & \ \,b\,r\cos\varphi
+         \end{pmatrix}
+   \]
+
+   \begin{importantbox}
+      \[
+         \det J(r,\varphi)=a\,b\,r
+      \]
+   \end{importantbox}
+
+   \textit{Transformationsformel: }\,
+   \[
+      \iint_{R} f(x,y)\,\mathrm{d}x\,\mathrm{d}y
+      =
+      \iint_{h^{-1}(R)} f\!\bigl(a r\cos\varphi,\; b r\sin\varphi\bigr)\,
+      \underbrace{|\det J|}_{=\,a b r}\,\mathrm{d}r\,\mathrm{d}\varphi
+   \]
+
+   \begin{importantbox}
+      \[
+         \mathrm{d}A = a\,b\,r\,\mathrm{d}r\,\mathrm{d}\varphi
+      \]
+   \end{importantbox}
+
+   \subsection*{Beispiel: Flächeninhalt der Ellipse}
+      Mit \(T=[0,1]\times[0,2\pi)\):   % chktex 9
+      \begin{align*}
+         A
+         &= \iint_{T} a\,b\,r\,\mathrm dr\,\mathrm d\varphi \tag{Grundformel aufstellen}\\[4pt]
+         &= \left(\int_{0}^{1} a\,b\,r\,\mathrm dr\right)\!
+         \left(\int_{0}^{2\pi}\mathrm d\varphi\right) \tag{Grenzen separieren}\\[4pt]
+         &= a\,b\left[\tfrac{r^{2}}{2}\right]_{0}^{1}\cdot \bigl[\varphi\bigr]_{0}^{2\pi} \tag{Integrale berechnen}\\[4pt]
+         &= a\,b\cdot \tfrac{1}{2}\cdot 2\pi
+         = \pi\,a\,b\tag{Ergebnis}
+      \end{align*}
+
+% Wegintegral 1 =======================================================
+\section{Wegintegral 1. Art}
+
+   Wir betrachten ein Skalarfeld \(f:\mathbb{R}^3\to\mathbb{R}\) und eine stückweise \(C^1\)-Kurve
+   \(\vec{x}:[a,b]\to\mathbb{R}^3\) mit \(\vec{x}(t)=(x(t),y(t),z(t))\).
+      Das skalare Bogenelement ist
+   \[
+      \mathrm{d}s=\lVert \vec{x}'(t)\rVert\,\mathrm{d}t
+      = \sqrt{x'(t)^2+y'(t)^2+z'(t)^2}\,\mathrm{d}t
+   \]
+
+
+   \begin{importantbox}
+      Das Kurvenintegral entlang \(K = \vec x([a,b])\) lautet
+      \[
+         \int_{K} f\,\mathrm{d}s
+         \;=\; \int_{a}^{b} f\!\bigl(\vec{x}(t)\bigr)\,\lVert \vec{x}'(t)\rVert\,\mathrm{d}t
+         \;=\; \int_{a}^{b} f\!\bigl(\vec{x}(t)\bigr)\, \sqrt{x'(t)^2+y'(t)^2+z'(t)^2}\,\mathrm{d}t
+      \]
+   \end{importantbox}
+
+   \textbf{Wichtig:} Der Wert hängt nur von der Spur \(K\) ab (parametrisierungsinvariant).
+   Richtungsumkehr ändert nichts, da \(\mathrm{d}s\) orientierungsfrei ist.
+
+
+% Wegintegral 2 =======================================================
+\section{Wegintegral 2. Art}
+
+   Wir betrachten ein Vektorfeld \(\vec{v} : \mathbb{R}^3 \to \mathbb{R}^3\) und eine stetig differenzierbare Kurve \(\vec{x} : [a,b] \to \mathbb{R}^3\) mit \(\vec{x}(t) = (x(t), y(t), z(t))\). Dabei ist \(\mathrm{d}\vec{x} = \vec{x}'(t) \, \mathrm{d}t = (x'(t), y'(t), z'(t))\) das vektorielle Bogenelement und \(\cdot\) bezeichnet das Skalarprodukt. Entlang der Bahn \(K = \vec{x}([a,b])\) ist das Kurvenintegral des Vektorfeldes definiert durch
+   \begin{importantbox}
+   \[
+      \int_K \vec{v} \cdot \mathrm{d}\vec{x} = \int_a^b \vec{v}(\vec{x}(t)) \cdot \vec{x}'(t) \, \mathrm{d}t = \int_a^b \begin{pmatrix} v_x(\vec{x}(t)) \\ v_y(\vec{x}(t)) \\ v_z(\vec{x}(t)) \end{pmatrix} \cdot \begin{pmatrix} x'(t) \\ y'(t) \\ z'(t) \end{pmatrix} \mathrm{d}t
+   \]
+   \end{importantbox}
+
+% Potentialfelder =====================================================
+\section{Potentialfelder}
+
+   Das Skalarfeld \(f\) heißt Potentialfunktion von \(\vec{v}\) und ist bis auf eine additive Konstante eindeutig.
+   \subsection*{Definition}
+      \begin{importantbox}
+         \[
+            \vec{v}=\nabla f,
+            \qquad\text{d.\,h.}\qquad
+            \vec{v}(x,y,z)=\bigl(\partial_x f(x,y,z),\,\partial_y f(x,y,z),\,\partial_z f(x,y,z)\bigr)
+         \]
+      \end{importantbox}
+
+   \subsection*{Wegunabhängigkeit}
+      Für jede stückweise \(C^1\)-Kurve \(\vec{\gamma}:[a,b]\to\mathbb{R}^3\) mit \(A=\vec{\gamma}(a)\), \(B=\vec{\gamma}(b)\) gilt
+      \begin{importantbox}
+         \[
+            \int_{\vec{\gamma}}\vec{v}\cdot \mathrm{d}\vec{x}
+            =\int_a^b \vec{v}\bigl(\vec{\gamma}(t)\bigr)\cdot \vec{\gamma}'(t)\,\mathrm{d}t
+            = f(B)-f(A)
+         \]
+      \end{importantbox}
+         Insbesondere verschwindet das Zirkulationsintegral über jeden geschlossenen Weg \(C\):
+      \begin{importantbox}
+         \[
+         \oint_{C}\,\vec{v}\cdot \mathrm{d}\vec{x}=0
+         \]
+      \end{importantbox}
+
+
+   \subsection*{Charakterisierung über die Rotation}
+   \begin{importantbox}
+   \[
+   \nabla\times\vec{v}=\vec{0}
+   \]
+   \end{importantbox}
+
+   \subsection*{Integrabilitätsbedingung}
+
+      \textbf{Voraussetzung:} Offenes Gebiet \(G\subset\mathbb{R}^3\), \(\vec{v}\in C^1(G)\).
+
+      \begin{importantbox}
+      \[
+      \text{Lokal: }\quad \partial_{x_j} v_i \;=\; \partial_{x_i} v_j \quad (i\neq j)
+      \;\;\Longleftrightarrow\;\;
+      \nabla\times\vec{v}=\vec{0}
+      \]
+      \end{importantbox}
+
+      \begin{importantbox}
+         \[
+            \frac{\partial v_y}{\partial z}=\frac{\partial v_z}{\partial y},\qquad
+            \frac{\partial v_z}{\partial x}=\frac{\partial v_x}{\partial z},\qquad
+            \frac{\partial v_x}{\partial y}=\frac{\partial v_y}{\partial x}
+         \]
+      \end{importantbox}
+
+      \textit{Komponentenform (für \(\vec{v}=(v_x,v_y,v_z)\)):}
+      \[
+      \partial_z v_y=\partial_y v_z,\qquad
+      \partial_y v_x=\partial_x v_y,\qquad
+      \partial_x v_z=\partial_z v_x
+      \]
+
+      \textit{Global ausreichend:} Ist \(G\) \emph{einfach zusammenhängend} (z.\,B. sternförmig), 
+      so existiert eine Potentialfunktion \(f\) mit \(\vec{v}=\nabla f\).
+
+
+   \subsection*{Äquivalenzen (offenes, einfach zusammenhängendes Gebiet \(G\), \(\vec{v}\in C^1(G)\))}
+   \begin{importantbox}
+   \[
+   \text{konservativ}
+   \;\Longleftrightarrow\;
+   \vec{v}=\nabla f
+   \;\Longleftrightarrow\;
+   \text{Wegunabhängigkeit}
+   \;\Longleftrightarrow\;
+   \oint\vec{v}\cdot \mathrm{d}\vec{x}=0
+   \;\Longleftrightarrow\;
+   \nabla\times\vec{v}=\vec{0}\ \text{ in }G
+   \]
+   \end{importantbox}
+
+\end{document} % chktex 17

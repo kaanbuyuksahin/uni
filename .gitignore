@@ -1,0 +1,23 @@
+# LaTeX build
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.lof
+*.lot
+*.lol
+*.dvi
+*.ps
+
+# Editor/OS
+.DS_Store
+.vscode/

@@ -1,0 +1,1202 @@
+% =============================================================================
+%  Grundlagen der Signalverarbeitung Latex Skript
+%  von Kaan Büyüksahin
+%  letzte Aktualisieurng 05. September 2025
+% =============================================================================
+
+\documentclass[12pt]{article}
+\usepackage[rgb, table]{xcolor}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{amsmath}
+\usepackage{afterpage}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{transparent}
+\usepackage{amssymb}
+\usetikzlibrary{trees, shadings}
+\usepackage{caption}
+\usepackage{tabularx}
+\usepackage{circuitikz}
+\usepackage{geometry}
+\geometry{
+a4paper,
+left = 1cm,
+right = 1cm,
+top = 1 cm,
+bottom = 1 cm
+}
+\pgfplotsset{compat=1.15}
+\usepackage[ngerman]{babel}
+\usepackage{datetime}
+\renewcommand{\dateseparator}{/}
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[
+   hidelinks,
+   pdfauthor={Kaan Büyükşahin},
+   pdftitle={Grundlagen der Signalverarbeitung - Kurzreferenz}, % chktex 8
+   pdfsubject={Zusammenfassung der wichtigsten Inhalte für Grundlagen der Signalverarbeitung},
+   pdfcreator={pdflatex},
+   ]{hyperref}
+
+%%% Farbsettings %%%
+\definecolor{Aufgabe1Teil1}{rgb}{0.929, 1.0, 0.859}
+\definecolor{Aufgabe1Teil2}{rgb}{0.894, 0.953, 0.894}
+\definecolor{Aufgabe2}{rgb}{1.0, 0.796, 0.796}
+\definecolor{Aufgabe4}{rgb}{0.910, 0.961, 0.988}
+
+% TikZ Bibliotheken für Farbverläufe
+\usetikzlibrary{shadings}
+
+% Benutzerdefinierte Farben definieren
+\definecolor{color1}{RGB}{82, 57, 128}
+\definecolor{color2}{RGB}{196,173,221}
+\definecolor{color3}{RGB}{27, 14, 32}
+\definecolor{color4}{RGB}{200, 179, 246}
+\definecolor{color5}{RGB}{209, 192, 236}
+
+% Titel-Informationen
+\title{Grundlagen der Signalverarbeitung}
+\author{Kaan Büyükşahin}
+\date{\today}
+
+% Kopf- und Fußzeile konfigurieren
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{Grundlagen der Signalverarbeitung}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\raisebox{10pt}{\thepage}} % Seitenzahl nach oben gezogen
+\renewcommand{\headrulewidth}{0pt}  % Unteren Balken gelsöcht
+
+%%% Deckblatt %%%
+
+% Titelseite mit Farbverlauf
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        % Haupthintergrund mit sanftem diagonalem Farbverlauf
+        \shade[shading=linear,left color=color1,right color=color4] 
+            (current page.south west) rectangle (current page.north east);
+
+      % Zweite Schicht für weichere Übergänge (vertikal)
+        \shade[shading=linear,top color=color2!60,bottom color=color3,opacity=0.3] 
+            (current page.south west) rectangle (current page.north east);
+         
+    \end{tikzpicture}
+
+    % ZENTRIERUNG: Alles wird horizontal zentriert
+    \centering
+    
+    % ABSTAND VON OBEN: 3.5cm Platz vom Seitenrand
+    \vspace*{3.5cm}
+    
+    % HAUPTTITEL - eleganter und moderner
+    {\fontsize{40}{48}\selectfont\transparent{0.85}\color{white!}\bfseries 
+    Grundlagen der\\[0.4cm] 
+    \transparent{0.85}\textcolor{white!}{Signalverarbeitung}}
+    
+    % ABSTAND ZWISCHEN TITEL UND UNTERTITEL: 2cm
+    \vspace{2cm}
+    
+    % UNTERTITEL - stilvoller 
+    {\fontsize{22}{26}\selectfont\transparent{0.85}\color{white}  
+    Kurzreferenz}
+    
+    % FLEXIBLER PLATZ: Drückt den unteren Bereich nach unten
+    \vspace*{\fill}
+
+    % INFORMATIONSBEREICH - professioneller gestaltet
+    \transparent{0.85}\color{white}
+    \begin{minipage}[t]{0.55\linewidth}
+        \raggedright{}
+        Kaan Büyükşahin\\
+        Technische Universität Darmstadt\\
+        Fachbereich Elektro- und Informationstechnik\\
+        Fachgebiet Signalverarbeitung bei Prof.\ Dr.-Ing.\ Zoubir
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.40\linewidth}
+        \raggedleft{}
+        {\href{https://www.kaanbs.com}{\transparent{0.85}\textcolor{white}{kaanbs.com}}}\\
+        Aktualisiert: {\normalsize\today}
+    \end{minipage}
+    
+    % ABSTAND ZUM SEITENRAND: 2cm vom unteren Rand
+    \vspace{1cm}
+
+\end{titlepage}
+
+%%% Mathematische Zusammenhänge ===================================================================
+
+\section*{\underline{Mathematische Zusammenhänge}}
+
+   \subsection*{Trigonometrische Funktionen}
+      \subsubsection*{Winkeltabelle}
+
+         \begin{table}[h!]
+            \centering
+            \renewcommand{\arraystretch}{2} 
+            \resizebox{\textwidth}{!}{
+            \scriptsize
+               \begin{tabularx}{\textwidth}{|c|*{17}{>{\centering\arraybackslash}X|}}  % chktex 44
+                  \hline   % chktex 44
+                  \textbf{DEG} & \(0^{\circ}\) & \(30^{\circ}\) & \(45^{\circ}\) & \(60^{\circ}\) & \(90^{\circ}\) & \(120^{\circ}\) & \(135^{\circ}\) & \(150^{\circ}\) & \(180^{\circ}\) & \(210^{\circ}\) & \(225^{\circ}\) & \(240^{\circ}\) & \(270^{\circ}\) & \(300^{\circ}\) & \(315^{\circ}\) & \(330^{\circ}\) & \(360^{\circ}\) \\
+                  \hline   % chktex 44
+                  \textbf{rad} & \(0\) & \(\frac{\pi}{6}\) & \(\frac{\pi}{4}\) & \(\frac{\pi}{3}\) & \(\frac{\pi}{2}\) & \(\frac{2\pi}{3}\) & \(\frac{3\pi}{4}\) & \(\frac{5\pi}{6}\) & \(\pi\) & \(\frac{7\pi}{6}\) & \(\frac{5\pi}{4}\) & \(\frac{4\pi}{3}\) & \(\frac{3\pi}{2}\) & \(\frac{5\pi}{3}\) & \(\frac{7\pi}{4}\) & \(\frac{11\pi}{6}\) & \(2\pi\) \\
+                  \hline   % chktex 44
+                  \hline   % chktex 44
+                  \(\sin{x}\) & \(0\) & \(\frac{1}{2}\) & \(\frac{\sqrt{2}}{2}\) & \(\frac{\sqrt{3}}{2}\) & \(1\) & \(\frac{\sqrt{3}}{2}\) & \(\frac{\sqrt{2}}{2}\) & \(\frac{1}{2}\) & \(0\) & \(-\frac{1}{2}\) & \(-\frac{\sqrt{2}}{2}\) & \(-\frac{\sqrt{3}}{2}\) & \(-1\) & \(-\frac{\sqrt{3}}{2}\) & \(-\frac{\sqrt{2}}{2}\) & \(-\frac{1}{2}\) & \(0\) \\
+                  \hline   % chktex 44
+                  \(\cos{x}\) & \(1\) & \(\frac{\sqrt{3}}{2}\) & \(\frac{\sqrt{2}}{2}\) & \(\frac{1}{2}\) & \(0\) & \(-\frac{1}{2}\) & \(-\frac{\sqrt{2}}{2}\) & \(-\frac{\sqrt{3}}{2}\) & \(-1\) & \(-\frac{\sqrt{3}}{2}\) & \(-\frac{\sqrt{2}}{2}\) & \(-\frac{1}{2}\) & \(0\) & \(\frac{1}{2}\) & \(\frac{\sqrt{2}}{2}\) & \(\frac{\sqrt{3}}{2}\) & \(1\) \\
+                  \hline   % chktex 44
+                  \(\tan{x}\) & \(0\) & \(\frac{1}{\sqrt{3}}\) & \(1\) & \(\sqrt{3}\) & n.\ d. & \(-\sqrt{3}\) & \(-1\) & \(-\frac{1}{\sqrt{3}}\) & \(0\) & \(\frac{1}{\sqrt{3}}\) & \(1\) & \(\sqrt{3}\) & n.\ d. & \(-\sqrt{3}\) & \(-1\) & \(-\frac{1}{\sqrt{3}}\) & \(0\) \\
+                  \hline   % chktex 44
+               \end{tabularx} 
+            }
+         \end{table}
+
+      \smallskip
+
+      \noindent
+      \begin{minipage}[t]{0.45\textwidth}
+         \subsubsection*{Pythagoras}
+            \[
+               \cos^2(x) + \sin^2(x) = 1
+            \]
+
+         \subsubsection*{Symmetrie und Verschiebung}
+            \begin{align*}
+               \cos(-x) &= \cos(x) \quad \text{(gerade Funktion)} \\
+               \sin(-x) &= -\sin(x) \quad \text{(ungerade Funktion)} \\
+               \sin\left(x + \frac{\pi}{2}\right) &= \cos(x) \\
+               \cos\left(x - \frac{\pi}{2}\right) &= \sin(x)
+            \end{align*}
+
+         \subsubsection*{Doppelwinkelfunktionen}
+            \begin{align*}
+               \cos^2(x) &= \frac{1}{2}\left(1 + \cos(2x)\right) \\
+               \sin^2(x) &= \frac{1}{2}\left(1 - \cos(2x)\right) \\
+               \cos(2x) &= \cos^2(x) - \sin^2(x) \\ &= 1 - 2\sin^2(x) = 2\cos^2(x) - 1 \\
+               \sin(2x) &= 2\sin(x)\cos(x)
+            \end{align*}
+      \end{minipage}
+      \hfill
+      \begin{minipage}[t]{0.45\textwidth}
+         \subsubsection*{Additionstheoreme}
+            \begin{align*}
+               \cos(x \pm y) &= \cos(x)\cos(y) \mp \sin(x)\sin(y) \\
+               \sin(x \pm y) &= \sin(x)\cos(y) \pm \cos(x)\sin(y) \\
+               \sin(x) + \sin(y) &= 2\sin\left(\frac{x+y}{2}\right)\cos\left(\frac{x-y}{2}\right) \\
+               \sin(x) - \sin(y) &= 2\cos\left(\frac{x+y}{2}\right)\sin\left(\frac{x-y}{2}\right) \\
+               \sin(x)\sin(y) &= \frac{1}{2}\left[\cos(x-y) - \cos(x+y)\right] \\
+               \cos(x) + \cos(y) &= 2\cos\left(\frac{x+y}{2}\right)\cos\left(\frac{x-y}{2}\right) \\
+               \cos(x) - \cos(y) &= -2\sin\left(\frac{x+y}{2}\right)\sin\left(\frac{x-y}{2}\right) \\
+               \cos(x)\cos(y) &= \frac{1}{2}\left[\cos(x-y) + \cos(x+y)\right] \\
+               \sin(x)\cos(y) &= \frac{1}{2}\left[\sin(x-y) + \sin(x+y)\right]
+            \end{align*}
+      \end{minipage}
+
+      \newpage
+      
+   \subsection*{Komplexe Zahlen und Integrale}
+      \subsubsection*{Komplexer Zeiger mit Einheitskreis und Punkten}
+
+         \begin{center}
+            \begin{tabular}{c c} 
+            \raisebox{3 cm}{ 
+               \begin{minipage}[t]{0.45\textwidth}
+                  \renewcommand{\arraystretch}{1.5}
+                  \begin{tabular}{|c|c|c|c|c|c|}   % chktex 44
+                  \hline   % chktex 44
+                  \textbf{\(\varphi\)} & \textbf{\(0\)} & \textbf{\(\frac{\pi}{2}\)} & \textbf{\(\pi\)} & \textbf{\(\frac{3\pi}{2}\)} & \textbf{\(2\pi\)} \\
+                  \hline   % chktex 44
+                  \(x = e^{j\varphi}\) & \(1\) & \(j\) & \(-1\) & \(-j\) & \(1\) \\
+                  \hline   % chktex 44
+                  Punkt & \((1,0)\) & \((0,1)\) & \((-1,0)\) & \((0,-1)\) & \((1,0)\) \\
+                  \hline   % chktex 44
+                  \noalign{\vskip 10pt}
+                  \hline   % chktex 44
+                  \(-\varphi\) & \textbf{\(0\)} & \textbf{\(-\frac{\pi}{2}\)} & \textbf{\(-\pi\)} & \textbf{\(-\frac{3\pi}{2}\)} & \textbf{\(-2\pi\)} \\
+                  \hline   % chktex 44
+                  \(x = e^{-j\varphi}\) & \(1\) & \(-j\) & \(-1\) & \(j\) & \(1\) \\
+                  \hline   % chktex 44
+                  Punkt & \((1,0)\) & \((0,-1)\) & \((-1,0)\) & \((0,1)\) & \((1,0)\) \\
+                  \hline   % chktex 44
+               \end{tabular}
+               \end{minipage}
+               }
+               &
+               \begin{minipage}[t]{0.55\textwidth} 
+                  \begin{center}
+                     \begin{tikzpicture}[scale=1.8] 
+                     % Der Kreis
+                     \draw[thick] (1,0) circle(1.25); 
+
+                     % Achsen
+                     \draw[->] (-0.5,0) -- (2.5,0) node[anchor=west] {\text{Re}(x)};
+                     \draw[->] (1,-1.5) -- (1,1.55) node[anchor=south] {\text{Im}(x)};
+
+                     % Punkte auf dem Einheitskreis
+                     \filldraw[blue] (2.25 , 0) circle(0.04);
+                     \filldraw[blue] (1 , 1.25) circle(0.04); 
+                     \filldraw[blue] (-0.25 , 0) circle(0.04);
+                     \filldraw[blue] (1 , -1.25) circle(0.04);
+
+                     % Winkelbeschriftungen
+                     \node at (2.35, -0.2) {\(1\)};
+                     \node at (0.85, 1.425) {\(1\)};
+                     \node at (-0.45, -0.2) {\(-1\)};
+                     \node at (0.8, -1.45) {\(-1\)};
+                     \end{tikzpicture}
+                  \end{center}
+               \end{minipage}
+            \end{tabular}
+      \end{center}
+
+
+      \begin{minipage}[t]{0.48\textwidth}
+      \subsubsection*{Grundlagen komplexer Zahlen}
+         \begin{align*}
+            j^2 &= -1 \\
+            -j^2 &= 1 \\
+            j &= \sqrt{-1} \\
+            j^{-1} &= \frac{1}{j} = -j \\
+            j^3 &= j \cdot j^2 = -j \\
+            j^4 &= (j^2)^2 = 1   % chktex 3
+         \end{align*}    
+
+      \subsubsection*{Darstellung von Sinus und Kosinus}
+         \begin{align*}
+            e^{j\varphi} &= \cos(\varphi) + j\sin(\varphi) \\
+            \cos(\varphi) &= \frac{1}{2}\left(e^{j\varphi} + e^{-j\varphi}\right) \\
+            \sin(\varphi) &= \frac{1}{2j}\left(e^{j\varphi} - e^{-j\varphi}\right)
+         \end{align*}
+      \subsection*{Betragsdefinitionen}
+         \begin{align*}
+            |x| &= \sqrt{x^2} \quad (x \in \mathbb{R}) \\
+            |z| &= \sqrt{\mathrm{Re}(z)^2 + \mathrm{Im}(z)^2} \quad (z \in \mathbb{C}) \\ % chktex 3
+            z &= x + j\,y, \\
+            |z|^2 &= z \cdot z^* = \mathrm{Re}(z)^2 + \mathrm{Im}(z)^2 \\  % chktex 3
+            |e^{\,j\varphi}| &= 1 \\
+            |e^{-\,j\varphi}| &= 1 \\
+         \end{align*}
+
+      \end{minipage}
+      \hfill
+      \begin{minipage}[t]{0.48\textwidth}
+         \subsection*{Integrale}
+
+            \noindent
+            \(\int \frac{1}{x^n} \, dx = \frac{x^{1-n}}{1-n} + C, \quad \text{für } n \neq 1\) \\[8pt]
+            \(\int x \sqrt{X} \, dx = -\frac{1}{3} \sqrt{X^3} \quad \text{mit } X = a^2 - x^2\)\\[8pt]
+            \(\int x^2 \sqrt{X} \, dx = -\frac{x}{4} \sqrt{X^3} + \frac{a^2}{8} \left( x \sqrt{X} + a^2 \arcsin \frac{x}{a} \right)\)\\[8pt]
+
+            \(\int \sin(ax) \, dx = -\frac{1}{a} \cos(ax)\) \\[8pt]
+            \(\int \sin^2(ax) \, dx = \frac{1}{2}x - \frac{1}{4a} \sin(2ax)\) \\[8pt]
+            \(\int x \sin(ax) \, dx = \frac{\sin(ax)}{a^2} - \frac{x \cos(ax)}{a}\) \\[8pt]
+            \(\int x^2 \sin(ax) \, dx = \frac{2x}{a^2} \sin(ax) - \left( \frac{x^2}{a} - \frac{2}{a^3} \right) \cos(ax)\) \\[8pt]
+
+            \(\int \cos(ax) \, dx = \frac{1}{a} \sin(ax)\) \\[8pt]
+            \(\int \cos^2(ax) \, dx = \frac{1}{2}x + \frac{1}{4a} \sin(2ax)\) \\[8pt]
+            \(\int x \cos(ax) \, dx = \frac{\cos(ax)}{a^2} + \frac{x \sin(ax)}{a}\) \\[8pt]
+            \(\int x^2 \cos(ax) \, dx = \frac{2x}{a^2} \cos(ax) + \left( \frac{x^2}{a} - \frac{2}{a^3} \right) \sin(ax)\) \\[8pt]
+
+            \(\int x e^{a x} \, dx = \frac{e^{a x}}{a^2} \cdot (a x - 1)\)
+      \end{minipage}
+
+      \newpage
+
+      \section*{Wahrscheinlichkeitsrechnung und Statistik}
+         \noindent
+         \begin{minipage}[t]{0.45\textwidth}
+            \subsection*{Parameter einer Verteilung}
+            \begin{itemize}
+               \item \textbf{Erwartungswert (Mittelwert):} 
+               \[
+                  \mu = \mathbb{E}[X]
+               \]
+               \item \textbf{Varianz oder Streuung:} 
+               \[
+                  \sigma^2 = \text{Var}(X) = \mathbb{E}[(X - \mu)^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2  % chktex 3
+               \]
+               \item \textbf{Standardabweichung:}
+               \[
+                  \sigma = \sqrt{\text{Var}(X)}
+               \]
+            \end{itemize}
+         \end{minipage}
+         \hfill
+         \begin{minipage}[t]{0.45\textwidth}
+            \subsection*{Rechenregeln für Erwartungswerte}
+               \begin{itemize}
+
+                  \item \textbf{Linearität des Erwartungswertes:}
+                  \[
+                  \mathbb{E}[aX + bY] = a \mathbb{E}[X] + b \mathbb{E}[Y]
+                  \]
+
+                  \item \textbf{Erwartungswert einer Konstanten:}
+                  \[
+                  \mathbb{E}[c] = c, \quad \text{für eine Konstante } c
+                  \]
+
+
+
+                  \item \textbf{Multiplikation unabhängiger Zufallsvariablen:}
+                  \[
+                  \mathbb{E}[XY] = \mathbb{E}[X] \cdot \mathbb{E}[Y]
+                  \]
+
+
+                  \item \textbf{Erwartungswert einer Summe:}
+                  \[
+                  \mathbb{E}\left[\sum_{i=1}^n X_i\right] = \sum_{i=1}^n \mathbb{E}[X_i]
+                  \]
+
+
+                  \item \textbf{Quadratische Form:}
+                  \[
+                  \mathbb{E}[X^2] = \text{Var}(X) + (\mathbb{E}[X])^2   % chktex 3
+                  \]
+
+
+               \end{itemize}
+         \end{minipage}
+         \medskip
+         \hrule
+
+         \begin{center}
+            \subsection*{Verteilungen}
+         \end{center}
+
+         \begin{table}[h!]
+            \centering
+            \renewcommand{\arraystretch}{1.5}
+               \begin{tabular}{|l|c|c|c|c|c|}   % chktex 44
+                  \hline   % chktex 44
+                  & \textbf{\(W(X)\)} & \textbf{\(f(x)\)} & \textbf{\(E[X]\)} & \textbf{\(\text{Var}(X)\)} & \textbf{Diagramm der Dichte} \\ \hline % chktex 44
+                  Gleichverteilung &
+                  \([a, b]\) &
+                  \(\displaystyle f(x) = 
+                  \begin{cases} 
+                     \frac{1}{b-a}, & a \leq x \leq b \\ 
+                     0, & \text{sonst}
+                  \end{cases}\) &
+                  \(\frac{a+b}{2}\) &
+                  \(\frac{(b-a)^2}{12}\) &   % chktex 3
+                  \begin{tikzpicture}[scale=0.6]
+                     \draw[->] (0,0) -- (4.5,0) node[right] {\(x\)};
+                     \draw[->] (0,0) -- (0,2.5) node[above] {\(f(x)\)};
+                     \draw[thick] (1,0) -- (1,2) -- (3,2) -- (3,0);
+                     \node[below] at (1,0) {\(a\)};
+                     \node[below] at (3,0) {\(b\)};
+                     \node[right] at (3,2) {\(\frac{1}{b-a}\)};
+                  \end{tikzpicture} \\ \hline   % chktex 31, % chktex 44
+
+                  Normalverteilung &
+                  \(\mathbb{R}\) &
+                  \(\displaystyle f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}\) & % chktex 3
+                  \(\mu\) &
+                  \(\sigma^2\) &
+                  \begin{tikzpicture}[scale=0.6]
+                     \draw[->] (-3.5,0) -- (3.5,0) node[right] {\(x\)};
+                     \draw[->] (0,0) -- (0,2.5) node[above] {\(f(x)\)};
+                     \draw[thick, domain=-3:3, samples=100] 
+                     plot (\x,{2*exp(-\x*\x/2)});
+                     \node[below] at (0,0) {\(\mu\)};
+                     \node[right] at (0.5,2) {\(\frac{1}{\sigma\sqrt{2\pi}}\)};
+                  \end{tikzpicture} \\ \hline   % chktex 31, % chktex 44
+               \end{tabular}
+               \caption*{\footnotesize Normalverteilung \(=\) Standardnormalverteilung \(=\) Gauß-Verteilung}
+               \caption*{\footnotesize Gleichv. \(=\) Rechteckv. \(=\) Uniformv. \(=\) Konstante Verteilung \(=\) Diskrete Gleichv. \(=\) Stetige Gleichv.}
+         \end{table}
+
+         \begin{table}[h!]
+            \centering
+            \footnotesize
+            \renewcommand{\arraystretch}{2} 
+            \setlength{\tabcolsep}{9pt} 
+            \begin{tabular}{|c|c|c|c|c|}  % chktex 44
+            \hline   % chktex 44
+            \textbf{Eigenschaft} & Verteilung & Parameter & Dichtefunktion \(f_x(X)\) & Verteilungsfunktion \(F_x(X)\) \\ \hline  % chktex 44
+            \textbf{Beschreibung} & Normal- oder Gaußverteilung & \(\mu = 0, \sigma = 1\) & 
+            \(\displaystyle f(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}\) & 
+            \(\displaystyle F(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{t^2}{2}} dt\) \\ \hline % chktex 44
+            \end{tabular}
+            \caption*{\footnotesize Normal- und Gaußverteilung beschreibt dasselbe (Synonyme)}
+         \end{table}
+
+\newpage
+
+%%% Wahrscheinlichkeit und Zufallsvariablen =======================================================
+\section*{\underline{Prüfungsaufgabe 1: Teil 1}}
+
+\pagecolor{Aufgabe1Teil1}
+
+   \section*{Wahrscheinlichkeit}
+
+   \noindent
+   \begin{minipage}[t]{0.45\textwidth}
+      \subsection*{Rechengesetze}
+
+      \underline{Additionssatz} \\[5pt]
+         \(P(A \cup B) = P(A) + P(B) - P(A \cap B)\) \\[5pt]
+         \(P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)\) \\
+
+      \underline{Komplementärereignis} \\[5pt]
+         \(P(\overline{A}) = 1 - P(A)\) \\[5pt]
+         \(P(\overline{A} \mid B) = 1 - P(A \mid B)\) \\
+
+      \underline{Zerlegung eines Ereignisses} \\[5pt]
+         \(P(A) = P(A \cap B) + P(A \cap \overline{B})\) \\
+
+      \underline{Kommutativgesetz} \\[5pt]
+         \(A \cup B = B \cup A\) \\[5pt]
+         \(A \cap B = B \cap A\) \\
+
+      \underline{Assoziativgesetz} \\[5pt]
+         \(A \cup (B \cup C) = (A \cup B) \cup C\) \\[5pt]
+         \(A \cap (B \cap C) = (A \cap B) \cap C\) \\
+
+      \underline{Distributivgesetz} \\[5pt]
+         \(A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\) \\[5pt]
+         \(A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\) \\
+
+      \underline{De Morgan'sche Gesetze} \\[5pt]
+         \(\overline{A \cap B} = \overline{A} \cup \overline{B}\) \\[5pt]
+         \(\overline{A \cup B} = \overline{A} \cap \overline{B}\) \\
+
+      \underline{Unabhängige Ereignisse} \\[5pt]
+         \text{stochastisch \textbf{unabhängig}} \\
+            \(P(A \cap B) = P(A) \cdot P(B)\)  \\[5pt]
+         \text{stochastisch abhängig} \\[5pt]
+            \(P(A \cap B) \neq P(A) \cdot P(B)\) \\
+   \end{minipage}
+   \hfill
+   \begin{minipage}[t]{0.45\textwidth}
+
+      \section*{Bedingte Wahrscheinlichkeit} 
+         \(P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad \text{falls } P(B) > 0\)
+
+      \section*{Formel der totalen Wahrscheinlichkeit}
+         \(P(A) = \sum_{i=1}^N P(A \mid B_i) \cdot P(B_i)\)
+
+      \section*{Bayes}
+         \textbf{falls \(P(B)\) nicht bekannt} \\[10pt]
+            \(P(A_k \mid B) = \frac{P(B \mid A_k) \cdot P(A_k)}{\sum_{i=1}^N P(B \mid A_i) P(A_i)}\) \\[10pt]
+         \textbf{falls \(P(B)\) bekannt} \\[10pt]
+            \(P(A_k \mid B) = \frac{P(B \mid A_k) \cdot P(A_k)}{P(B)}\)
+
+      \section*{Weitere Formeln}
+
+         \textbf{Multiplikationsregel mit bedingter \\ Wahrscheinlichkeit} \\[10pt]
+            \(P(A_1 \cap A_2 \mid B) = P(A_1 \mid B) \cdot P(A_2 \mid B)\) \\
+
+         \textbf{Relative Häufigkeit} \\[5pt]
+            \(n(A)\): Anzahl der Häufigkeit / Eintreten \\[5pt]
+            \(N\): Gesamtanzahl der Versuche / Beobachtungen \\[5pt]
+            \(P(A) = \frac{n(A)}{N}\)
+
+      \section*{Baumdiagramm}
+      \begin{tikzpicture}[sibling distance=3cm]
+         \node {P\((\cdot)\)}
+         child {node {A} 
+         child {node {D} 
+         child {node {X} edge from parent node [left][yshift = 0.2cm] {\(\frac{4}{7}\)}}
+         child {node {Y = \(\overline{X}\)} edge from parent node [right][yshift = 0.2cm] {\(\frac{3}{7}\)}}
+         edge from parent node [left][yshift = 0.2cm] {\(\frac{1}{2}\)}}
+         child {node {E = \(\overline{D}\)} edge from parent node [right][yshift = 0.2cm] {\(\frac{1}{2}\)}}
+         edge from parent node [left][yshift = 0.2cm] {\(\frac{3}{10}\)}
+         } 
+         child {node {B = \(\overline{A}\)} edge from parent node [right][yshift = 0.2cm] {\(\frac{7}{10}\)}};
+      \end{tikzpicture}
+
+   \end{minipage}
+   
+   
+\newpage
+
+%%% Prüfungsaufgabe 1: Teil 2 =====================================================================
+\section*{\underline{Prüfungsaufgabe 1: Teil 2}}
+
+\pagecolor{Aufgabe1Teil2}
+
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+
+\section*{Diskrete Wahrscheinlichkeit}
+
+   \subsection*{Wahrscheinlichkeitsdichtefunktion}
+
+   \begin{enumerate}
+      \item \(\int_{-\infty}^{\infty} f_X(x) \, dx = 1\)
+      \item Wahrscheinlichkeit ist nicht negativ!
+      \item \(f_X(x)\) ist stückweise kontinuierlich
+   \end{enumerate}
+
+   \(f_X(x) = \frac{dF_X(x)}{dx}\)
+
+   \subsection*{Erwartungswert}
+
+      \(\mu = E[X]\)\\[10pt]
+      \(E[X] = \int_{-\infty}^{\infty} x \, f_X(x) \, dx\)  \\[10pt]
+      \(E[X^2] = \int_{-\infty}^{\infty} x^2 \, f_X(x) \, dx\) \\[5pt]
+
+      \textbf{Bedingter Erwartungswert}
+
+      \begin{align*}
+         E[X \mid X > \mathbf{a}]    &= \frac{1}{P(X > \mathbf{a})} \int_{\mathbf{a}}^{\infty} x f_X(x) \, dx \\[5pt]
+         &= \frac{1}{1 - F_X(\mathbf{a})} \int_{\mathbf{a}}^{\text{Letzte Grenze}} x f_X(x) \, dx
+      \end{align*}
+
+   \subsection*{Varianz}
+
+      \(\sigma^2 = \text{Var}(X) = E[X^2] - (E[X])^2\)  % chktex 3
+
+   \end{minipage}
+   \hfill
+   \begin{minipage}[t]{0.45\textwidth}
+
+   \subsection*{Verteilungsfunktion}
+
+      \(F_X(-\infty) = 0\) \\[10pt]
+      \(0 \leq F_X(x) \leq 1\) \\[10pt]
+      \(F_X(\infty) = 1\) \\[10pt]
+      \(F_X(x_1) = \int_{-\infty}^{x} f_X(t) \, dt\) \\[10pt]
+      \(F_X(x_2) = \int_{-\infty}^{x} f_X(t) \, dt + F_X(x_1)\) \\[10pt]
+      \(F_X(x) = P(\{X \leq x\}) = \int_{-\infty}^{x} f_X(t) \, dt\) \\[10pt]
+      \(P(X > x) = \int_{x}^{\text{Grenze Ende}} f_X(x) \, dx\)
+      \begin{align*}
+         P(\{x_1 < X < x_2\})    &= F_X(x_2) - F_X(x_1) \\[10pt]
+         &= \int_{x_1}^{x_2} f_X(t) \, dt
+      \end{align*}
+      \[
+      F_X(x) = 
+      \begin{cases}
+         0, & \text{für } x > \text{Grenze 1} \\[5pt]
+         \text{\ldots}, & \text{Grenze 1} \le x \le \text{Grenze 2} \\[5pt]
+         1, & \text{für } x > \text{Grenze 2}
+      \end{cases}
+      \] 
+
+      \(F_{XY}(x, y) = F_X(x) \cdot F_Y(y)\)
+   \end{minipage}
+\newpage
+
+%%% Prüfungsaufgabe 2 und 3 =======================================================================
+
+\section*{\underline{Prüfungsaufgabe 2 und 3}}
+
+\pagecolor{Aufgabe2}
+
+\tableofcontents
+\newpage
+
+\noindent
+
+\section{Kovarianz}
+
+   \subsection*{Eigenschaften der Kovarianz}
+      \begin{itemize}
+         \item \textbf{Unkorrelierte Variablen:} Falls \( c_{X_1X_2}(\kappa) = 0 \), sind \( X_1 \) und \( X_2 \) unkorreliert. Bedeutet also, dass keine lineare Beziehung zwischen den Variablen besteht.
+         \item \textbf{Orthogonalität:} Falls \( r_{X_1 X_2} = 0 \), sind die Variablen orthogonal.
+         \item \textbf{Unabhängigkeit:} Wenn \( X_1 \) und \( X_2 \) unabhängig sind, gilt:
+         \[
+            f_{X_1 X_2}(x_1, x_2) = f_{X_1}(x_1) f_{X_2}(x_2) \quad \text{und} \quad c_{X_1 X_2} = 0.
+         \]
+      \end{itemize}
+
+\newpage
+
+\section{SOMF, WSS}
+   \subsection{Second-Order Moment Function (SOMF)}
+      Die \textbf{Second-Order Moment Function (SOMF)} misst die Ähnlichkeit eines Zufallsprozesses mit einer zeitverschobenen Version desselben Prozesses.
+
+      \begin{itemize}
+         \item SOMF ist definiert als: 
+         \[
+         r_{XX}(n+k, n) = E[X(n+k) \cdot X(n)]
+         \]
+         \item Für einen komplexen Zufallsprozess \( X(n) \) ist die SOMF definiert als:
+         \[
+         r_{XX}(n_1, n_2) = E[X(n_1) \cdot X^*(n_2)].
+         \]
+      \end{itemize}
+
+   \subsection{Wide-Sense Stationarity (WSS)}
+      Ein Zufallsprozess \( X(n) \) ist \textbf{Wide-Sense Stationary (WSS)}, wenn:
+      \begin{enumerate}
+         \item Der Erwartungswert \( E[X(n)] \) konstant ist.
+         \item Die SOMF nur von der Zeitdifferenz \( \kappa \) abhängt:
+         \[
+         r_{XX}(n+\kappa, n) = r_{XX}(\kappa)
+         \]
+      \end{enumerate}
+
+   \subsection{Cross-Second-Order Moment Function}
+      Die \textbf{Cross-SOMF} beschreibt die Ähnlichkeit zwischen zwei Zufallsprozessen \( X_1(n) \) und \( X_2(n) \) \textbf{IM NICHT STATIONÄREN ZUSTAND}:
+      \[
+         r_{X_1 X_2}(n_1, n_2) = E[X_1(n_1) \cdot X_2(n_2)].
+      \]
+
+      \begin{itemize}
+         \item Wenn \( X_1(n) \) und \( X_2(n) \) gemeinsam WSS sind, hängt die Cross-SOMF nur von \( \kappa\) ab:
+         \[
+            r_{X_1 X_2}(\kappa) = E[X_1(n + \kappa) \cdot X_2(n)], \quad \text{und somit ergibt sich}
+         \]
+         \begin{center}
+            \(c_{X_1 X_2}= r_{X_1 X_2}(\kappa) = E[X_1(n + \kappa) \cdot X_2(n)]\)
+         \end{center} 
+      \end{itemize}
+
+   \subsection{Central Second-Order Moment Function (Kovarianzfunktion)}
+      Die zentrale SOMF, auch \textbf{Kovarianzfunktion} genannt, wird definiert als:
+      \[
+         c_{XX}(n+\kappa, n) = E[(X(n+\kappa) - E[X(n+\kappa)]) \cdot (X(n) - E[X(n)])], \quad \text{bzw.}
+      \] 
+      \begin{center}
+         \(c_{XX}(n+\kappa, n) = E[X(n+\kappa) \cdot X(n)] - E[X(n+\kappa)] \cdot E[X(n)]\), \quad \text{falls \(E[X(n)] = 0\)} \\[10pt]
+      \(c_{XX}(n+\kappa, n) = r_{XX} = E[X(n+\kappa) \cdot X(n)]\)
+      \end{center}
+      \medskip
+      \begin{itemize}
+         \item Die Kovarianzfunktion kann durch die SOMF ausgedrückt werden:
+         \[
+         c_{XX}(n+\kappa, n) = r_{XX}(n+\kappa, n) - E[X(n+\kappa)]E[X(n)].
+         \] \\[10pt]
+         \item Für zwei Prozesse \( X(n) \) und \( Y(n) \) verwenden wir die \textbf{Kreuzkovarianzfunktion}:
+         \[
+         c_{XY}(n+\kappa, n) = r_{XY}(n+\kappa, n) - E[X(n+\kappa)]E[Y(n)],
+         \]
+         \[
+         c_{XY}(n+\kappa, n) = E[X(n+k)Y(n)] - E[X(n+\kappa)]E[Y(n)].
+         \] \\[5pt]
+   \end{itemize}
+
+   Des Weiteren gilt noch: \(c_{XY}(k) = c_{YX}(-k)\)
+
+
+\newpage
+
+\section{Leistungsspektraldichte (PSD) und Spektrum}
+\subsection{Leistungsspektraldichte}
+
+   \subsubsection{Weißes Rauschen}
+
+   Ein \textbf{weißes Rauschen} ist ein Zufallsprozess \(X(n)\), dessen \textbf{Leistungsdichtespektrum (Power Spectral Density, PSD)} konstant über alle Frequenzen ist:
+   \[
+   S_{XX}(e^{j\omega}) = \sigma_X^2
+   \]
+
+   \subsubsection*{Eigenschaften}
+      \begin{enumerate}
+         \item \textbf{Konstante PSD:} Das PSD bleibt unabhängig von der Frequenz konstant. Dies bedeutet, dass das weiße Rauschen eine gleichmäßige Energieverteilung über alle Frequenzen hat.
+         \item \textbf{Zweite Momentfunktion (SOMF):} Die SOMF für einen weißen Prozess wird durch die inverse Fourier-Transformation der PSD erhalten:
+         \[
+            r_{XX}(\kappa) = \sigma_X^2 \delta(\kappa)
+         \]
+            wobei \(\delta(\kappa)\) die Kronecker-Delta-Funktion ist, definiert als:
+         \[
+         \delta(\kappa) = 
+         \begin{cases} 
+            1, & \text{wenn } \kappa = 0 \\
+            0, & \text{wenn } \kappa \neq 0
+         \end{cases}
+         \]
+            \item \textbf{Statistik:} Die Zufallsvariablen eines weißen Rauschens sind unkorreliert, haben eine konstante Varianz \(\sigma_X^2\) und einen Erwartungswert von 0.
+         \item Unabhängigkeit und identische Verteilung sind klassische Eigenschaften von Rauschprozessen.
+      \end{enumerate}
+
+   \subsubsection{Kreuzleistungsspektraldichte CPSD}
+      Die \textbf{Cross-Power Spectral Density (CPSD)} beschreibt die Frequenzabhängigkeit der statistischen Korrelation zwischen zwei zufälligen Prozessen \(X(n)\) und \(Y(n)\). Dies ist ein wesentlicher Begriff in der Frequenzbereichsanalyse, insbesondere bei der Untersuchung von Beziehungen zwischen zwei Prozessen.
+
+   \subsubsection*{Eigenschaften}
+      \begin{enumerate}
+      \item \textbf{Symmetrie}:
+      \[
+         S_{XY}(e^{j\omega}) = S_{YX}(e^{j\omega})^*  % chktex 3
+      \]
+      Wenn \(X(n)\) und \(Y(n)\) reellwertig sind, dann gilt:
+      \[
+         S_{XY}(e^{j\omega}) = S_{YX}(e^{-j\omega})
+      \]
+
+      \item \textbf{Reale und imaginäre Anteile}:
+      \begin{itemize}
+         \item Der reale Anteil von \(S_{XY}(e^{j\omega})\) ist gerade.
+         \item Der imaginäre Anteil von \(S_{XY}(e^{j\omega})\) ist ungerade.
+      \end{itemize}
+
+      \item \textbf{Orthogonalität}:
+      \[
+         \text{Wenn } X(n) \text{ und } Y(n) \text{ orthogonal sind, dann gilt: } S_{XY}(e^{j\omega}) = 0
+      \]
+      \end{enumerate}
+
+   \newpage
+
+   \subsection{Definition des Spektrums}
+
+      Das Spektrum eines stationären Zufallsprozesses \(X(n)\) wird definiert als die Fourier-Transformation der Kovarianzfunktion:
+      \[
+         C_{XX}(e^{j\omega}) = \sum_{n=-\infty}^{\infty} c_{XX}(n) e^{-j\omega n}
+      \]
+
+   \subsubsection{Eigenschaften}
+      \begin{enumerate}
+      \item Die Spektralfunktion \(C_{XX}(e^{j\omega})\) existiert und ist beschränkt sowie gleichmäßig stetig, wenn:
+      \[
+         \sum_{n} |c_{XX}(n)| < \infty
+      \]
+         \item Die Inversion ist gegeben durch:
+      \[
+         c_{XX}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} C_{XX}(e^{j\omega}) e^{j\omega n} d\omega
+      \]
+      \item \(C_{XX}(e^{j\omega})\) ist:
+      \begin{itemize}
+         \item Reellwertig
+         \item \(2\pi\)-periodisch
+         \item Nicht-negativ
+      \end{itemize}
+      \end{enumerate}
+
+   \subsubsection{Kreuzspektrum}
+      Für zwei gemeinsam stationäre Zufallsprozesse \(X_1(n)\) und \(X_2(n)\) ist das Kreuzspektrum definiert als:
+      \[
+         C_{X_1X_2}(e^{j\omega}) = \sum_{n=-\infty}^\infty c_{X_1X_2}(n) e^{-j\omega n}
+      \]
+      Mit der Eigenschaft:
+      \[
+         C_{X_1X_2}(e^{j\omega}) = C_{X_2X_1}(e^{j\omega})^*   % chktex 3
+      \]
+      Die Inversion lautet:
+      \[
+         c_{X_1X_2}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} C_{X_1X_2}(e^{j\omega}) e^{j\omega n} d\omega
+      \]
+
+   \subsubsection{Reellwertige Prozesse}
+      Wenn \(X_1(n)\) und \(X_2(n)\) reellwertig sind, gilt:
+      \begin{itemize}
+         \item \(C_{X_1X_2}(e^{j\omega}) = C_{X_2X_1}(e^{-j\omega})\)
+         \item \(C_{X_1X_2}(e^{j\omega}) = C_{X_1X_2}(e^{-j\omega})^* = C_{X_2X_1}(e^{-j\omega}) = C_{X_2X_1}(e^{j\omega})^*\)  % chktex 3
+      \end{itemize}
+
+\newpage
+\section{FIR und IIR Filter}
+   \subsection{Einführung Digitale Filterung}
+   \subsubsection{Allgemeines Konzept der Filterung}
+      \begin{itemize}
+         \item \textbf{Filterung} dient der Reduktion oder Verstärkung bestimmter Signalanteile.
+         \item Digitale Filter arbeiten mit \textbf{abgetasteten, zeitdiskreten Signalen} und lassen sich in zwei Haupttypen unterteilen:
+         \begin{enumerate}
+            \item \textbf{Finite Impulse Response (FIR):} Haben eine endliche Impulsantwort.
+            \item \textbf{Infinite Impulse Response (IIR):} Besitzen eine unendliche Impulsantwort.
+         \end{enumerate}
+         \item Der Frequenzbereich eines Filters wird durch die Übertragungsfunktion \(H(e^{j\omega})\) beschrieben:
+         \[
+            H(e^{j\omega}) = \frac{Y(e^{j\omega})}{X(e^{j\omega})}
+         \]
+         wobei \(X(e^{j\omega})\) und \(Y(e^{j\omega})\) die Fourier-Transformationen des Eingangs- und Ausgangssignals sind.
+      \end{itemize}
+
+   \smallskip
+
+   \subsubsection{Lineare Differenzengleichung mit konstanten Koeffizienten (LCCDE)}
+      \begin{itemize}
+         \item Zeitinvariante, lineare diskrete Systeme werden durch eine LCCDE beschrieben:
+         \[
+            \sum_{k=0}^{M} a_k y(n-k) = \sum_{r=0}^{N-1} b_r x(n-r)
+         \]
+         \item \textbf{FIR-System:} Hat \(M = 0\):
+         \[
+            y(n) = \sum_{r=0}^{\text{Ordnung}} b_r x(n-r)
+         \] \\[5pt]
+         \[
+            y(n) = \sum_{r=0}^{\text{Verzögerung} - 1} b_r x(n-r)
+         \]
+         \item \textbf{IIR-System:} Hat \(M > 0\):
+         \[
+            \sum_{k=0}^{M} a_k y(n-k) = \sum_{r=0}^{N-1} b_r x(n-r)
+         \]
+      \end{itemize}
+
+
+   \newpage
+   \subsection{Endliche Impulsantwort: FIR - Filter}  % chktex 8
+      \subsection*{Definition}
+         FIR-Filter sind lineare zeitinvariante Systeme mit einer endlichen Impulsantwort.\\ 
+         \\
+         \textbf{Differenzengleichung}:
+         \[
+            y(n) = \sum_{r=0}^{Information} b_r x(n-r), \quad \text{Information: Ordnung O = Verzögerung N - 1} % chktex 8
+         \]
+         Entspricht der Faltungsformel:
+         \[
+            y(n) = \sum_{k=-\infty}^{\infty} h(k)x(n-k) = \sum_{k=0}^{N-1} h(k)x(n-k)
+         \]
+         wobei \(h(k)\) die Impulsantwort des Filters darstellt.
+
+   \subsection*{Vergleich IIR und FIR}
+      \begin{enumerate}
+         \item \textbf{Stabilität}
+         \begin{itemize}
+            \item IIR-Filter erfordern zusätzliche Stabilitätskriterien.
+            \item FIR-Filter sind per Definition stabil.
+         \end{itemize}
+         \item \textbf{Lineare Phase}
+         \begin{itemize}
+            \item Es ist schwierig, eine lineare Phase mit einem IIR-Filter zu erreichen.
+            \item FIR-Filter ermöglichen eine perfekte lineare Phase.
+         \end{itemize}
+         \item \textbf{Effizienz}
+         \begin{itemize}
+            \item IIR-Filter erreichen Spezifikationen für den Amplitudengang effizienter.
+            \item IIR-Filter sind weniger rechenaufwendig als FIR-Filter.
+         \end{itemize}
+      \end{enumerate}
+
+   \newpage
+   \subsection{Unendliche Impulsantwort: IIR - Filter}   % chktex 8
+      \subsection*{Definition}
+         Ein IIR-Filter hat eine unendliche Impulsantwort.\\
+         \\
+         \textbf{Differenzengleichung:}
+         \[
+            \sum_{k=0}^M a_k y(n-k) = \sum_{r=0}^{N-1} b_r x(n-r)
+         \]
+         Die Übertragungsfunktion ist rational und wird dargestellt als:
+         \[
+            H(z) = \frac{\sum_{r=0}^{N-1} b_r z^{-r}}{1 + \sum_{k=1}^M a_k z^{-k}}
+         \]
+
+   \subsection*{Eigenschaften}
+      \begin{enumerate}
+         \item \textbf{Kausalität und Stabilität:}
+         \begin{itemize}
+            \item Für die Stabilität müssen die Wurzeln des Nennerpolynoms innerhalb des Einheitskreises im \(z\)-Bereich liegen (\(|z| < 1\)).
+         \end{itemize}
+         \item \textbf{Reelle und kausale Impulsantwort \(h(n)\):}
+         \begin{itemize}
+            \item Die Einheitspulsantwort \(h(n)\) ist reell, kausal und stabil.
+         \end{itemize}
+      \end{enumerate}
+
+   \subsection*{Vergleich IIR und FIR}
+      \begin{enumerate}
+         \item \textbf{Stabilität:}
+         \begin{itemize}
+            \item IIR-Filter erfordern zusätzliche Stabilitätskriterien.
+            \item FIR-Filter sind per Definition stabil.
+         \end{itemize}
+         \item \textbf{Lineare Phase:}
+         \begin{itemize}
+            \item Es ist schwierig, eine lineare Phase mit einem IIR-Filter zu erreichen.
+            \item FIR-Filter ermöglichen eine perfekte lineare Phase.
+         \end{itemize}
+         \item \textbf{Effizienz:}
+         \begin{itemize}
+            \item IIR-Filter erreichen Spezifikationen für den Amplitudengang effizienter.
+            \item IIR-Filter sind weniger rechenaufwendig als FIR-Filter.
+         \end{itemize}
+      \end{enumerate}
+
+   \newpage
+   \subsection{Lineare Filterung}
+
+      Die lineare Filterung beschreibt, wie ein stationärer Eingangssignalprozess \(X(n)\) durch ein lineares zeitinvariantes System (LTI-System) verarbeitet wird, um einen Ausgangssignalprozess \(Y(n)\) zu erzeugen. Das System wird durch seine Einheitspulsantwort \(h(n)\) charakterisiert. Die Beziehung zwischen Eingangs- und Ausgangssignal ist durch die Faltungsoperation gegeben:
+      \[
+         Y(n) = \sum_{\rho} h(\rho) X(n-\rho)
+      \]
+
+      Ein LTI-System ist \textbf{stabil}, wenn die folgende Bedingung erfüllt ist:
+      \[
+         \sum_\rho |h(\rho)| < \infty
+      \]
+
+   \subsubsection{Kovarianzfunktion und Spektrum der Ausgabe}
+      Die Kovarianzfunktion \(c_{YY}(\kappa)\) des Ausgangsprozesses \(Y(n)\) eines stabilen linearen Systems mit der Impulsantwort \(h(n)\) ist definiert als:
+      \[
+         c_{YY}(\kappa) = E[Y(n+\kappa)Y(n)]
+      \] \\
+      Ersetzt man \(Y(n)\) durch die gefilterte Version des Eingangssignals \(X(n)\):
+      \[
+         Y(n) = \sum_{\rho} h(\rho) X(n-\rho),
+      \]
+      führt dies zur Kovarianzfunktion:
+      \[
+         c_{YY}(\kappa) = \sum_{\rho}\sum_{\iota} h(\rho) h(\iota)^* c_{XX}(\kappa - \rho + \iota),   % chktex 3
+      \]
+      wobei \(c_{XX}(\kappa)\) die Kovarianzfunktion des Eingangssignals \(X(n)\) ist.
+
+   \subsubsection*{Spektrum des Ausgangssignals}
+      Durch Fourier-Transformation der Kovarianzfunktion ergibt sich die Spektraldichte des Ausgangssignals:
+      \[
+         C_{YY}(e^{j\omega}) = |H(e^{j\omega})|^2 C_{XX}(e^{j\omega}),
+      \]
+      wobei:
+      \begin{itemize}
+         \item \(H(e^{j\omega})\) die Übertragungsfunktion des Filters ist,
+         \item \(C_{XX}(e^{j\omega})\) die Spektraldichte des Eingangssignals beschreibt.
+      \end{itemize}
+
+   \subsubsection{Kreuzkovarianzfunktion und Kreuzspektrum}
+      Die Kreuz-Kovarianzfunktion des Ausgangssignals \(Y(n)\) und Eingangssignals \(X(n)\) eines stabilen LTI-Systems mit Impulsantwort \(h(n)\) ist definiert als:
+      \[
+         c_{YX}(\kappa) = E[Y(n+\kappa)X(n)]
+      \]
+      Durch Einsetzen von \(Y(n) = \sum_{\rho} h(\rho) X(n-\rho)\) ergibt sich:
+      \[
+         c_{YX}(\kappa) = \sum_\rho h(\rho) c_{XX}(\kappa-\rho)
+      \]
+      wobei \(c_{XX}(\kappa)\) die Autokovarianzfunktion des Eingangssignals \(X(n)\) ist.
+
+\newpage
+
+\section{Gefilterte Rauschprozesse: AR, MA und ARMA}
+   \subsection{Lineare Filterung von Zufallsprozessen plus Rauschen}
+      Lineare Filterung von stationären Zufallsprozessen \(X(n)\) in Kombination mit einem Rauschsignal \(V(n)\). Die Annahmen sind:
+      \begin{enumerate}
+         \item \(X(n)\) und \(V(n)\) sind stationär und unkorreliert
+         \item \(h(n)\), \(X(n)\) und \(V(n)\) sind reellwertig.
+      \end{enumerate}
+
+      Der Ausgang \(Y(n)\) des Systems wird berechnet durch:
+      \[
+         Y(n) = \sum_{\rho=-\infty}^\infty h(\rho)X(n-\rho) + V(n)
+      \]
+
+   \subsection{Autoregressives (AR) Modell}
+      Hauptidee des Filters besteht darin, das weiße Spektrum des Eingangssignals nach Wunsch zu formen.
+      \subsubsection{Definition}
+         Der AR-Prozess \(Y(n)\) der Ordnung \(p\) (AR(\(p\))) wird durch die \textbf{Differenzengleichung} definiert:  % chktex 36
+         \[
+            Y(n) + \sum_{k=1}^p a_k Y(n-k) = X(n),
+         \]
+         \textbf{Übertragungsfunktion:}
+         \[
+            H(e^{j\omega}) = \frac{1}{1 + \sum_{k=1}^p a_k e^{-j\omega k}}.
+         \]
+
+   \subsection{Filter mit gleitendem Mittelwert (MA)}
+      Das \textbf{Moving-Average} Modell beschreibt einen Zufallsprozess Y(n), bei dem der aktuelle Wert als Linearkombination aktueller und vorheriger Werte eines weißen Rauschens X(n) dargestellt wird. % chktex 36
+      \\
+      \textbf{Differenzengleichung:}
+      \[
+         Y(n) = X(n) + \sum_{l=1}^{q} b_l X(n-l),
+      \]
+      \\
+      \textbf{Übertragungsfunktion:}
+
+      Diese Gleichung kann in die Übertragungsfunktion transformiert werden:
+      \[
+         H(e^{j\omega}) = 1 + \sum_{l=1}^q b_l e^{-j\omega l}.
+      \]
+
+   \subsection{Autoregressives Modell des gleitenden Durchschnitts (ARMA)}
+      Der ARMA-Prozess \(Y(n)\) der Ordnung \(p\) und \(q\) (ARMA(\(p,q\))) wird durch die \textbf{Differenzengleichung} definiert:   % chktex 36
+      \[
+         Y(n) + \sum_{k=1}^p a_k Y(n-k) = X(n) + \sum_{l=1}^q b_l X(n-l),
+      \]
+      \textbf{Übertragungsfunktion:}
+      \[
+         H(e^{j\omega}) = \frac{1 + \sum_{l=1}^q b_l e^{-j\omega l}}{1 + \sum_{k=1}^p a_k e^{-j\omega k}}.
+      \]
+
+\newpage
+
+   \section{Optimale lineare Systeme}
+
+      \subsection{Wiener Filter}
+         \subsubsection{Hauptkonzept}
+            Der \textbf{Wiener Filter} ist ein lineares, zeitinvariantes Filter, das die Fehlerquadrate zwischen dem geschätzten Signal und dem tatsächlichen Signal minimiert. Dies basiert auf dem \textbf{Minimum Mean-Squared Error (MSE)-Kriterium}.
+
+            \paragraph{Minimum Mean Squared Error (MSE)}
+            \[
+               q(h) = E\left[ \epsilon^2(n) \right].
+            \]
+
+            \[
+               q(h) = E\left[\left(X(n) - \sum_{m} h(m)Y(n-m)\right)^2\right].   % chktex 3
+            \]
+            \\
+            Der Fehler \( \epsilon(n) \) ist definiert als:
+            \[
+               \epsilon(n) = X(n) - \hat{X}(n), \quad \hat{X}(n) = \sum_{m} h_{opt}(m) Y(n-m).
+            \]
+            Hierbei ist:
+            \begin{itemize}
+               \item \( q(h)\): Der mittlere quadratische Fehler
+               \item \( X(n) \): Das ursprüngliche Signal
+               \item \( \hat{X}(n)\): Die geschätzte Version des ursprünglichen Signals
+               \item \( Y(n) \): Das beobachtete Signal (Signal mit Rauschen überlagert)
+               \item \( h(n) \): Die Impulsantwort des Filters
+               \item \( \epsilon(n) \): Der Fehler
+            \end{itemize}
+
+         \subsubsection{Optimale Lösung \textbf{-} Optimierung}
+
+            \textbf{Orthogonalitätsprinzip} \\
+            Die Fehlerkomponente \(\epsilon(n)\) ist orthogonal zur beobachteten Komponente \(Y(n)\):
+            \[
+               c_{\epsilon Y}(\kappa) = E\left[ \epsilon(n + \kappa) Y(n) \right] = 0, \quad \forall \kappa \in \mathbb{Z}
+            \]
+            \\
+            \textbf{Optimale Filterantwort} \\
+            Im \textbf{Zeitbereich} ergibt sich die \textit{Wiener-Hopf-Gleichung}
+            \[
+               c_{XY}(\kappa) = \sum_{m =- \infty}^{\infty} h_{\text{opt}}(m) \ast c_{YY}(\kappa) 
+            \]
+            Im \textbf{Frequenzbereich} ergibt sich die optimale Filterantwort \( H_{\text{opt}}(e^{j\omega}) \)
+
+            \[
+               C_{XY}(e^{j\omega}) = H_{\text{opt}}(e^{j\omega}) \cdot C_{YY}(e^{j\omega}) 
+            \]
+
+            \[
+               H_{\text{opt}}(e^{j\omega}) = \frac{C_{XY}(e^{j\omega})}{C_{YY}(e^{j\omega})},
+            \]
+
+\newpage
+
+%%% Methode der kleinsten Quadrate ================================================================
+\section*{\underline{Prüfungsaufgabe 4}}
+\section*{Methode der kleinsten Quadrate}
+
+\pagecolor{Aufgabe4}
+
+\noindent
+   \begin{minipage}[t]{0.45\textwidth}
+
+      \subsection*{Grundlagen Matrizen}
+
+         \[
+         A = \begin{bmatrix}
+            a_1 & a_2 \\
+            b_1 & b_2
+         \end{bmatrix}
+         \]
+
+         \[
+            A^T = \begin{bmatrix}
+               a_1 & b_1 \\
+               a_2 & b_2
+         \end{bmatrix}
+         \]
+
+         \[
+            A^{-1} = \frac{1}{\det(A)} \begin{pmatrix} 
+               d & -b \\ 
+               -c & a 
+         \end{pmatrix} = \frac{1}{ad - bc} 
+         \begin{pmatrix} 
+            d & -b \\ 
+            -c & a 
+         \end{pmatrix}
+         \] \\
+
+         \textbf{1.}
+         \[
+            X^T X = \begin{pmatrix}
+               \sum_{i=1}^{N} x_i^2 & \sum_{i=1}^{N} x_i \\[15pt]
+               \sum_{i=1}^{N} x_i & \sum_{i=1}^{N} 1 
+         \end{pmatrix}
+         \] \\
+
+         \textbf{2.}
+         \[
+            X^T y = \begin{pmatrix}
+               \sum_{i}^{N} x_i y_i \\[10pt]
+               \sum_{i}^{N} y_i 
+            \end{pmatrix}
+         \] \\
+
+         \textbf{3.}
+         \[
+            \hat{\theta} = (X^T X)^{-1} X^T y   % chktex 3
+         \]
+
+         \[
+            \hat{\theta} = \begin{pmatrix}
+               \hat{\theta} \\ 
+               \hat{\theta_0}
+         \end{pmatrix} \Rightarrow \begin{matrix}
+            \hat{\theta} = x_2 \\ 
+            \hat{\theta_0} = x_1
+         \end{matrix} = \hat{\theta} = \begin{pmatrix}
+            x_2 \\
+            x_1
+         \end{pmatrix}
+         \] \\
+
+         \textbf{4.}
+         \[
+            \hat{y} = X \hat{\theta} + \epsilon(x)= \begin{pmatrix}
+               y_1 \\
+               y_2 \\
+               y_3 \\
+               y_4 \\
+               y_5 \\
+               \ldots
+            \end{pmatrix} = \begin{pmatrix}
+            x_1 & 1 \\
+            x_2 & 1 \\
+            x_3 & 1 \\
+            x_4 & 1 \\
+            x_5 & 1 \\
+            \ldots & \ldots
+            \end{pmatrix}   \begin{pmatrix}
+            \hat{\theta} \\
+            \hat{\theta_0}
+         \end{pmatrix} + \epsilon(x)
+         \] 
+   \end{minipage}
+      \hfill
+   \begin{minipage}[t]{0.45\textwidth}
+
+         \subsection*{Weitere Formeln}
+
+            \textbf{quadratische Abweichung} \\ 
+            \textbf{(quadratischer Fehler)}
+
+            \[
+               \epsilon = \sum_{i = 1}^{N} (y_i - \hat{y}_i)^2 % chktex 3
+            \] \\
+
+            \textbf{mittlere quadratische Abweichung} \\ 
+            \textbf{(mittlerer quadratischer Fehler)}
+            \[
+               \epsilon = \frac{1}{N} \sum_{i = 1}^{N} (y_i - \hat{y}_i)^2 % chktex 3
+            \] \\
+
+            \textbf{1. Stichprobenmittelwert für \(\bar{x}\) und \(\bar{y}\)} 
+            \[
+               \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i, \quad \bar{y} = \frac{1}{N} \sum_{i=1}^{N} y_i
+            \] \\
+
+            \textbf{2. Steigung \(\hat{\theta}\)} \\
+            \[
+               \hat{\theta} = \frac{\sum_{i=1}^{N} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{n = 1}^{N} (x_i - \bar{x})^2}  % chktex 3
+            \] \\
+
+            \textbf{3. Achsenabschnitt}
+            \[
+               \hat{\theta}_0 = \bar{y} - \hat{\theta} \bar{x}
+            \] \\
+
+            \textbf{4. Endformel}
+            \[
+               f(x) = \hat{y} = \hat{\theta}x_i + \hat{\theta}_0
+            \] \\
+   
+   \end{minipage}
+
+\end{document}
