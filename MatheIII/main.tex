@@ -1,0 +1,1445 @@
+% =====================================================================
+% Mathematik III für Elektrotechniker - Kurzreferenz
+% Autor: Kaan Büyükşahin 
+% Version: 1.0; 15.09.2025, 18:35:13 Uhr
+% Beschreibung: Kurzreferenz der Vorlesung Mathematik III für
+% Elektrotechniker
+% =====================================================================
+
+\documentclass[a4paper,11pt,oneside,open=any,parskip=half, DIV=15]{scrreprt}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[automark]{scrlayer-scrpage}
+\usepackage{newtxtext,newtxmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{booktabs} 
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,intersections,positioning,matrix,decorations.pathmorphing,patterns, shapes.geometric, decorations.markings}
+\usepackage[table]{xcolor}
+\usepackage{tcolorbox}
+\usetikzlibrary{matrix}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{paracol}
+\usepackage{comment}
+\usepackage{hyperref}
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=black,
+        urlcolor=blue,
+        citecolor=blue,
+        filecolor=blue,
+        menucolor=blue,
+        pdftitle={Mathematik III fuer Elektrotechniker - Kurzreferenz},  % chktex 8
+        pdfauthor={Kaan Büyüksahin},
+        pdfsubject={Mathematik III Kurzreferenz für Elektrotechniker},
+        pdfcreator={LaTeX mit hyperref},
+        pdfproducer={LaTeX},
+        pdfkeywords={Oberflächenintegrale, Flächenintegrale, Integralsätze, Divergenz, Gauß, Stokes, Nabla, Gradient, Greensche Formel, Transformation, Vektorfelder, Differentialgleichungen, Potenzreihenansätze, Lineare gewöhnliche Differentialgleichungen, Laplace-Transformation, Randwertaufgaben, Eigenwertaufgaben, Komplexe Differentiation, Cauchyscher Integralsatz, Cauchysche Integralformel, Laurentreihen, Residuen},
+        pdflang={de},
+        pdfstartview={FitH},
+        pdfpagelayout={OneColumn},
+        pdfpagemode={UseOutlines},
+        bookmarksnumbered=true,
+        bookmarksopen=true,
+        bookmarksopenlevel=1,
+        pdfnewwindow=true,
+        breaklinks=true,
+        pdfmenubar=true,
+        pdftoolbar=true,
+        pdfwindowui=true,
+        unicode=true,
+        pdfencoding=auto
+    }
+\usepackage{cleveref}
+
+
+\clearpairofpagestyles{}
+% Kopf- und Fußzeile ==================================================
+% oben: links Kursname, rechts aktuelle Überschrift
+\ohead{\headmark}
+
+% unten: links Autor, Mitte Seitenzahl, rechts Semester
+\ifoot{Mathematik III für Elektrotechniker\\Technische Universität Darmstadt\\Wintersemester 2025/2026}
+\ofoot{\pagemark}
+
+% Trennlinien
+\KOMAoptions{headsepline=true, footsepline=true}
+
+% Schrift der Kopf-/Fußzeile
+\setkomafont{pageheadfoot}{\normalfont\small}
+
+% Kopfzeilenhöhe (falls Warnung "headheight too small")
+\setlength{\headheight}{15pt}
+\setlength{\footheight}{36pt}
+
+% Auch auf Kapitelanfangsseiten Kopfzeile anzeigen
+\renewcommand*\chapterpagestyle{scrheadings}
+
+% Zur Sicherheit den Stil aktivieren (normalerweise nicht nötig)
+\pagestyle{scrheadings}
+
+% Titelseite Einstellungen ============================================
+\definecolor{farbe1}{HTML}{ccccff}
+\definecolor{farbe2}{HTML}{ae9ffe}
+\definecolor{farbe3}{HTML}{8f72fd}
+\definecolor{farbe4}{HTML}{7145fb}
+\definecolor{farbe5}{HTML}{5218fa}
+
+
+% Ausgewogene Textfarben ==============================================
+\colorlet{titlefg}{farbe5!10}    % 6% farbe5, 94% Weiß
+\colorlet{subtitlefg}{farbe5!10}  % 12% farbe5, 88% Weiß
+
+% Diagonaler Verlauf mit anderem Winkel ==============================
+\pgfdeclarehorizontalshading{titelseitefarben}{100bp}{ % chktex-file 36
+  color(0bp)=(farbe1);  % ebenfalls importantbox!
+  color(25bp)=(farbe2);
+  color(55bp)=(farbe3);
+  color(80bp)=(farbe4);
+  color(100bp)=(farbe5)
+}
+
+% Layout ==============================================================
+\newcommand{\TitleBlockWidth}{0.60\paperwidth}
+\newcommand{\TitleLineGap}{1.0em}
+
+% Makros ==============================================================
+\newcommand{\TitleText}[1]{\textcolor{titlefg}{#1}}
+\newcommand{\SubtitleText}[1]{\textcolor{subtitlefg}{#1}}
+
+% Matrix Laplace Markierung ===========================================
+\definecolor{matrixblau}{RGB}{30,144,255}
+
+% Formel Box ==========================================================
+\definecolor{lightviolet}{HTML}{c2bdff}
+\newtcolorbox{importantbox}{
+    colback=lightviolet,
+    colframe=white,
+    boxrule=0pt,
+    arc=5pt,
+    boxsep=8pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt
+}
+
+% =====================================================================
+\begin{document}
+\pagenumbering{gobble}
+
+% Titelseite ==========================================================
+\begin{titlepage}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    
+    \path[shade, shading=titelseitefarben, shading angle=320]
+    (current page.south west) rectangle (current page.north east);
+  
+  \node[align=center, text width=\TitleBlockWidth, inner sep=0pt]
+    at (current page.center) {%
+      {\sffamily\bfseries\fontsize{36pt}{42pt}\selectfont
+        \TitleText{Mathematik \, III}\\[\TitleLineGap]
+        \TitleText{für \, Elektrotechniker}
+      }\\[4.5em]
+      {\sffamily\bfseries\fontsize{23pt}{30pt}\selectfont
+        \SubtitleText{Kurzreferenz}
+      }%
+    };
+      
+  \end{tikzpicture}
+
+\end{titlepage}
+
+\pagecolor{white}
+\cleardoublepage{}
+
+
+% Einführung ==========================================================
+\section*{Einführung}
+\addcontentsline{toc}{section}{Einführung}
+   Liebe Studenten,
+
+   diese Zusammenfassung wurde für das Modul Mathematik~III für Elektrotechniker erstellt und dient als Kurzreferenz für Übungsaufgaben und Prüfungsvorbereitung.
+
+   Als Tutor für Mathematik~III für ET im WS25/26 bei PD~Dr.\ Schmidt habe ich die wesentlichen Inhalte aus Vorlesungen, Mitschriften und dem offiziellen Skript kompakt zusammengetragen. 
+
+   \textbf{Empfehlung zur Prüfungsvorbereitung:} Nutzt unbedingt die Mitschriften aus den Vorlesungen von PD~Dr.\ Schmidt im Moodle-Kurs, da diese oft wichtige Erklärungen und Hinweise enthalten, die für das Verständnis und insbesondere für die Prüfung relevant sind.
+
+   \vspace{0.5em}
+   \textbf{Wichtiger Hinweis:}
+   Diese Kurzreferenz ist inoffiziell und nicht autorisiert. Sie entstand ursprünglich als meine persönliche Lernzusammenfassung und wurde während meiner Tätigkeit als Tutor im WS25/26 aktualisiert. Sie wurde mit größter Sorgfalt erstellt, kann jedoch Fehler enthalten und ersetzt keinesfalls weder die Teilnahme an Vorlesungen und Übungen noch das Studium der offiziellen Unterlagen.\newline
+   Sie dient ausschließlich als ergänzende Lernhilfe zur Wiederholung und Strukturierung des Stoffes. Bitte überprüft alle Inhalte eigenständig; maßgeblich sind die offiziellen Materialien und die Mitschriften des Dozenten.
+
+   \vspace{1em}
+   Ich wünsche euch viel Erfolg beim Lernen und gutes Gelingen in der Prüfung!
+
+   \vspace{0.5em}
+   Mit freundlichen Grüßen,\\
+   Kaan Büyükşahin
+
+   \vspace{1em}
+   Tutor für Mathematik III für ET\\
+   Technische Universität Darmstadt\\
+   Fachbereich Mathematik\\
+   Veranstaltung: Mathematik~III für ET (WS25/26), gehalten von PD~Dr.\ Schmidt\\
+   Internetseite: \url{https://kaanbs.com}\\
+   Letzte Aktualisierung: \today
+
+% Inhaltsverzeichnis ==================================================
+\tableofcontents
+\cleardoublepage{}
+
+% Nummerierung ========================================================
+\pagenumbering{arabic}
+
+% Kapitel 1 ===========================================================
+\chapter{Oberflächenintegrale}
+
+%=== Wichtige Integrale ===============================================
+\renewcommand{\arraystretch}{1.8}
+      \begin{longtable}{{|c|c|}}
+      \hline % chktex 44
+      \textbf{Integral} & \textbf{Ergebnis ohne Konstante K} \\
+      \hline   % chktex 44
+      \hline   % chktex 44
+         \(\int x^n \, \mathrm{d}x\) & \(\frac{1}{n+1} x^{n+1}\) \\
+      \hline   % chktex 44
+         \(\int \frac{1}{x} \, \mathrm{d}x\) & \(\ln x\) \\
+      \hline   % chktex 44
+         \(\int \frac{1}{x+a} \, \mathrm{d}x\) & \(\ln(x+a)\) \\
+      \hline   % chktex 44
+         \(\int \frac{1}{\sqrt{x}} \,\mathrm{d}x\) & \(2\sqrt{x}\) \\
+      \hline   % chktex 44
+         \(\int e^{ax} \, \mathrm{d}x\) & \(\frac{1}{a} e^{ax}\) \\
+      \hline   % chktex 44
+         \(\int x e^{ax} \, \mathrm{d}x\) & \(\frac{ax-1}{a^2} e^{ax}\) \\
+      \hline   % chktex 44
+         \(\int x^2 e^{ax} \, \mathrm{d}x\) & \(\frac{e^{ax}}{a^3} (a^2 x^2 - 2ax + 2)\) \\
+      \hline   % chktex 44
+         \(\int e^{ax} \sin(bx) \, \mathrm{d}x\) & \(\frac{e^{ax}}{a^2 + b^2} (a \sin(bx) - b \cos(bx))\) \\
+      \hline   % chktex 44
+         \(\int e^{ax} \cos(bx) \, \mathrm{d}x\) & \(\frac{e^{ax}}{a^2 + b^2} (a \cos(bx) + b \sin(bx))\) \\
+      \hline   % chktex 44
+         \(\int \ln x \, \mathrm{d}x\) & \(x \ln x - x\) \\
+      \hline   % chktex 44
+         \(\int x \ln x \, \mathrm{d}x\) & \(x^2\left(\frac{\ln x}{2} - \frac{1}{4}\right)\) \\
+      \hline   % chktex 44
+         \(\int \sin(ax) \, \mathrm{d}x\) & \(-\frac{1}{a} \cos(ax)\) \\
+      \hline   % chktex 44
+         \(\int \sin^2(ax) \, \mathrm{d}x\) & \(\frac{1}{2}x - \frac{1}{4a} \sin(2ax)\) \\
+      \hline   % chktex 44
+         \(\int x \sin(ax) \, \mathrm{d}x\) & \(\frac{\sin(ax)}{a^2} - \frac{x \cos(ax)}{a}\) \\
+      \hline   % chktex 44
+         \(\int x^2 \sin(ax) \, \mathrm{d}x\) & \(\frac{2x}{a^2} \sin(ax) - \left(\frac{x^2}{a} - \frac{2}{a^3}\right) \cos(ax)\) \\
+      \hline   % chktex 44
+         \(\int \cos(ax) \, \mathrm{d}x\) & \(\frac{1}{a} \sin(ax)\) \\
+      \hline   % chktex 44
+         \(\int \cos^2(ax) \, \mathrm{d}x\) & \(\frac{1}{2}x + \frac{1}{4a} \sin(2ax)\) \\
+      \hline   % chktex 44
+         \(\int x \cos(ax) \, \mathrm{d}x\) & \(\frac{\cos(ax)}{a^2} + \frac{x \sin(ax)}{a}\) \\
+      \hline   % chktex 44
+         \(\int x^2 \cos(ax) \, \mathrm{d}x\) & \(\frac{2x}{a^2} \cos(ax) + \left(\frac{x^2}{a} - \frac{2}{a^3}\right) \sin(ax)\) \\
+      \hline   % chktex 44
+         \(\int \sin(ax) \cos(ax) \, \mathrm{d}x\) & \(\frac{1}{2a} \sin^2(ax)\) \\
+      \hline   % chktex 44
+         \(\int \sin^2(ax) \cos^2(ax) \, \mathrm{d}x\) & \(\frac{x}{8} - \frac{\sin(4ax)}{32a}\) \\
+      \hline   % chktex 44
+   \end{longtable}
+
+% Kreuzprodukt ========================================================
+\section*{Kreuzprodukt}
+   Seien \(\vec{a}=(a_x,a_y,a_z)\) und \(\vec{b}=(b_x,b_y,b_z)\). Dann gilt:
+   \begin{importantbox}   
+      \[
+      \vec{a}\times\vec{b}= \begin{pmatrix}
+         a_x\\ a_y\\ a_z
+      \end{pmatrix} \times \begin{pmatrix}
+         b_x\\ b_y\\ b_z 
+      \end{pmatrix}=
+      \begin{pmatrix}
+      a_y b_z - a_z b_y\\
+      a_z b_x - a_x b_z\\
+      a_x b_y - a_y b_x
+      \end{pmatrix}
+      \]
+   \end{importantbox}
+
+\section{Skalares und vektorielles Oberflächenintegral}
+
+   Sei \(F\subset\mathbb{R}^3\) eine Fläche, parametrisiert durch \(\vec{x}(u,v)\) mit \((u,v)\in B\subset\mathbb{R}^2\).
+   \[
+      \vec{x}_u:=\frac{\partial\vec{x}}{\partial u},\qquad
+      \vec{x}_v:=\frac{\partial\vec{x}}{\partial v},\qquad
+      \vec{n}:=\frac{\vec{x}_u\times\vec{x}_v}{\|\vec{x}_u\times\vec{x}_v\|}\ \text{(Einheitsnormalenvektor)}.
+   \]
+   Skalares Flächenelement und vektorielles Flächenelement:
+   \[
+      \mathrm{d}F=\|\vec{x}_u\times\vec{x}_v\|\,\mathrm{d}u\,\mathrm{d}v,\qquad
+      \mathrm{d}\vec{F}=\vec{n}\,\mathrm{d}F=(\vec{x}_u\times\vec{x}_v)\,\mathrm{d}u\,\mathrm{d}v.
+   \]
+   \emph{Orientierung:} Vertauscht man \(u\) und \(v\), ändert \(\mathrm{d}\vec{F}\) sein Vorzeichen.
+
+   \subsection*{Skalares Oberflächenintegral \(\displaystyle \int_{F} f\,\mathrm{d}F\)}
+      Für ein Skalarfeld \(f:\mathbb{R}^3\to\mathbb{R}\):
+      \begin{importantbox}
+         \[
+            \ \int_{F} f\,\mathrm{d}F\;=\;\int_{B} f\big(\vec{x}(u,v)\big)\;\|\vec{x}_u(u,v)\times\vec{x}_v(u,v)\|\,\mathrm{d}u\,\mathrm{d}v\
+         \]
+      \end{importantbox}
+   
+   \subsection*{Vektorielles Oberflächenintegral (Fluss) \(\displaystyle \int_{F}\vec{v} \; \mathrm{d}\vec{F}\)}
+      Für ein Vektorfeld \(\vec{v}:\mathbb{R}^3\to\mathbb{R}^3\):
+      \begin{importantbox} 
+         \[
+            \ \int_{F}\vec{v}\cdot \mathrm{d}\vec{F}\;=\;\int_{B}\vec{v}\big(\vec{x}(u,v)\big)\cdot\big(\vec{x}_u(u,v)\times\vec{x}_v(u,v)\big)\,\mathrm{d}u\,\mathrm{d}v\
+         \]
+      \end{importantbox}
+      \begin{importantbox}
+         \[ 
+            \int_{F}\vec{v}\cdot \mathrm{d}\vec{F}=\int_{F}(\vec{v}\cdot\vec{n})\,\mathrm{d}F
+         \]
+      \end{importantbox}
+
+%=== Integralsätze ====================================================
+\chapter{Integralsätze}
+\section{Divergenz}
+
+   Ist \(\vec{v}:\mathbb{R}^3\to\mathbb{R}^3\) mit
+   \(\vec{v}=(v_x(\vec{x}),\,v_y(\vec{x}),\,v_z(\vec{x}))\) ein Vektorfeld,
+   so ist \(\operatorname{div}\vec{v}:\mathbb{R}^3\to\mathbb{R}\) ein Skalarfeld.
+
+   \begin{importantbox}
+      \[
+         \operatorname{div}\vec{v}
+         =\frac{\partial v_x}{\partial x}
+         +\frac{\partial v_y}{\partial y}
+         +\frac{\partial v_z}{\partial z}
+         =\nabla\cdot\vec{v}
+      \]
+   \end{importantbox}
+
+   Eine Stelle \(\vec{x}\) heißt Quelle, falls \(\operatorname{div}\vec{v}(\vec{x})>0\) und Senke, falls \(\operatorname{div}\vec{v}(\vec{x})<0\).
+
+   \(\vec{v}\) heißt in \(G\) quellenfrei, wenn \(\operatorname{div}\vec{v}(\vec{x})=0\) für alle \(\vec{x}\in G\).
+
+\section{Satz von Gauß}
+
+\subsection*{Ebene \(\mathbb{R}^2\)}
+   \begin{importantbox}
+      \[
+         \int_B \operatorname{div}\vec v\,\mathrm dA
+         \;=\;
+         \oint_K (\vec v\cdot \vec n)\,\mathrm ds
+      \] 
+   \end{importantbox}
+
+\subsection*{Raum \(\mathbb{R}^3\)}
+   \begin{importantbox}
+      \[
+         \int_B \operatorname{div}\vec v\,\mathrm{d}B
+         \;=\;
+         \iint_F \vec v\cdot \mathrm d\vec F
+         \;=\;
+         \iint_F (\vec v\cdot \vec n)\,\mathrm{d}F
+      \]
+   \end{importantbox}
+
+\newpage
+\section{Rotation}
+
+   Ist \(\vec{v}:\mathbb{R}^3\to\mathbb{R}^3\) mit
+   \(\vec{v}=(v_x(\vec{x}),\,v_y(\vec{x}),\,v_z(\vec{x}))\) ein Vektorfeld,
+   so ist \(\operatorname{rot}\vec{v}:\mathbb{R}^3\to\mathbb{R}^3\) ein Vektorfeld.
+
+   \begin{importantbox}
+      \[
+         \operatorname{rot}\vec{v}
+         =\begin{pmatrix}
+            \frac{\partial v_z}{\partial y}-\frac{\partial v_y}{\partial z}\\[6pt]
+            \frac{\partial v_x}{\partial z}-\frac{\partial v_z}{\partial x}\\[6pt]
+            \frac{\partial v_y}{\partial x}-\frac{\partial v_x}{\partial y}
+         \end{pmatrix}
+         =\nabla\times\vec{v}
+      \]
+   \end{importantbox}
+
+   Eine Stelle \(\vec{x}\) heißt Wirbel, falls \(\operatorname{rot}\vec{v}(\vec{x})\neq 0\).
+
+   \(\vec{v}\) heißt in \(G\) wirbelfrei, wenn \(\operatorname{rot}\vec{v}(\vec{x})=0\) für alle \(\vec{x}\in G\).
+
+\section{Satz von Stokes}
+
+   \begin{importantbox}
+      \[
+         \iint_F \text{rot } \vec{v} \, \mathrm{d}\vec{F} = \oint_{\partial F} \vec{v} \cdot \mathrm{d} \vec{x}
+      \]
+      \[
+         \iint_F (\text{rot } \vec{v} \cdot \vec n) \, \mathrm{d}F  = \oint_{\partial F} (\vec{v} \cdot \vec{t}) \, \mathrm{d}s
+      \]
+   \end{importantbox}
+
+   \subsection*{Voraussetzungen}
+
+      \begin{itemize}
+         \item \(F\): orientierbare, stückweise glatte Fläche mit Rand \(\partial F\)
+         \item \(\vec{n}\): gewählte äußere Einheitsnormale auf \(F\)
+         \item \(\partial F\) ist positiv zur Wahl von \(\vec{n}\) orientiert (mathematisch positiver Umlaufsinn)
+         \item \(\vec{v} : \mathbb{R}^3 \to \mathbb{R}^3\) ist \(C^1\) in einer Umgebung von \(F\)
+      \end{itemize}
+
+   \subsection*{Orientierung (Daumen-Zeigefinger-Regel)}
+
+      Daumen = \(\vec{n}\) (nach außen). Zeigefinger zeigt in die mathematisch positive Umlaufrichtung auf \(\partial F\).
+
+\section[Nabla-Operator nabla ]{Nabla-Operator \texorpdfstring{$\nabla$}{nabla}}
+
+   \begin{importantbox}
+      \[
+         \nabla = (\frac{\partial}{\partial x},
+            \frac{\partial}{\partial y},
+            \frac{\partial}{\partial z}) \; = \; \begin{pmatrix}
+            \frac{\partial}{\partial x}\\[6pt]
+            \frac{\partial}{\partial y}\\[6pt]
+            \frac{\partial}{\partial z}
+         \end{pmatrix}
+      \]
+   \end{importantbox}
+
+\section[Laplace-Operator Delta]{Laplace-Operator \texorpdfstring{$\Delta$}{Delta}}
+
+   \begin{importantbox}
+      \[
+         \Delta = \nabla\cdot\nabla \; = \; \text{div}(\text{grad} ) \; = \; \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}
+      \]
+   \end{importantbox}
+
+\section{Rechenregeln für \textit{grad}, \textit{div} und \textit{rot}}
+
+   \[
+      \begin{aligned}
+         f,g &\text{: Skalarfelder}\\
+         \vec u,\vec v &\text{: Vektorfelder}
+      \end{aligned}
+   \]
+
+   \textbf{Lineare Operatoren}
+   \begin{importantbox}
+      \begin{alignat*}{5}
+         \text{grad}(f + g) &= \text{grad } f + \text{grad } g &&\qquad \text{und} \qquad&& \text{grad}(\lambda f) &&= \lambda \text{grad } f &&\quad (\lambda \in \mathbb{R}) \\
+         \text{div}(\vec{u} + \vec{v}) &= \text{div } \vec{u} + \text{div } \vec{v} &&\qquad \text{und} \qquad&& \text{div}(\lambda \vec{v}) &&= \lambda \text{div } \vec{v} &&\quad (\lambda \in \mathbb{R})\\
+         \text{rot}(\vec{u} + \vec{v}) &= \text{rot } \vec{u} + \text{rot } \vec{v} &&\qquad \text{und} \qquad&& \text{rot}(\lambda \vec{v}) &&= \lambda \text{rot } \vec{v} &&\quad (\lambda \in \mathbb{R})
+      \end{alignat*}
+   \end{importantbox}
+
+   \textbf{Produktregeln}
+   \begin{importantbox}
+      \begin{align*}
+         \operatorname{grad}(fg) &= f\,\operatorname{grad} g + g\,\operatorname{grad} f
+         \\[1mm]
+         \operatorname{grad}(\vec u\!\cdot\!\vec v)
+         &= (\vec u\!\cdot\!\nabla)\vec v + (\vec v\!\cdot\!\nabla)\vec u
+            + \vec u\times \operatorname{rot}\vec v + \vec v\times \operatorname{rot}\vec u\\[1mm]
+         \operatorname{div}(f\vec v) &= f\,\operatorname{div}\vec v + (\operatorname{grad} f)\!\cdot\!\vec v
+         \\
+         \operatorname{rot}(f\vec v) &= f\,\operatorname{rot}\vec v + (\operatorname{grad} f)\times \vec v
+         \\
+         \operatorname{div}(\vec u\times \vec v)
+         &= -\,\vec u\!\cdot\!\operatorname{rot}\vec v + \vec v\!\cdot\!\operatorname{rot}\vec u
+         \\
+         \operatorname{rot}(\vec u\times \vec v)
+         &= (\vec v\!\cdot\!\nabla)\vec u - (\vec u\!\cdot\!\nabla)\vec v
+            + \vec u\,\operatorname{div}\vec v - \vec v\,\operatorname{div}\vec u
+      \end{align*}
+   \end{importantbox}
+
+   \textbf{Wiederholte Anwendung}
+
+   \begin{importantbox}
+      \begin{align*}
+         \operatorname{div}(\operatorname{grad} f) &= \Delta f \\[1mm]
+         \operatorname{rot}(\operatorname{grad} f) &= \vec 0 \\[1mm]
+         \operatorname{div}(\operatorname{rot} \vec v) &= 0 \\[1mm]
+         \operatorname{rot}(\operatorname{rot} \vec v) &= \operatorname{grad}(\operatorname{div} \vec v) - (\Delta v_x,\;\Delta v_y,\;\Delta v_z)
+      \end{align*}
+   \end{importantbox}
+
+\section{Greensche Formel}
+
+   \begin{importantbox}
+      \[
+         \int_B \left( u \Delta v + \nabla u \cdot \nabla v \right) \mathrm{d}B = \iint_F u \frac{\partial v}{\partial n} \mathrm{d}F
+      \]
+      \[
+         \int_B \left( u \Delta v - v \Delta u \right) \mathrm{d}B = \iint_F \left( u \frac{\partial v}{\partial n} - v \frac{\partial u}{\partial n} \right) \mathrm{d}F
+      \]
+   \end{importantbox}   
+
+% Differentialgleichungen =============================================
+\chapter{Differentialgleichungen}
+
+\section{Klassifizierung von DGL}
+
+   Um eine Differentialgleichung (DGL) zu lösen, ist es hilfreich, sie zunächst zu klassifizieren. Wir können uns dabei einen kleinen Steckbrief der DGL erstellen. Mit diesem Steckbrief können wir die DGL eindeutig identifizieren und wissen sofort, welche Lösungsmethoden wir anwenden können. 
+
+   \vspace{0.5cm}
+
+   Der Steckbrief wird durch vier einfache Fragen erstellt:
+
+   \subsection*{1. Frage: Was ist die höchste Ableitung, die vorkommt? (Die Ordnung)}
+
+      \begin{itemize}
+         \item Die Ordnung ist die Zahl der höchsten Ableitung
+         \item \textbf{Beispiele:}
+         \begin{itemize}
+            \item \(y' = 2x \rightarrow\) 1. Ordnung
+            \item \(y'' + y = 0 \rightarrow\) 2. Ordnung
+            \item \(5xy''' + x*y' = e^x \rightarrow\) 3. Ordnung  %chktex 23
+         \end{itemize}
+         \item \textbf{Warum ist das wichtig?} Die Ordnung verrät uns, wie viele Integrationsschritte wir brauchen und wie viele frei wählbare Konstanten in der allgemeinen Lösung auftauchen werden
+      \end{itemize}
+
+   \subsection*{2. Frage: Steht die höchste Ableitung allein da? (Explizit vs. Implizit)}
+
+      \begin{itemize}
+         \item \textbf{Explizite DGL:}
+         \begin{itemize}
+            \item Die Gleichung ist nach der höchsten Ableitung aufgelöst: \(y^{(n)} = \ldots\)
+            \item \textbf{Beispiel:} \(y'' = -2xy' - 5xy + \sin(x)\)
+         \end{itemize}
+         
+         \item \textbf{Implizite DGL:}
+         \begin{itemize}
+            \item Die Gleichung ist nicht nach der höchsten Ableitung aufgelöst.
+            \item \textbf{Beispiel:} \((y')^2 + x*y' - y = 0\) % chktex 3
+         \end{itemize}
+      \end{itemize}
+
+   \subsection*{3. Frage: Kommen die Funktion y und ihre Ableitungen nur ``einfach'' vor? (Linear vs. Nichtlinear)}
+
+      \begin{itemize}
+         \item \textbf{Lineare DGL:}
+         \begin{itemize}
+            \item Die gesuchte Funktion \(y\) und alle ihre Ableitungen kommen nur in linearer Form vor. Das bedeutet:
+            \begin{enumerate}
+                  \item \textbf{Keine} Produkte von \(y\), \(y'\), \(y''\), etc.\ (z.B. \(y*y'\) oder \(y'*y''\))
+                  \item \textbf{Keine} komplizierten Funktionen davon (z.B.\ \(\sin(y)\), \(e^y\), \(\sqrt{y'}\))
+            \end{enumerate}
+            \item Die Standardform ist: \(a_n(x)*y^{(n)} + \ldots + a_1(x)*y' + a_0(x)*y = s(x)\)  % chktex 11
+            \item \textbf{Beispiele:}
+            \begin{itemize}
+                  \item \(y' + 2x*y = 0\) 
+                  \item \(y'' - 5*y' + 6*y = e^x\)
+                  \item \(x*y' + y = x^2\)
+            \end{itemize}
+         \end{itemize}
+         
+         \item \textbf{Nichtlineare DGL:}
+         \begin{itemize}
+            \item Alles, was gegen die obigen Regeln verstößt.
+            \item \textbf{Beispiele:}
+            \begin{itemize}
+                  \item \(y' = y^2\) (y kommt quadratisch vor \(\rightarrow\) nichtlinear)
+                  \item \(y'' + \sin(y) = 0\) (y steht in einer Sinus-Funktion \(\rightarrow\) nichtlinear)
+                  \item \(y' * y = x\) (Produkt von y und \(y'\) \(\rightarrow\) nichtlinear)
+            \end{itemize}
+         \end{itemize}
+      \end{itemize}
+
+   \subsection*{4. Frage: Homogen vs. Inhomogen}
+
+      \begin{itemize}
+         \item \textbf{Homogene lineare DGL:}
+         \begin{itemize}
+            \item Die ``Störfunktion'' \(s(x)\) ist Null. Alles steht auf einer Seite der Gleichung.
+            \item Die Standardform sieht so aus: \(a_n(x)*y^{(n)} + \ldots + a_1(x)*y' + a_0(x)*y = 0\)  %chktex 11
+            \item \textbf{Beispiel:} \(y'' + 3y' - 4y = 0\)
+         \end{itemize}
+         
+         \item \textbf{Inhomogene lineare DGL:}
+         \begin{itemize}
+            \item Die ``Störfunktion'' ist ungleich Null. Es gibt einen Term, der nicht von der gesuchten Funktion y oder ihren Ableitungen abhängt.
+            \item Die Standardform ist: \(a_n(x)*y^{(n)} + \ldots + a_1(x)*y' + a_0(x)*y = s(x)\)  %chktex 11
+            \item \textbf{Beispiele:}
+            \begin{itemize}
+                  \item \(y' + 2xy = 5\) \; \(s(x) = 5\)
+                  \item \(y'' - 5y = e^x\) \; \(s(x) = e^x\)
+                  \item \(y'' + y = \cos(x)\) \; \(s(x) = \cos(x)\)
+            \end{itemize}
+         \end{itemize}
+      \end{itemize}
+
+\section[Trennung der Variablen y' = f(t)g(y)]{Trennung der Variablen \texorpdfstring{$y' = f(x)g(y)$}{y' = f(x)g(y)}}
+
+   Eine Differentialgleichung erster Ordnung heißt separabel, wenn sie sich in die Form
+   \[
+      \frac{dy}{dt}=f(t)\,g(y)
+      \qquad\text{oder}\qquad
+      M(y)\,dy=N(t)\,dt
+   \]
+   bringen lässt. Dann kann man die Variablen trennen und beide Seiten integrieren.
+   Autonome Gleichungen der Form \(y'=g(y)\) sind stets separabel.
+   \section*{5\,-Schritte\,-Rezept}
+      \begin{importantbox}
+         \begin{enumerate}[label=\textbf{\arabic*)},itemsep=2pt,topsep=4pt]   % chktex 9, % chktex 10
+            \item \textbf{Als Bruch schreiben:} \(y'=\dfrac{dy}{dt}\)
+            \item \textbf{Trennen:} \(\displaystyle \frac{1}{g(y)}\,dy=f(t)\,dt\)
+            \item \textbf{Integrieren:} \(\displaystyle \int \frac{1}{g(y)}\,dy=\int f(t)\,dt + C\)
+            \item \textbf{Nach y(t) lösen} (wenn möglich; sonst als implizite Gleichung stehen lassen).
+            \item \textbf{Anfangswert einsetzen} \((t_0,y_0)\) und C bestimmen.
+         \end{enumerate}
+      \end{importantbox}
+
+
+\section[DGL 1. Ordnung y' = f(x)+g(x)]{DGL 1. Ordnung \texorpdfstring{$y' = f(x)+g(x)$}{y' = f(x)+g(x)}}
+
+   Die Gesamtlösung der DGL lautet
+   \begin{importantbox}
+      \[ 
+         y = y_h + y_p 
+      \]
+   \end{importantbox}   
+
+
+   Hierbei ist \( y_h \) = homogene Lösung der DGL,
+   \( y_p \) = spezielle Lösung der DGL.\@
+
+   \begin{importantbox}
+      \[
+         y_h = c\,e^{\int a(x) \, \mathrm{d}x}, \qquad c \in \mathbb{R}.
+         \]
+      \[
+         y_p = y_h \cdot \int \frac{g(x)}{y_h}\,\mathrm{d}x
+      \] 
+   \end{importantbox}
+
+\newpage
+\section{DGL 1. Ordnung mit konstanten Koeffizienten}
+
+   \subsection*{Ansatz der rechten Seite}
+      \begin{enumerate}
+         \item \(y_h\) bestimmen
+         \item Charakteristisches Polynom \(p(\lambda) = \lambda^n + a_{n-1}\lambda^{n-1} + \ldots + a_1\lambda + a_0 = 0\) bestimmen % chktex 11
+         \item \(y_p\) Ansatz
+         \item Auf Resonanz überprüfen
+         \item \(y_p\) n-Fach ableiten
+         \item \(y_p\) aufstellen und Koeffizientenvergleich
+         \item Gesamtlösung \(y = y_h + y_p\)
+      \end{enumerate}
+      \textit{Hinweis:} Bei Kombinationen der Störfunktionen die jeweiligen Ansätze addieren. Also \(y_p = y_{p1} + y_{p2} + \ldots\)
+
+   \subsection*{Beispiel}
+
+      Sei die DGL \(y' = y + t\sin(t)\) gegeben.
+
+      \begin{enumerate}
+         \item \(y_h\) bestimmen
+         
+            \[
+               y' - y = 0
+            \]
+
+         \item Charakteristisches Polynom \(p(\lambda) = \lambda^n + a_{n-1}\lambda^{n-1} + \ldots + a_1\lambda + a_0 = 0\) bestimmen  % chktex 11
+         
+            \[
+               \lambda - 1 = 0 \; \rightarrow \; \lambda = 1 \; \Rightarrow y_h = ce^{\lambda t} = y_h = ce^{t} \;, c \, \in \, \mathbb{R}
+            \]
+
+         \item \(y_p\) Ansatz
+         
+            \[
+               y_p : t\sin(t) \, \rightarrow \, \sin(\beta t)(b_0 + b_1 t) \quad ,\beta = 1
+            \]
+
+         \item Auf Resonanz überprüfen
+            
+            Keine Resonanz, da \(\lambda = 1 \neq i\beta = i\)
+         
+         \item \(y_p\) n-Fach ableiten
+         
+            \[
+               y_p = a\sin(t) + bt\sin(t) + c\cos(t) + dt\cos(t) \quad \vert \,  \text{Kettenregel: } (uv)' = u'v + uv'
+            \]
+
+            \[
+               y_p' = a\cos(t) bt\cos(t) + b\sin(t) - c\sin(t) - dt\sin(t) + d\cos(t)
+            \]
+
+         \item \(y_p\) aufstellen und Koeffizientenvergleich
+         
+            \begin{align*}
+               y_p' &= y_p + t\sin(t) \\
+               a\cos(t) + bt\cos(t) + b\sin(t) \ldots &\\
+               \quad \ldots - c\sin(t) - dt\sin(t) + d\cos(t) &= a\sin(t) + bt\sin(t) + c\cos(t) \ldots \\
+               &\quad \ldots + dt\cos(t) + t\sin(t)
+            \end{align*}
+
+            Mit Koeffizientenvergleich folgt:
+
+            \begin{alignat*}{2}
+               \sin(t) &: \quad & b - c &= a \\
+               \cos(t) &: \quad & a + d &= c \\
+               t\sin(t) &: \quad & -d &= b + 1 \\
+               t\cos(t) &: \quad & b &= d \\
+            \end{alignat*}
+               
+            Aus diesen vier Gleichungen können wir jeden Koeffizienten bestimmen:
+
+            \begin{alignat*}{3}
+               \sin(t) &: \quad & b - c &= a \tag{I}\\
+               \cos(t) &: \quad & a + d &= c \tag{II}\\
+               t\sin(t) &: \quad & -d &= b + 1 \tag{III}\\
+               t\cos(t) &: \quad & b &= d \tag{IV}
+            \end{alignat*}
+
+
+            \begin{enumerate}
+               \item[(III)+(IV)] Aus \( -d=b+1 \) und \( b=d \) folgt
+               \[
+                  -d=d+1 \;\Rightarrow\; -2d=1 \;\Rightarrow\; d=-\tfrac12,
+                  \quad\Rightarrow\quad b=-\tfrac12.
+               \]
+               \item[(II)] Einsetzen von \( d=-\tfrac12 \) in \( a+d=c \) liefert
+               \[
+                  c=a-\tfrac12.
+               \]
+               \item[(I)] Mit \( b=-\tfrac12 \) und \( c=a-\tfrac12 \) in \( b-c=a \):
+               \[
+                  -\tfrac12-(a-\tfrac12)=a \;\Rightarrow\; -a=a \;\Rightarrow\; a=0.
+               \]
+               \item[Schluss] Aus \( c=a-\tfrac12 \) folgt \( c=-\tfrac12 \).
+            \end{enumerate}
+
+            Aus \((\mathrm{III})\) und \((\mathrm{IV})\) ergibt sich \( d=b=-\tfrac12 \).
+            Mit \((\mathrm{II})\) folgt \( c=a-\tfrac12 \), und aus \((\mathrm{I})\) erhält man \( a=0 \),
+            also \( c=-\tfrac12 \). Damit ist die eindeutige Lösung
+            \[
+               \boxed{(a,b,c,d)=\bigl(0,\,-\tfrac12,\,-\tfrac12,\,-\tfrac12\bigr)}.
+            \]
+
+
+         \item Gesamtlösung \(y = y_h + y_p\)
+         
+            \[
+               y = y_h + y_p \; = \; ce^t - \frac{1}{2}\sin(t)t - \frac{1}{2}\cos(t) - \frac{1}{2}\cos(t)t \quad , c \, \in \, \mathbb{R}
+            \]
+
+      \end{enumerate}
+
+
+   \begin{importantbox}
+      \begin{center}
+         \begin{tabular}{|p{0.42\textwidth}|p{0.52\textwidth}|}   % chktex 44
+            \hline   % chktex 44
+            \textbf{Störfunktion \(b(x)\)} & \textbf{Ansatz} \\
+            \hline   % chktex 44
+            \(b(x)= b_0 + b_1 x + \ldots + b_m x^m\)  % chktex 11
+            &
+            \(y_p(x)= A_0 + A_1 x + \ldots + A_m x^m\)\\ % chktex 11
+            & falls \(0\) keine Nullstelle von \(p(\lambda)\) ist.\\
+            & \(y_p(x)= x^{k}\big(A_0 + A_1 x + \ldots + A_m x^m\big)\)\\  % chktex 11
+            & falls \(0\) eine \(k\)-fache Nullstelle von \(p(\lambda)\) ist.\\
+            \hline   % chktex 44
+            \(b(x)= e^{\alpha x}\,\big(b_0 + b_1 x + \ldots + b_m x^m\big)\)  % chktex 11
+            &
+            \(y_p(x)= e^{\alpha x}\big(A_0 + A_1 x + \ldots + A_m x^m\big)\)\\   % chktex 11
+            & falls \(\alpha\) keine Nullstelle von \(p(\lambda)\) ist.\\
+            & \(y_p(x)= x^{k} e^{\alpha x}\big(A_0 + A_1 x + \ldots + A_m x^m\big)\)\\ % chktex 11
+            & falls \(\alpha\) eine \(k\)-fache Nullstelle von \(p(\lambda)\) ist.\\
+            \hline   % chktex 44
+            \(b(x)= \cos(\beta x)\,\big(b_0 + b_1 x + \ldots + b_m x^m\big)\) % chktex 11
+            &
+            \(y_p(x)= \cos(\beta x)\big(A_0 + A_1 x + \ldots + A_m x^m\big)\)\\  % chktex 11
+            & \(\hspace{2.2em}+\, \sin(\beta x)\big(B_0 + B_1 x + \ldots + B_m x^m\big)\)\\  % chktex 11
+            & falls \(i\beta\) keine Nullstelle von \(p(\lambda)\) ist.\\
+            \(b(x)= \sin(\beta x)\,\big(b_0 + b_1 x + \ldots + b_m x^m\big)\) % chktex 11
+            &
+            \(y_p(x)= x^{k}\cos(\beta x)\big(A_0 + A_1 x + \ldots + A_m x^m\big)\)\\   % chktex 11
+            & \(\hspace{2.2em}+\, x^{k}\sin(\beta x)\big(B_0 + B_1 x + \ldots + B_m x^m\big)\)\\  % chktex 11
+            & falls \(i\beta\) eine \(k\)-fache Nullstelle von \(p(\lambda)\) ist.\\
+            \hline   % chktex 44
+            \(b(x)= e^{\alpha x}\cos(\beta x)\,\big(b_0 + b_1 x + \ldots + b_m x^m\big)\) % chktex 11
+            &
+            \(y_p(x)= e^{\alpha x}\cos(\beta x)\big(A_0 + A_1 x + \ldots + A_m x^m\big)\)\\  % chktex 11
+            & \(\hspace{2.2em}+\, e^{\alpha x}\sin(\beta x)\big(B_0 + B_1 x + \ldots + B_m x^m\big)\)\\  % chktex 11
+            & falls \(\alpha+i\beta\) keine Nullstelle von \(p(\lambda)\) ist.\\
+            \(b(x)= e^{\alpha x}\sin(\beta x)\,\big(b_0 + b_1 x + \ldots + b_m x^m\big)\) % chktex 11
+            &
+            \(y_p(x)= x^{k} e^{\alpha x}\cos(\beta x)\big(A_0 + A_1 x + \ldots + A_m x^m\big)\)\\  % chktex 11
+            & \(\hspace{2.2em}+\, x^{k} e^{\alpha x}\sin(\beta x)\big(B_0 + B_1 x + \ldots + B_m x^m\big)\)\\  % chktex 11
+            & falls \(\alpha+i\beta\) eine \(k\)-fache Nullstelle von \(p(\lambda)\) ist.\\
+            \hline   % chktex 44
+         \end{tabular}
+      \end{center}
+   \end{importantbox}
+
+\newpage
+
+   \section{Bernoullische DGL}
+
+      \begin{importantbox}
+         \[
+            y' \;=\; f(x)\,y \;+\; r(x)\,y^{\alpha}, \qquad \alpha\neq 0 \, , \, 1
+         \]
+      \end{importantbox}
+
+      \[
+         \left.
+         \begin{aligned}
+            u \;&=\; y^{\,1-\alpha}\\[1em]
+            u' \;&=\; (1-\alpha)\,f(x)\,u \;+\; (1-\alpha)\,r(x)
+         \end{aligned}
+         \ \right\}
+         \quad\Longrightarrow\quad
+         \begin{aligned}
+            y \;&=\; u^{\frac{1}{\,1-\alpha\,}},\\[2pt]
+         \end{aligned}
+      \]
+
+      \begin{importantbox}
+         \[
+            u' \;=\;
+            \underbrace{(1-\alpha)\,f(x)\,u}_{\displaystyle u_h \;=\; c\,e^{\int (1-\alpha)f(x)\,dx}}
+            \;+\;
+            \underbrace{(1-\alpha)\,r(x)}_{\displaystyle
+            u_p \;=\; u_h \,\int \frac{(1-\alpha)\,r(x)}{\,u_h\,}\,dx}
+         \]
+      \end{importantbox}
+
+\section{Riccati DGL}
+
+   \begin{importantbox}
+      \[
+      y' \;=\; f(x)\,y \;+\; g(x)\,y^{2} \;+\; r(x),
+      \qquad \text{Voraussetzung: eine spezielle Lösung } y_p(x)\ \text{ist bekannt}
+      \]
+   \end{importantbox}
+
+
+   \[
+      z \;=\; \frac{1}{\,y - y_p\,} \; \Rightarrow \; y \;=\; y_p \;+\; \frac{1}{z} \qquad \vert \; z_h \; \text{und} \;  z_p \; \text{berechnen um} \; z \; \text{zu erhalten}
+   \]
+   
+   \[
+      z' \;=\; -\bigl(f(x)+2g(x)y_p\bigr)z \;-\; g(x).
+   \]
+
+
+\section{Exakte DGL}
+
+   \begin{importantbox}
+      \[
+         p(x,y)+q(x,y)\,y' \;=\; 0 \qquad\Longleftrightarrow\qquad p(x,y)\,dx + q(x,y)\,dy \;=\; 0.
+      \]
+   \end{importantbox}
+
+   Die DGL heißt exakt wenn: \(F_x(x,y)=p(x,y),\;\;F_y(x,y)=q(x,y)\)\\
+   Die Funktion \(F\) heißt (Potential-)Stammfunktion.
+
+   Sind \(p = p(x,y)\) und \(q = q(x,y)\) in einem einfachen zusammenhängenden Gebiet \(G\) stetig differenzierbare Funktionen, so gilt:
+   \begin{importantbox}
+      \[
+         p(x,y)\,dx+q(x,y)\,dy=0\;\text{ ist exakt}
+         \;\Longleftrightarrow\;
+         \frac{\partial p(x,y)}{\partial y}=\frac{\partial q(x,y)}{\partial x}.
+      \]
+   \end{importantbox}
+
+   \begin{importantbox}
+      \[
+         F(x,y) = \int_{x_0}^{x} p(t,y) \mathrm{d}t + \int_{y_0}^{y} q(x_0,t) \mathrm{d}t = 0
+      \]
+   \end{importantbox}
+
+
+\section{Existenz- und Eindeutigkeitssätze}
+
+   \subsection*{Peano-Existenzsatz}
+      Wenn \(f(x,y)\) in einer Umgebung des Startpunkts \((x_0,y_0)\) stetig ist, 
+      dann existiert mindestens eine Lösung des Anfangswertproblems. 
+      Diese Lösung gilt auf einem kleinen Intervall um \(x_0\). 
+
+   \begin{importantbox}
+      \[
+         [t_0 - \varepsilon,\, t_0 + \varepsilon],\quad
+         \varepsilon = \left\{
+         \begin{array}{l}
+         \min\{a,\, \frac{b}{u}\}\\[0.2em]
+         a
+         \end{array}
+         \right.
+      \]
+   \end{importantbox}
+
+   \textit{Wichtig:} Es ist nur die Existenz gesichert, nicht die Eindeutigkeit.
+
+   \subsection*{Picard–Lindelöf (Existenz und Eindeutigkeit)}
+      Wenn \(f(x,y)\) stetig ist und die Lipschitz-Bedingung bezüglich \(y\) erfüllt, 
+      dann existiert genau eine Lösung des Anfangswertproblems.  
+
+\section{Potenzreihenansatz}
+
+   Wir lösen eine lineare DGL \(n\)-ter Ordnung
+   \begin{importantbox}
+      \[
+         x^{(n)}(t) + a_{n-1}(t)\,x^{(n-1)}(t) + \ldots + a_1(t)\,x'(t) + a_0(t)\,x(t) \;=\; s(t)  % chktex 11
+      \]
+   \end{importantbox}
+
+   durch einen Potenzreihenansatz um den Entwicklungspunkt \(a\).
+
+   \paragraph{(1) Taylorreihen der Daten}
+      Entwickle die Koeffizientenfunktionen und die rechte Seite um \(t=a\):
+      \[
+         a_j(t)=\sum_{k=0}^{\infty} c^{(a_j)}_{k}\,(t-a)^k \quad (j=0,\dots,n-1),   % chktex 3
+         \qquad
+         s(t)=\sum_{k=0}^{\infty} c^{(s)}_{k}\,(t-a)^k.  % chktex 3
+      \]
+      Damit schreibt sich die DGL als
+      \[
+         x^{(n)}(t)
+         +\sum_{k=0}^{\infty} c^{(a_{n-1})}_{k}(t-a)^k\,x^{(n-1)}(t) % chktex 3
+         +\dots
+         +\sum_{k=0}^{\infty} c^{(a_{0})}_{k}(t-a)^k\,x(t)  % chktex 3
+         \;=\;
+         \sum_{k=0}^{\infty} c^{(s)}_{k}(t-a)^k.   % chktex 3
+      \]
+      \emph{Merke:} \(c^{(a_j)}_{k}\) und \(c^{(s)}_{k}\) sind die Taylor-Koeffizienten an der Stelle \(a\).
+
+   \paragraph{(2) Ansatz für die Lösung}
+      Setze
+      \[
+         x(t)=\sum_{k=0}^{\infty} c_k\,(t-a)^k,\qquad k\in\mathbb{N}_0, % chktex 3
+      \]
+      in die Gleichung aus (1) ein. Hierbei darf gliedweise differenziert werden.
+
+   \paragraph{(3) Nach Potenzen sammeln}
+      Fasse die Terme zu gleichen Potenzen von \((t-a)\) zusammen (oft mit Indexverschiebungen). Links erhält man
+      \[
+         d_0 + d_1\,(t-a) + d_2\,(t-a)^2 + \dots,  % chktex 3
+      \]
+      wobei die Größen \(d_\ell\) von den Unbekannten \(c_k\) abhängen. Rechts steht weiterhin
+      \[
+         \sum_{k=0}^{\infty} c^{(s)}_{k}\,(t-a)^k. % chktex 3
+      \]
+
+   \paragraph{(4) Koeffizientenvergleich \(\Rightarrow\) Rekursion}
+      Durch Vergleich der Potenzen gilt für alle \(k\ge 0\):
+      \[
+         d_k \;=\; c^{(s)}_{k}.
+      \]
+      Daraus folgen Rekursionsformeln, mit denen sich \(c_n, c_{n+1},\dots\) aus \(c_0,\dots,c_{n-1}\) berechnen lassen.
+
+   \paragraph{Startwerte aus Anfangsbedingungen}
+      Sind Anfangswerte am Entwicklungspunkt gegeben,
+      \[
+         x(a)=x_0,\; x'(a)=x_1,\; \dots,\; x^{(n-1)}(a)=x_{n-1},
+      \]
+      dann gelten sofort
+      \[
+         c_0=x_0,\qquad c_1=x_1,\qquad c_2=\frac{x_2}{2!},\;\dots,\qquad
+         c_{n-1}=\frac{x_{n-1}}{(n-1)!}.
+      \]
+      \emph{Tipp:} Diese Startwerte direkt in die Rekursionsformeln einsetzen.
+
+   \begin{importantbox}
+      \begin{align*}
+         y &= \sum_{k=0}^{\infty} c_k (x-x_0)^k \\[0.5em]   % chktex 3
+         y' &= \sum_{k=1}^{\infty} k \cdot c_k (x-x_0)^{k-1} \\[0.5em]  % chktex 3
+         y'' &= \sum_{k=2}^{\infty} k(k-1) c_k (x-x_0)^{k-2} \\[0.5em]  % chktex 3
+         y''' &= \sum_{k=3}^{\infty} k(k-1)(k-2) c_k (x-x_0)^{k-3} \\[0.5em]  % chktex 23, % chktex 3
+         &\vdots
+      \end{align*}
+   \end{importantbox}
+
+   \subsection*{Wichtige Hinweise:}
+      \begin{itemize}
+         \item Potenzreihe für \(y(x)\) und ihre Ableitungen in die DGL einsetzen
+         \item Koeffizientenvergleich durchführen
+         \item Rekursionsformel für die Koeffizienten \(a_k\) bestimmen
+         \item Anfangsbedingungen verwenden um erste Koeffizienten festzulegen
+         \item Der Entwicklungspunkt \(a\) sollte so gewählt werden, dass alle Koeffizientenfunktionen \(a_k(t)\) dort analytisch sind
+         \item Bei singulären Punkten funktioniert dieses Verfahren nicht
+         \item Die Lösung konvergiert mindestens im Konvergenzbereich aller Taylorreihen
+         \item Bei bekannten Anfangsbedingungen können die ersten Koeffizienten sofort bestimmt werden
+         \item \textbf{Merkhilfe:} Bei jeder Ableitung 
+         \begin{itemize}
+            \item kommt ein Faktor \(k\) dazu (vom Potenzgesetz)
+            \item startet die Summe einen Index höher
+            \item wird der Exponent um 1 kleiner
+         \end{itemize}
+      \end{itemize}
+
+\section{Wronski-Determinante}
+
+   Die Wronski-Determinante ist ein wichtiges Werkzeug zur Überprüfung der linearen Unabhängigkeit von Funktionen. Für \(n\) Funktionen \(f_1, f_2, \ldots, f_n\) ist sie definiert als:
+   \begin{importantbox}
+      \[
+         W(x) = \det 
+         \begin{pmatrix}
+            f_1(x) & f_2(x) & \cdots & f_n(x) \\
+            f_1'(x) & f_2'(x) & \cdots & f_n'(x) \\
+            \vdots & \vdots & \ddots & \vdots \\
+            f_1^{(n-1)}(x) & f_2^{(n-1)}(x) & \cdots & f_n^{(n-1)}(x)
+         \end{pmatrix}
+      \]        
+   \end{importantbox}
+
+   \subsection*{Eigenschaften und Anwendungen}
+
+      \textbf{Lineare Unabhängigkeit:} \\
+      Wenn \(W(x_1) \neq 0\) für mindestens ein \(x_1 \in I\), dann sind die Funktionen \(f_1, \ldots, f_n\) auf dem gesamten Intervall \(I\) linear unabhängig.
+
+
+      \textbf{Fundamentalsystem von Differentialgleichungen:} \\
+      Bilden die Funktionen \(y_j : I \to \mathbb{C}\) (für \(j = 1, \ldots, n\)) ein Fundamentalsystem eines linearen Differentialgleichungssystems, dann gilt:
+      \begin{importantbox}
+         \[
+            \det W(x) \neq 0 \quad \text{für alle } x \in I
+         \]         
+      \end{importantbox}
+
+      \textbf{Lineare Abhängigkeit:} \\
+      Gibt es ein \(\hat{x} \in I\) mit \(W(\hat{x}) = 0\) und sind die Voraussetzungen des Satzes von Picard-Lindelöf in einer Umgebung von \(\hat{x}\) erfüllt, dann sind die Funktionen linear abhängig.
+
+
+   \subsection*{Praktische Bedeutung}
+      \begin{itemize}
+         \item Die Wronski-Determinante ist ein praktisches Werkzeug, um zu überprüfen, ob Lösungen einer Differentialgleichung linear unabhängig sind
+         \item Bei homogenen linearen DGLs bilden linear unabhängige Lösungen ein Fundamentalsystem
+         \item Die Determinante ist entweder für alle \(x \in I\) gleich Null oder für kein \(x \in I\) gleich Null
+      \end{itemize}
+
+\section[Lineare DGL n-ter Ordnung]{Lineare DGL \texorpdfstring{$n$\nobreakdash-ter Ordnung}{n-ter Ordnung}}
+
+   Wir betrachten
+   \begin{importantbox}
+      \[
+         y^{(n)} + a_{n-1}\,y^{(n-1)} + \dots + a_{1}\,y' + a_{0}\,y \;=\; g(x), % chktex 11
+      \]
+   \end{importantbox}
+
+   sowie die homogene Gleichung.
+
+   \subsection*{Homogene Gleichung und charakteristische Gleichung}
+      Setze \(y=\mathrm e^{\lambda x}\). Dann ergibt sich die charakteristische Gleichung
+      \begin{importantbox}
+         \[
+            y_h = C_1 y_1 + \cdots + C_n y_n
+            \qquad\Longleftrightarrow\qquad
+            p(\lambda)=\lambda^{n}+a_{n-1}\lambda^{n-1}+\dots+a_1\lambda+a_0=0   % chktex 11
+         \]
+      \end{importantbox}
+
+      Aus den Nullstellen von \(p\) folgt die homogene Gesamtlösung \(y_h\):
+      \begin{importantbox}
+         \begin{itemize}[leftmargin=1.2em]
+         \item \textbf{Reelle einfache Nullstellen} \(\lambda_1,\dots,\lambda_k\):\\
+         \(y_h=\sum_{j=1}^{k} C_j\,\mathrm e^{\lambda_j x}\).
+         \item \textbf{Mehrfache Nullstelle} \(\lambda\) der Vielfachheit \(m\):\\
+         Beiträge \(x^{0}\mathrm e^{\lambda x},\,x^{1}\mathrm e^{\lambda x},\dots, x^{m-1}\mathrm e^{\lambda x}\).
+         \item \textbf{Komplexe konjugierte Nullstellen} \(\lambda=\alpha\pm i\beta\) (\(\beta\neq 0\)):\\
+         Beitrag \( \mathrm e^{\alpha x}\bigl(C\cos(\beta x)+D\sin(\beta x)\bigr)\).\\
+         Bei Vielfachheit \(m\): zusätzlich mit Faktoren \(x^{0}, x^{1},\dots,x^{m-1}\) multiplizieren.
+         \end{itemize}
+      \end{importantbox}
+
+   \subsection*{Besondere Lösung \(y_p\) und Resonanz-Regel}
+      Für typische rechte Seiten \(g(x)\) wählt man folgenden Ansatz und passt ihn bei Resonanz an:
+      
+      \begin{importantbox}    
+         \begin{center}       
+         \begin{tabular}{ll}
+            \(g(x)\) & \(\;\) geeigneter Ansatz für \(y_p\) \\ \hline   % chktex 44
+            Polynom \(P_m(x)\) & \(x^{s}\displaystyle\sum_{k=0}^{m} b_k x^k\) \\
+            \(\mathrm e^{rx}\,P_m(x)\) & \(x^{s}\mathrm e^{rx}\displaystyle\sum_{k=0}^{m} b_k x^k\) \\
+            \(\mathrm e^{\alpha x}\bigl(A\cos\beta x+B\sin\beta x\bigr)\) 
+            & \(x^{s}\mathrm e^{\alpha x}\bigl(C\cos\beta x+D\sin\beta x\bigr)\) \\
+         \end{tabular}
+         \end{center}
+      \end{importantbox}
+      \noindent
+      \textbf{Resonanz:} Ist der zugehörige Parameter (\(r\) bzw. \(\alpha\pm i\beta\)) eine Nullstelle der charakteristischen Gleichung mit Vielfachheit \(m\), dann setze \(s=m\) (sonst \(s=0\)).  % chktex 12
+
+   \subsection*{Gesamtlösung und AWP-Schema}
+      \begin{enumerate}[leftmargin=1.2em]
+      \item \(y_h\) aus der charakteristischen Gleichung bestimmen.
+      \item Einen passenden Ansatz für \(y_p\) wählen, Parameter bestimmen.
+      \item \(\displaystyle y = y_h + y_p\).
+      \item Anfangswerte einsetzen (AWP): aus \(y(x_0)=\eta_0,\,y'(x_0)=\eta_1,\dots, y^{(n-1)}(x_0)=\eta_{n-1}\)
+            die Konstanten \(C_j\) der speziellen Lösung bestimmen.
+      \end{enumerate}
+
+\section{Systeme von DGLn}
+
+   \begin{importantbox}
+      Die DGL \( n \)-ter Ordnung
+      \[
+         y^{(n)} = f(x, y, y', \ldots, y^{(n-1)}), \quad y(x_0) = \eta_0,\ y'(x_0) = \eta_1,\ \ldots,\ y^{(n-1)}(x_0) = \eta_{n-1}
+      \]
+      ist äquivalent zum System von \( n \) DGLn 1-ter Ordnung:
+      \[
+         \vec{y}' = \vec{f}(x, \vec{y}), \quad \text{mit} \quad \vec{y}(x_0) = \vec{y}_0.
+      \]
+      Dabei ist:
+      \[
+         \vec{y} = 
+         \begin{pmatrix}
+            y_1 \\
+            y_2 \\
+            \vdots \\
+            y_n
+         \end{pmatrix}
+         =
+         \begin{pmatrix}
+            y \\
+            y' \\
+            \vdots \\
+            y^{(n-1)}
+         \end{pmatrix}, \quad 
+         \vec{f}(x, \vec{y}) =
+         \begin{pmatrix}
+            y_2 \\
+            y_3 \\
+            \vdots \\
+            f(x, y_1, y_2, \ldots, y_n)
+         \end{pmatrix}, \quad 
+         \vec{y}_0 =
+         \begin{pmatrix}
+            \eta_0 \\
+            \eta_1 \\
+            \vdots \\
+            \eta_{n-1}
+         \end{pmatrix}
+      \]
+   \end{importantbox}
+
+\section{Laplace-Transformation}
+
+   \begin{importantbox}
+      \[
+         \mathcal{L}\{f(t)\} = F(s) = \int_{0}^{\infty} e^{-st}f(t)\,dt
+      \]
+   \end{importantbox}
+
+   \subsection*{Eigenschaften der Laplace-Transformation}
+
+      \textbf{Linearität}
+         \begin{importantbox}
+            \[
+               \mathcal{L}\{\alpha f(t) + \beta g(t)\} = \alpha F(s) + \beta G(s)
+            \]
+         \end{importantbox}
+
+      \textbf{Integration}
+         \begin{importantbox}
+            \[
+               \mathcal{L}\left\{\int_{0}^{t} f(\tau)\,d\tau\right\} = \frac{1}{s} F(s)
+            \]
+         \end{importantbox}
+
+      \textbf{Differentiation}
+         \begin{importantbox}
+            \begin{align*}
+               \mathcal{L}\{f'(t)\} &= sF(s) - f(0^+) \\
+               \mathcal{L}\{f''(t)\} &= s^2F(s) - (sf(0^+) + f'(0^+)) \\
+               \mathcal{L}\{f^{(n)}(t)\} &= s^nF(s) - \sum_{k=1}^{n} s^{n-k} f^{(k-1)}(0^+)  % chktex 25
+            \end{align*}
+         \end{importantbox}
+
+   \subsection*{Laplace-Transformationstabelle}
+
+      \begin{center}
+      {\setlength{\tabcolsep}{12pt}% horizontaler Zellabstand (Default ~6pt)
+      \renewcommand{\arraystretch}{1.3}% vertikaler Abstand (Zeilenhöhe)
+      \begin{tabular}{|c|c||c|c|}  % chktex 44
+         \hline   % chktex 44
+         \(f(t)\) & \(F(s)\) & \(f(t)\) & \(F(s)\) \\
+         \hline\hline   % chktex 44
+         \(1\) & \(\tfrac{1}{s}\) & \(\tfrac{1}{a}\sin(at)\) & \(\tfrac{1}{s^{2}+a^{2}}\) \\
+         \hline   % chktex 44
+         \(\mathrm e^{-at}\) & \(\tfrac{1}{s+a}\) & \(\cos(at)\) & \(\tfrac{s}{s^{2}+a^{2}}\) \\
+         \hline   % chktex 44
+         \(t\) & \(\tfrac{1}{s^{2}}\) & \(\tfrac{1}{a}\mathrm e^{-bt}\sin(at)\) & \(\tfrac{1}{(s+b)^{2}+a^{2}}\) \\  % chktex 3
+         \hline   % chktex 44
+         \(\tfrac{1}{a}(1-\mathrm e^{-at})\) & \(\tfrac{1}{s(s+a)}\) & \(\mathrm e^{-bt}\!\left(\cos(at)-\tfrac{b}{a}\sin(at)\right)\) & \(\tfrac{s}{(s+b)^{2}+a^{2}}\) \\ % chktex 3
+         \hline   % chktex 44
+         \(\tfrac{1}{b-a}(\mathrm e^{-at}-\mathrm e^{-bt})\) & \(\tfrac{1}{(s+a)(s+b)}\) & \(\tfrac{1}{2}t^{2}\) & \(\tfrac{1}{s^{3}}\) \\
+         \hline   % chktex 44
+         \(\tfrac{1}{a-b}(a\,\mathrm e^{-at}-b\,\mathrm e^{-bt})\) & \(\tfrac{s}{(s+a)(s+b)}\) & \(\tfrac{1}{a^{2}}(\mathrm e^{-at}+at-1)\) & \(\tfrac{1}{s^{2}(s+a)}\) \\
+         \hline   % chktex 44
+         \(t\,\mathrm e^{-at}\) & \(\tfrac{1}{(s+a)^{2}}\) & \(\tfrac{1}{ab(a-b)}\!\left((a-b)+b\,\mathrm e^{-at}-a\,\mathrm e^{-bt}\right)\) & \(\tfrac{1}{s(s+a)(s+b)}\) \\ % chktex 3
+         \hline   % chktex 44
+         \(\mathrm e^{-at}(1-at)\) & \(\tfrac{s}{(s+a)^{2}}\) & \(\tfrac{1}{a^{2}}\!\left(1-\mathrm e^{-at}-at\,\mathrm e^{-at}\right)\) & \(\tfrac{1}{s(s+a)^{2}}\) \\ % chktex 3
+         \hline   % chktex 44
+         \(\tfrac{1}{a}\sinh(at)\) & \(\tfrac{1}{s^{2}-a^{2}}\) & \(\tfrac{t^{2}}{2}\,\mathrm e^{-at}\) & \(\tfrac{1}{(s+a)^{3}}\) \\  % chktex 3
+         \hline   % chktex 44 
+         \(\cosh(at)\) & \(\tfrac{s}{s^{2}-a^{2}}\) & \(\mathrm e^{-at}\,t\!\left(1-\tfrac{a}{2}t\right)\) & \(\tfrac{s}{(s+a)^{3}}\) \\  % chktex 3
+         \hline   % chktex 44
+      \end{tabular}
+      }
+      \end{center}
+
+
+% Komplexe Diffentiation ==============================================
+\chapter{Komplexe Funktionen}
+
+\section{Komplexe Differenzierbarkeit, Holomorphie und Ganzheit}
+
+   Für eine komplexe Funktion \( f : G \to \mathbb{C} \) auf einem Gebiet \( G \) gelten folgende Definitionen:
+
+   \subsection*{Komplexe Differenzierbarkeit}
+      \begin{itemize}
+         \item \( f \) ist in \( z_0 \in G \) komplex differenzierbar, wenn der Grenzwert
+         \begin{importantbox}
+            \[
+               f'(z_0) = \lim_{z \to z_0} \frac{f(z) - f(z_0)}{z - z_0}
+            \]
+         \end{importantbox}
+
+         existiert.
+
+         \item \( f \) ist auf \( U \subseteq G \) komplex differenzierbar, wenn sie in jedem Punkt \( z_0 \in U \) komplex differenzierbar ist
+      \end{itemize}
+
+   \subsection*{Holomorphie}
+      \begin{itemize}
+         \item \( f \) ist holomorph in \( z_0 \in G \), wenn es eine offene Umgebung \( U \subseteq G \) von \( z_0 \) gibt, auf der \( f \) komplex differenzierbar ist.
+
+         \item \( f \) ist holomorph auf \( U \subseteq G \), wenn \( f \) in jedem Punkt \( z_0 \in U \) holomorph ist
+      \end{itemize}
+
+   \subsection*{Ganze Funktionen}
+      \begin{itemize}
+         \item \( f \) heißt ganz, wenn sie auf ganz \( \mathbb{C} \) holomorph ist
+      \end{itemize}
+
+   \subsection*{Zusammenhang}
+      \begin{itemize}
+         \item Jede ganze Funktion ist auf der gesamten komplexen Ebene holomorph
+         \item Holomorphie impliziert komplexe Differenzierbarkeit
+         \item Die Begriffe sind hierarchisch: Ganz \(\Rightarrow\) Holomorph \(\Rightarrow\) Komplex differenzierbar
+      \end{itemize}
+
+\section{Kurvenintegrale}
+
+   Es sei \(z=x+iy\) und \(f(z)=u(x,y)+i\,v(x,y)\).
+   Sei ferner die (stückweise glatte) Kurve
+   \[
+   C:\ \gamma:[t_0,t_1]\to\mathbb{C},\qquad \gamma(t)=a(t)+i\,b(t).
+   \]
+
+   \subsection*{Cauchy–Riemann–Kriterium}
+      \(f\) ist genau dann auf \(G\) holomorph, wenn \(u\) und \(v\) auf \(G\) stetig partiell differenzierbar sind und
+      \[
+         u_x(x,y)=v_y(x,y),\qquad
+         u_y(x,y)=-\,v_x(x,y)
+         \quad\text{für alle }(x,y)\in G.
+      \]
+
+   Dann gilt
+   \begin{importantbox}
+      \[
+         \begin{aligned}
+            \int_{C} f(z)\,\mathrm dz
+            &= \int_{C} \bigl(u(x,y)+i\,v(x,y)\bigr)\,\bigl(\mathrm dx + i\,\mathrm dy\bigr)\\[0.3em]
+            &= \int_{C} \bigl(u(x,y)\,\mathrm dx - v(x,y)\,\mathrm dy\bigr)
+               \;+\; i \int_{C} \bigl(v(x,y)\,\mathrm dx + u(x,y)\,\mathrm dy\bigr)\\[0.6em]
+            &= \int_{t_0}^{t_1} \Bigl[u\bigl(a(t),b(t)\bigr)\,a'(t) - v\bigl(a(t),b(t)\bigr)\,b'(t)\Bigr]\,\mathrm dt + \ldots\\
+            &\quad \ldots \;+\; i \int_{t_0}^{t_1} \Bigl[v\bigl(a(t),b(t)\bigr)\,a'(t) + u\bigl(a(t),b(t)\bigr)\,b'(t)\Bigr]\,\mathrm dt
+         \end{aligned}
+      \]
+   \end{importantbox}
+
+   \subsection*{Praktische Berechnung}
+      \begin{enumerate}
+         \item \textbf{Kurve parametrisieren:} \( \gamma(t) = a(t) + ib(t) \) für \( t \in [t_0, t_1] \)
+         \item \textbf{Ableitung berechnen:} \( \gamma'(t) = a'(t) + ib'(t) \)
+         \item \textbf{Funktion einsetzen:} \( f(\gamma(t)) = u(a(t), b(t)) + iv(a(t), b(t)) \)
+         \item \textbf{Integral berechnen:}
+         \[
+            \int_C f(z) \, dz = \int_{t_0}^{t_1} f(\gamma(t)) \cdot \gamma'(t) \, dt
+         \]
+      \end{enumerate}
+
+   \subsection*{Rezept: Holomorphie nachweisen}
+      \begin{enumerate}[leftmargin=1.2em]
+         \item Schreibe \(z=x+iy\) und zerlege \(f\) als \(f(z)=u(x,y)+i\,v(x,y)\).
+         \item Prüfe, ob \(u\) und \(v\) auf einem offenen \(U\subseteq G\) stetig partiell differenzierbar sind (\(C^{1}\)).\\
+               \emph{Falls nein:} \(f\) ist nicht holomorph.
+         \item Prüfe in \(U\) die Cauchy–Riemann–Gleichungen
+               \[
+                  u_x=v_y \qquad u_y=-v_x
+               \]
+               \emph{Falls verletzt:} \(f\) ist (auf \(U\)) nicht holomorph.\\
+               \emph{Falls erfüllt:} \(f\) ist (auf \(U\)) holomorph.
+      \end{enumerate}
+
+   \subsection*{Eigenschaften komplexer Kurvenintegrale}
+      \begin{itemize}
+         \item Linearität: \( \int_C (\alpha f(z) + \beta g(z)) \, dz = \alpha \int_C f(z) \, dz + \beta \int_C g(z) \, dz \)
+         \item Umkehrung der Kurvenrichtung: \( \int_{-C} f(z) \, dz = -\int_C f(z) \, dz \)
+         \item Zusammensetzung von Kurven: \( \int_{C_1 + C_2} f(z) \, dz = \int_{C_1} f(z) \, dz + \int_{C_2} f(z) \, dz \)
+      \end{itemize}
+
+   \subsection*{Praktische Bedeutung}
+      \begin{itemize}
+         \item Die Cauchy-Riemann-Gleichungen sind ein notwendiges und hinreichendes Kriterium für Holomorphie
+         \item Dieses Kriterium ermöglicht die Überprüfung von Holomorphie durch reelle Analysis
+         \item Viele wichtige Funktionen (Polynome, Exponentialfunktion, trigonometrische Funktionen) erfüllen diese Bedingungen
+      \end{itemize}
+
+\section{Cauchyscher Integralsatz und Satz von Morera}
+
+   \textbf{Cauchyscher Integralsatz}\\
+   Ist \( G \) ein einfach zusammenhängendes Gebiet und \( f \colon G \to \mathbb{C} \) eine holomorphe Funktion, so gilt für jede stückweise glatte, geschlossene Kurve \( C \) in \( G \):
+   \begin{importantbox}
+      \[
+         \oint_C f(z) \, \mathrm{d}z = 0
+      \]
+   \end{importantbox}
+
+   Der \textbf{Satz von Morera} besagt die Umkehrung: Ist \( f \colon G \to \mathbb{C} \) stetig und gilt
+   \[
+      \oint_C f(z) \, \mathrm{d}z = 0
+   \]
+   für jede stückweise glatte, geschlossene Kurve \( C \) in \( G \), so ist \( f \) holomorph in \( G \).
+
+   \paragraph{Hinweis:}
+   Die Beschränktheit von \(G\) ist nicht erforderlich. Offen und einfach zusammenhängend genügt.
+   Für Morera genügt es, die Bedingung \(\oint_C f\,dz=0\) nur für Dreiecke in \(G\) zu überprüfen.
+
+\section{Cauchysche Integralformel}
+
+   Es sei \( G \subseteq \mathbb{C} \) ein einfach zusammenhängendes Gebiet und 
+   \( f \colon G \to \mathbb{C} \) eine holomorphe Funktion. 
+   Weiterhin sei \( C \subset G \) eine stückweise glatte, einfach geschlossene, 
+   positiv orientierte Jordankurve, die das Gebiet \( D \) berandet, wobei \(\overline{D} \subset G\).
+
+   Dann gilt für jeden Punkt \( z \) im Inneren von \( C \) die Cauchysche Integralformel:
+   \begin{importantbox}
+      \[
+         f(z) = \frac{1}{2\pi i} \oint_C \frac{f(w)}{w - z} \, \mathrm{d}w
+      \]
+   \end{importantbox}
+
+   Die Funktion \( f \) ist im Punkt \( z \) beliebig oft komplex differenzierbar. 
+   Für die \( n \)-te Ableitung (\( n \in \mathbb{N} \)) von \( f \) an der Stelle \( z \) 
+   gilt die verallgemeinerte Cauchysche Integralformel:
+   \begin{importantbox}
+      \[
+         f^{(n)}(z) = \frac{n!}{2\pi i} \oint_C \frac{f(w)}{(w - z)^{n+1}} \, \mathrm{d}w % chktex 3
+      \]
+   \end{importantbox}
+
+   \subsection*{Symbolerklärung und wichtige Begriffe}
+   \begin{itemize}
+      \item \( \oint_C \) bezeichnet das komplexe Kurvenintegral über die geschlossene Kurve \( C \)
+      \item \( i \) ist die imaginäre Einheit mit \( i^2 = -1 \)
+      \item \( w \) ist die Integrationsvariable entlang der Kurve \( C \)
+      \item Der Integrand \( \frac{f(w)}{w - z} \) wird als Cauchy-Kern bezeichnet
+      \item Die Orientierung von \( C \) ist gegen den Uhrzeigersinn (positiv orientiert)
+   \end{itemize}
+
+   \paragraph{Bemerkungen.}
+      \begin{itemize}
+      \item Die Beschränktheit des Gebiets \(G\) ist nicht erforderlich; wesentlich ist,
+            dass \(f\) auf einer offenen Umgebung von \(\overline{D}\) holomorph ist
+      \item Bei umgekehrter Orientierung der Kurve \(C\) ändert sich das Vorzeichen der Integrale
+      \item Die Formel zeigt eine fundamentale Eigenschaft: Die Randwerte der holomorphen 
+            Funktion bestimmen \(f\) im Inneren des Gebiets vollständig
+      \item Aus der Integralformel folgt automatisch die beliebige Differenzierbarkeit 
+            holomorpher Funktionen – ein bemerkenswerter Unterschied zur reellen Analysis
+   \end{itemize}
+
+\section{Laurentreihen und Singularitäten}
+
+   Sei \(a\in\mathbb{C}\) und \(A=\{z\in\mathbb{C}: r_1<|z-a|<r_2\}\) ein Kreising.
+   Ist \(f\) auf \(A\) holomorph, so besitzt \(f\) in \(A\) die eindeutige Laurententwicklung
+   \begin{importantbox}
+      \[
+         f(z)=\sum_{k=-\infty}^{\infty} a_k (z-a)^k   % chktex 3 
+               = \underbrace{\sum_{k=1}^{\infty} \frac{a_{-k}}{(z-a)^{k}}}_{\text{Hauptteil}}   % chktex 3
+               + \underbrace{\sum_{k=0}^{\infty} a_k (z-a)^k}_{\text{regulärer Teil}}  % chktex 3
+      \]
+   \end{importantbox}
+
+   \newpage
+
+   Für die Koeffizienten gilt (Cauchy-Koeffizientenformel): Ist \(C\) ein positiv
+   orientierter Kreis um \(a\) mit \(C\subset A\), dann
+   \begin{importantbox}
+      \[
+         a_k=\frac{1}{2\pi i}\oint_C \frac{f(z)}{(z-a)^{k+1}}\,\mathrm{d}z \qquad ,k\in\mathbb{Z}  % chktex 3
+      \]
+   \end{importantbox}
+
+   \paragraph{Isolierte Singularität:}
+   Ein Punkt \(a\) heißt isolierte Singularität von \(f\), wenn \(f\) auf einem gelochten
+   Umkreis \(\{0<|z-a|<\varepsilon\}\) holomorph ist.
+
+   \paragraph{Klassifikation}
+   \begin{itemize}
+      \item \textbf{Hebbar:} Der Hauptteil verschwindet, d.\,h.\ \(a_k=0\) für alle \(k<0\).
+            Dann lässt sich \(f\) holomorph in \(a\) fortsetzen
+      \item \textbf{Pol der Ordnung \(n\):} Es gibt \(n\in\mathbb{N}\) mit \(a_{-n}\neq 0\) und
+            \(a_k=0\) für alle \(k<-n\)
+      \item \textbf{Wesentlich:} Unendlich viele negative Koeffizienten sind von \(0\) verschieden
+   \end{itemize}
+
+\section{Residuen und Residuensatz}
+
+   \subsection*{Residuen}
+
+      Hat \(f\) in \(a\) eine isolierte Singularität, so besitzt \(f\) im gelochten
+      Umkreis eine Laurententwicklung
+      \begin{importantbox}
+         \[
+            f(z)=\sum_{k=-\infty}^{\infty} a_k (z-a)^k   % chktex 3
+         \]
+      \end{importantbox}
+      
+      Das Residuum in \(a\) ist der Koeffizient vor \((z-a)^{-1}\):  % chktex 3
+      \begin{importantbox}
+         \[
+            \operatorname{Res}(f,a)=a_{-1} \;=\; \frac{1}{2\pi i}\oint_{|z-a|=\varepsilon} f(z)\,\mathrm{d}z
+         \]
+      \end{importantbox}
+      wobei der Kreis positiv orientiert ist.
+
+\newpage
+   \subsection*{Residuensatz}
+      Sei \(K\) eine stückweise glatte, positiv orientierte, geschlossene Kurve.
+      Ist \(f\) auf und innerhalb von \(K\) analytisch, mit Ausnahme endlich vieler
+      isolierter Singularitäten \(a_1,\dots,a_n\) im Inneren, dann
+      \begin{importantbox}
+         \[
+            \oint_{K} f(z)\,dz
+            \;=\; 2\pi i \sum_{k=1}^{n}\operatorname{Res}(f,a_k)
+         \]      
+      \end{importantbox}   
+
+      \subsection*{Berechnung von Residuen}
+         \begin{enumerate}
+            \item Einfacher Pol in \(a\)
+            \[
+               \operatorname{Res}(f,a)=\lim_{z\to a}(z-a)\,f(z)
+            \]
+            \item Quotient \(f=\dfrac{g}{h}\) mit einfachem Nullpunkt von \(h\) in \(a\)
+            \[
+               \operatorname{Res}(f,a)=\frac{g(a)}{h'(a)}
+            \]
+            \item Pol der Ordnung \(n\ge 1\)
+            \[
+               \operatorname{Res}(f,a)=\frac{1}{(n-1)!}
+               \lim_{z\to a}\frac{\mathrm{d^{\,n-1}}}{\mathrm{d}z^{\,n-1}} \big[(z-a)^n f(z)\big]  % chktex 3
+            \]
+         \end{enumerate}
+
+\end{document} % chktex 17
